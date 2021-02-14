@@ -16,7 +16,7 @@ namespace Ev.Game
             world
                 .WithTribe("RandomW",  Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd))
                 .WithTribe("Explorer", Color.Red,        new ExplorerTribeBehaviour(rnd))
-                .WithTribe("Gatherer", Color.Cyan,       new JaclkOfAllTradesTribeBehaviour(rnd))
+                .WithTribe("Gatherer", Color.Cyan,       new JackOfAllTradesTribeBehaviour(rnd))
                 .WithTribe("Lazy",     Color.White,      new LazyTribeBehaviour(rnd))
                 .WithTribe("Aggr",     Color.Yellow,     new AggressiveTribeBehaviour(rnd))
                 .WithTribe("SmrtAggr", Color.Magenta,    new SmartAggressiveTribeBehaviour(rnd))
@@ -64,8 +64,19 @@ namespace Ev.Game
         static void Main()
         {
             var world = CreateWorld();
-            
+
+            // TODO: setup game by specifying how many tribes are requested
+            // TODO: wait for tribes to join the game
+            // TODO: upon tribe joining the game registers the tribe IP address, name and color 
+            // when doing 
+            //  tribe.DoMove(world.GetWorldState(tribe));
+            // game sends the world state to each tribe which in turn replies by sending its move
+            // DoMove channels the move into a wrapper that takes care sending the move to the server
+            // the wrapper is also responsive to deserialise the worldstate coming from the server
+            // server is also sending special term messages when winning or losing
+
             CreateTribes(world, new Random());
+
             GameLoop(world);
         }
     }

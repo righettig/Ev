@@ -6,9 +6,9 @@ using Ev.Domain.World.Core;
 
 namespace Ev.Behaviours
 {
-    public class JaclkOfAllTradesTribeBehaviour : TribeBehaviour
+    public class JackOfAllTradesTribeBehaviour : TribeBehaviour
     {
-        public JaclkOfAllTradesTribeBehaviour(IRandom rnd) : base(rnd) { }
+        public JackOfAllTradesTribeBehaviour(IRandom rnd) : base(rnd) { }
 
         public override IGameAction DoMove(IWorldState state, ITribe tribe)
         {
