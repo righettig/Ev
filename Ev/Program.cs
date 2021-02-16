@@ -17,7 +17,8 @@ namespace Ev.Game
                 .WithTribe("RandomW",  Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd))
                 .WithTribe("Explorer", Color.Red,        new ExplorerTribeBehaviour(rnd))
                 .WithTribe("Gatherer", Color.Cyan,       new JackOfAllTradesTribeBehaviour(rnd))
-                .WithTribe("Lazy",     Color.White,      new LazyTribeBehaviour(rnd))
+                .WithTribe("Player1",  Color.White,      new PlayerControlledTribeBehaviour(rnd))
+                //.WithTribe("Lazy",     Color.White,      new LazyTribeBehaviour(rnd));
                 .WithTribe("Aggr",     Color.Yellow,     new AggressiveTribeBehaviour(rnd))
                 .WithTribe("SmrtAggr", Color.Magenta,    new SmartAggressiveTribeBehaviour(rnd))
                 .WithTribe("Flee",     Color.DarkCyan,   new FleeTribeBehaviour(rnd));
@@ -40,12 +41,21 @@ namespace Ev.Game
                     var tribe = alive[i];
                     var next = alive[(i + 1) % alive.Length];
 
-                    var move = tribe.DoMove(world.GetWorldState(tribe));
+                    var state = world.GetWorldState(tribe);
+
+                    var move = tribe.DoMove(state);
+
+                    if (move is PlayerControlledGameAction) {
+                        DumpActions();
+                        move = ReadAction(state);
+                        move.Tribe = tribe;
+                    }
+
                     history.Add(move);
 
                     finished = world.Update(tribe, move, iteration);
 
-                    //Dump(world, iteration, move, next);
+                    Dump(world, iteration, move, next);
 
                     world.GetAliveTribes().ToList().ForEach(t => t.IsAttacking = false);
 

@@ -2,7 +2,7 @@
 
 namespace Ev.Domain.Actions.Core
 {
-    public interface IGameAction 
+    public interface IGameAction
     {
         ITribe Tribe { get; set; }
     }

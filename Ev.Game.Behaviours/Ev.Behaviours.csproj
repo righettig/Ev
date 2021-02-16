@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="PlayerControlled.Behaviour.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Ev.Domain\Ev.Domain.csproj" />
   </ItemGroup>
 

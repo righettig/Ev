@@ -1,6 +1,8 @@
-﻿using Ev.Domain.Actions.Core;
+﻿using Ev.Domain.Actions;
+using Ev.Domain.Actions.Core;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.World;
+using Ev.Domain.World.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +11,93 @@ using static System.Math;
 
 namespace Ev.Helpers
 {
-    public static class Debug 
+    public static class Debug
     {
-        public static void DumpHistory(IList<IGameAction> history) 
+        public static void DumpHistory(IList<IGameAction> history)
         {
             for (int i = 0; i < history.Count; i++)
             {
                 WriteLine($"{i} - {history[i]}");
             }
+        }
+
+        public static void DumpActions() 
+        {
+            WriteLine("Choose: (H)old (A)attack (M)ove");
+        }
+
+        public static void DumpDirections()
+        {
+            WriteLine("Choose: 0 -> N | 1 -> S | 2 -> E | 3 -> W | 4 -> NE | 5 -> NW | 6 -> SE | 7 -> SW");
+        }
+
+        public static Directions ReadDirection() 
+        {
+            var key = ReadKey(true);
+
+            Directions? dir;
+            do
+            {
+                switch (key.Key)
+                {
+                    case ConsoleKey.D0: dir = Directions.N; break;
+                    case ConsoleKey.D1: dir = Directions.S; break;
+                    case ConsoleKey.D2: dir = Directions.E; break;
+                    case ConsoleKey.D3: dir = Directions.W; break;
+                    case ConsoleKey.D4: dir = Directions.NE; break;
+                    case ConsoleKey.D5: dir = Directions.NW; break;
+                    case ConsoleKey.D6: dir = Directions.SE; break;
+                    case ConsoleKey.D7: dir = Directions.SW; break;
+                    default: dir = null; break;
+                }
+
+            } while (!dir.HasValue);
+
+            return dir.Value;
+        }
+
+        public static IGameAction ReadAction(IWorldState state) 
+        {
+            var key = ReadKey(true);
+
+            IGameAction action = null;
+            do
+            {
+                switch (key.Key)
+                {
+                    case ConsoleKey.H: action = new HoldAction(); break;
+
+                    case ConsoleKey.M:
+                        DumpDirections();
+                        action = new MoveAction(ReadDirection()); break;
+
+                    case ConsoleKey.A:
+                        DumpDirections();
+                        var loc = (-1, -1);
+                        switch (ReadDirection())
+                        {
+                            case Directions.N: loc = (2, 1); break;
+                            case Directions.S: loc = (2, 3); break;
+                            case Directions.E: loc = (3, 2); break;
+                            case Directions.W: loc = (1, 2); break;
+                            case Directions.NE: loc = (3, 1); break;
+                            case Directions.NW: loc = (1, 1); break;
+                            case Directions.SE: loc = (3, 3); break;
+                            case Directions.SW: loc = (1, 3); break;
+                        }
+                        var target = state.GetEntity<ITribe>(loc);
+                        if (target == null) {
+                            WriteLine("Invalid Target!" + Environment.NewLine);
+                            DumpActions();
+                            return ReadAction(state);
+                        }
+                        return new AttackAction(target);
+
+                    default: action = null; break;
+                }
+            } while (action == null);
+            
+            return action;
         }
 
         public static void Dump(IWorld world, int iteration, IGameAction move = null, ITribe next = null) 
