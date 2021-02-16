@@ -1,5 +1,6 @@
 ﻿namespace Ev.Domain.Actions.Core
 {
-    public class PlayerControlledGameAction : GameAction { 
+    public class PlayerControlledGameAction : GameAction 
+    { 
     }
 }

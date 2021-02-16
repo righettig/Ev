@@ -97,6 +97,10 @@ namespace Ev.Domain.World
                     tribe.Population -= 20;
                     a.Target.Population += 20;
                 }
+            } 
+            else if (move is SuicideGameAction)
+            {
+                tribe.Population = 0;
             }
 
             // remove losers

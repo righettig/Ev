@@ -23,37 +23,7 @@ namespace Ev.Helpers
 
         public static void DumpActions() 
         {
-            WriteLine("Choose: (H)old (A)attack (M)ove");
-        }
-
-        public static void DumpDirections()
-        {
-            WriteLine("Choose: 0 -> N | 1 -> S | 2 -> E | 3 -> W | 4 -> NE | 5 -> NW | 6 -> SE | 7 -> SW");
-        }
-
-        public static Directions ReadDirection() 
-        {
-            var key = ReadKey(true);
-
-            Directions? dir;
-            do
-            {
-                switch (key.Key)
-                {
-                    case ConsoleKey.D0: dir = Directions.N; break;
-                    case ConsoleKey.D1: dir = Directions.S; break;
-                    case ConsoleKey.D2: dir = Directions.E; break;
-                    case ConsoleKey.D3: dir = Directions.W; break;
-                    case ConsoleKey.D4: dir = Directions.NE; break;
-                    case ConsoleKey.D5: dir = Directions.NW; break;
-                    case ConsoleKey.D6: dir = Directions.SE; break;
-                    case ConsoleKey.D7: dir = Directions.SW; break;
-                    default: dir = null; break;
-                }
-
-            } while (!dir.HasValue);
-
-            return dir.Value;
+            WriteLine("Choose: (H)old (A)attack (M)ove (S)uicide");
         }
 
         public static IGameAction ReadAction(IWorldState state) 
@@ -65,6 +35,8 @@ namespace Ev.Helpers
             {
                 switch (key.Key)
                 {
+                    case ConsoleKey.S: action = new SuicideGameAction(); break;
+
                     case ConsoleKey.H: action = new HoldAction(); break;
 
                     case ConsoleKey.M:
@@ -98,6 +70,36 @@ namespace Ev.Helpers
             } while (action == null);
             
             return action;
+        }
+
+        private static void DumpDirections()
+        {
+            WriteLine("Choose: 0 -> N | 1 -> S | 2 -> E | 3 -> W | 4 -> NE | 5 -> NW | 6 -> SE | 7 -> SW");
+        }
+
+        private static Directions ReadDirection()
+        {
+            var key = ReadKey(true);
+
+            Directions? dir;
+            do
+            {
+                switch (key.Key)
+                {
+                    case ConsoleKey.D0: dir = Directions.N; break;
+                    case ConsoleKey.D1: dir = Directions.S; break;
+                    case ConsoleKey.D2: dir = Directions.E; break;
+                    case ConsoleKey.D3: dir = Directions.W; break;
+                    case ConsoleKey.D4: dir = Directions.NE; break;
+                    case ConsoleKey.D5: dir = Directions.NW; break;
+                    case ConsoleKey.D6: dir = Directions.SE; break;
+                    case ConsoleKey.D7: dir = Directions.SW; break;
+                    default: dir = null; break;
+                }
+
+            } while (!dir.HasValue);
+
+            return dir.Value;
         }
 
         public static void Dump(IWorld world, int iteration, IGameAction move = null, ITribe next = null) 
