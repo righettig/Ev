@@ -1,5 +1,6 @@
 ﻿using Ev.Behaviours;
 using Ev.Domain.Actions.Core;
+using Ev.Domain.Actions.Core.Processors;
 using Ev.Domain.Utils;
 using Ev.Domain.World;
 using Ev.Domain.World.Core;
@@ -11,7 +12,7 @@ namespace Ev.Game
 {
     class Program
     {
-        static IWorld CreateWorld() => new World(size: 32, food: 10, wood: 10, iron: 10, new Random(1234));
+        static IWorld CreateWorld(IRandom rnd) => new World(size: 32, food: 60, wood: 30, iron: 10, rnd);
 
         static void CreateTribes(IWorld world, IRandom rnd) => 
             world
@@ -23,12 +24,13 @@ namespace Ev.Game
                 .WithTribe("SmrtAggr", Color.Magenta,    new SmartAggressiveTribeBehaviour(rnd))
                 .WithTribe("Flee",     Color.DarkCyan,   new FleeTribeBehaviour(rnd));
 
-        static void GameLoop(IWorld world) 
+        static void GameLoop(IWorld world, IRandom rnd) 
         {
             var finished = false;
             var iteration = 0;
 
             var history = new List<(IGameAction, IWorldState)>();
+            var actionProcessor = new GameActionProcessor(rnd);
 
             Dump(world, iteration);
 
@@ -45,7 +47,7 @@ namespace Ev.Game
                     var move = tribe.DoMove(state);
                     history.Add((move, state));
 
-                    finished = world.Update(tribe, move, iteration);
+                    finished = world.Update(tribe, move, iteration, actionProcessor);
 
                     //Dump(world, iteration, move, next);
 
@@ -66,7 +68,7 @@ namespace Ev.Game
 
         static void Main()
         {
-            var world = CreateWorld();
+            var world = CreateWorld(new Random(11));
 
             // TODO: setup game by specifying how many tribes are requested
             // TODO: wait for tribes to join the game
@@ -80,7 +82,7 @@ namespace Ev.Game
 
             CreateTribes(world, new Random());
 
-            GameLoop(world);
+            GameLoop(world, new Random());
         }
     }
 }

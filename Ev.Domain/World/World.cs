@@ -1,5 +1,4 @@
-﻿using Ev.Domain.Actions;
-using Ev.Domain.Actions.Core;
+﻿using Ev.Domain.Actions.Core;
 using Ev.Domain.Behaviours.Core;
 using Ev.Domain.Entities;
 using Ev.Domain.Entities.Collectables;
@@ -50,54 +49,9 @@ namespace Ev.Domain.World
             InitCollectable(iron, (rnd) => new Iron(rnd));
         }
 
-        public bool Update(ITribe tribe, IGameAction move, int iteration)
+        public bool Update(ITribe tribe, IGameAction move, int iteration, IGameActionProcessor actionProcessor)
         {
-            if (move is HoldAction)
-            {
-                tribe.Population--;
-            }
-            else if (move is MoveAction m)
-            {
-                var direction = m.Direction;
-                var oldPos = tribe.Position;
-
-                if (CanMove(tribe.Position, direction))
-                {
-                    tribe.Population -= 3;
-
-                    Move(tribe, direction);
-                }
-                else // Hold
-                {
-                    tribe.Population--;
-                }
-
-                tribe.PrevPosition = oldPos;
-            }
-            else if (move is AttackAction a)
-            {
-                tribe.IsAttacking = true;
-                a.Target.IsAttacking = true;
-
-                var won =
-                    _rnd.NextDouble() <= (double)tribe.Population / (tribe.Population + a.Target.Population);
-
-                if (won)
-                {
-                    tribe.Population += 20;
-                    a.Target.Population -= 20;
-
-                    if (a.Target.Population <= 0)
-                    {
-                        WipeTribe(a.Target, iteration);
-                    }
-                }
-                else
-                {
-                    tribe.Population -= 20;
-                    a.Target.Population += 20;
-                }
-            }
+            actionProcessor.Update(move, tribe, this, iteration);
 
             // remove losers
             if (tribe.Population <= 0)
@@ -112,6 +66,12 @@ namespace Ev.Domain.World
             }
 
             return Finished;
+        }
+
+        public void WipeTribe(ITribe tribe, int iteration)
+        {
+            State[tribe.Position.x, tribe.Position.y] = null;
+            tribe.DeadAtIteration = iteration;
         }
 
         public IWorld WithTribe(string tribeName, Color color, ITribeBehaviour behaviour)
@@ -171,79 +131,6 @@ namespace Ev.Domain.World
 
                 left--;
             }
-        }
-
-        private void WipeTribe(ITribe tribe, int iteration)
-        {
-            State[tribe.Position.x, tribe.Position.y] = null;
-            tribe.DeadAtIteration = iteration;
-        }
-
-        private bool CanMove((int x, int y) pos, Directions direction)
-        {
-            return direction switch
-            {
-                Directions.N => pos.y > 0,
-                Directions.S => pos.y < Size - 1,
-                Directions.W => pos.x > 0,
-                Directions.E => pos.x < Size - 1,
-                Directions.NW => pos.x > 0 && pos.y > 0,
-                Directions.SE => pos.x < Size - 1 && pos.y < Size - 1,
-                Directions.NE => pos.x < Size - 1 && pos.y > 0,
-                Directions.SW => pos.x > 0 && pos.y < Size - 1,
-                _ => true,
-            };
-        }
-
-        private void Move(ITribe tribe, Directions direction)
-        {
-            var (x, y) = tribe.Position;
-
-            switch (direction)
-            {
-                case Directions.N:
-                    tribe.Position = (tribe.Position.x, tribe.Position.y - 1);
-                    break;
-
-                case Directions.S:
-                    tribe.Position = (tribe.Position.x, tribe.Position.y + 1);
-                    break;
-
-                case Directions.W:
-                    tribe.Position = (tribe.Position.x - 1, tribe.Position.y);
-                    break;
-
-                case Directions.E:
-                    tribe.Position = (tribe.Position.x + 1, tribe.Position.y);
-                    break;
-
-                case Directions.NW:
-                    tribe.Position = (tribe.Position.x - 1, tribe.Position.y - 1);
-                    break;
-
-                case Directions.SE:
-                    tribe.Position = (tribe.Position.x + 1, tribe.Position.y + 1);
-                    break;
-
-                case Directions.NE:
-                    tribe.Position = (tribe.Position.x + 1, tribe.Position.y - 1);
-                    break;
-
-                case Directions.SW:
-                    tribe.Position = (tribe.Position.x - 1, tribe.Position.y + 1);
-                    break;
-            }
-
-            State[x, y] = null;
-
-            if (State[tribe.Position.x, tribe.Position.y] is Food)
-            {
-                tribe.Population += (State[tribe.Position.x, tribe.Position.y] as Food).Value;
-            }
-
-            // TODO: add logic to handle iron and wood
-
-            State[tribe.Position.x, tribe.Position.y] = tribe;
         }
 
         // return an empty random tile

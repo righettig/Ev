@@ -1,4 +1,5 @@
 ﻿using Ev.Domain.Actions.Core;
+using Ev.Domain.Actions.Core.Processors;
 using Ev.Domain.Behaviours.Core;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.Utils;
@@ -25,6 +26,8 @@ namespace Ev.Domain.World
 
         IWorldState GetWorldState(ITribe tribe);
 
-        bool Update(ITribe tribe, IGameAction move, int iteration);
+        bool Update(ITribe tribe, IGameAction move, int iteration, IGameActionProcessor actionProcessor);
+
+        void WipeTribe(ITribe target, int iteration);
     }
 }
