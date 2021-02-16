@@ -2,6 +2,7 @@
 using Ev.Domain.Actions.Core;
 using Ev.Domain.Utils;
 using Ev.Domain.World;
+using Ev.Domain.World.Core;
 using System.Collections.Generic;
 using System.Linq;
 using static Ev.Helpers.Debug;
@@ -10,7 +11,7 @@ namespace Ev.Game
 {
     class Program
     {
-        static IWorld CreateWorld() => new World(size: 16, food: 0, wood: 0, iron: 0, new Random(1234));
+        static IWorld CreateWorld() => new World(size: 32, food: 10, wood: 10, iron: 10, new Random(1234));
 
         static void CreateTribes(IWorld world, IRandom rnd) => 
             world
@@ -27,7 +28,7 @@ namespace Ev.Game
             var finished = false;
             var iteration = 0;
 
-            var history = new List<IGameAction>();
+            var history = new List<(IGameAction, IWorldState)>();
 
             Dump(world, iteration);
 
@@ -40,8 +41,9 @@ namespace Ev.Game
                     var tribe = alive[i];
                     var next = alive[(i + 1) % alive.Length];
 
-                    var move = tribe.DoMove(world.GetWorldState(tribe));
-                    history.Add(move);
+                    var state = world.GetWorldState(tribe);
+                    var move = tribe.DoMove(state);
+                    history.Add((move, state));
 
                     finished = world.Update(tribe, move, iteration);
 
@@ -58,7 +60,8 @@ namespace Ev.Game
 
             Dump(world, iteration++);
 
-            DumpHistory(history.Where(el => el.Tribe == world.Winner).ToList());
+            DumpHistory(
+                history.Where(el => el.Item1.Tribe == world.Winner).Select(el => el.Item1).ToList());
         }
 
         static void Main()
