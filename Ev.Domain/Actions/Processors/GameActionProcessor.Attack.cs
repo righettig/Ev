@@ -1,14 +1,14 @@
 ﻿using Ev.Domain.Entities.Core;
 using Ev.Domain.World;
 
-namespace Ev.Domain.Actions.Core.Processors
+namespace Ev.Domain.Actions.Processors
 {
     public partial class GameActionProcessor
     {
         public void Update(AttackAction action, ITribe tribe, IWorld world, int iteration)
         {
             tribe.IsAttacking = true;
-            action.Target.IsAttacking = true;
+            action.Target.IsAttacking = true; // TODO: introduce IsDefending ?
 
             var won =
                 _rnd.NextDouble() <= (double)tribe.Population / (tribe.Population + action.Target.Population);

@@ -1,6 +1,6 @@
 ﻿using Ev.Behaviours;
 using Ev.Domain.Actions.Core;
-using Ev.Domain.Actions.Core.Processors;
+using Ev.Domain.Actions.Processors;
 using Ev.Domain.Utils;
 using Ev.Domain.World;
 using Ev.Domain.World.Core;
@@ -12,17 +12,18 @@ namespace Ev.Game
 {
     class Program
     {
-        static IWorld CreateWorld(IRandom rnd) => new World(size: 32, food: 60, wood: 30, iron: 10, rnd);
+        static IWorld CreateWorld(IRandom rnd) => new World(size: 32, food: 50, wood: 120, iron: 90, rnd);
 
         static void CreateTribes(IWorld world, IRandom rnd) => 
             world
-                .WithTribe("RandomW",  Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd))
-                .WithTribe("Explorer", Color.Red,        new ExplorerTribeBehaviour(rnd))
-                .WithTribe("Gatherer", Color.Cyan,       new JackOfAllTradesTribeBehaviour(rnd))
-                .WithTribe("Lazy",     Color.White,      new LazyTribeBehaviour(rnd))
-                .WithTribe("Aggr",     Color.Yellow,     new AggressiveTribeBehaviour(rnd))
-                .WithTribe("SmrtAggr", Color.Magenta,    new SmartAggressiveTribeBehaviour(rnd))
-                .WithTribe("Flee",     Color.DarkCyan,   new FleeTribeBehaviour(rnd));
+                .WithTribe("Engineer",  Color.DarkYellow, new EngineerTribeBehaviour(rnd))
+                //.WithTribe("RandomW",  Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd))
+                //.WithTribe("Explorer", Color.Red,        new ExplorerTribeBehaviour(rnd))
+                //.WithTribe("Gatherer", Color.Cyan,       new JackOfAllTradesTribeBehaviour(rnd))
+                .WithTribe("Lazy",      Color.White,      new LazyTribeBehaviour(rnd));
+                //.WithTribe("Aggr",     Color.Yellow,     new AggressiveTribeBehaviour(rnd))
+                //.WithTribe("SmrtAggr", Color.Magenta,    new SmartAggressiveTribeBehaviour(rnd))
+                //.WithTribe("Flee",     Color.DarkCyan,   new FleeTribeBehaviour(rnd));
 
         static void GameLoop(IWorld world, IRandom rnd) 
         {
@@ -45,15 +46,16 @@ namespace Ev.Game
 
                     var state = world.GetWorldState(tribe);
                     var move = tribe.DoMove(state);
+
                     history.Add((move, state));
 
                     finished = world.Update(tribe, move, iteration, actionProcessor);
 
-                    //Dump(world, iteration, move, next);
+                    Dump(world, iteration, move, next);
 
                     world.GetAliveTribes().ToList().ForEach(t => t.IsAttacking = false);
 
-                    //ReadLine();
+                    //System.Console.ReadLine();
                 }
 
                 iteration++;

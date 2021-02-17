@@ -16,6 +16,11 @@ namespace Ev.Domain.Entities
         public (int x, int y) PrevPosition { get; set; }
         public Color Color { get; init; }
         public bool IsAttacking { get; set; }
+        int? ITribe.LockedForNTurns { get; set; }
+        int ITribe.Defense { get; set; }
+        public IGameAction BusyDoing { get; set; }
+        int ITribe.Wood { get; set; }
+        int ITribe.Iron { get; set; }
 
         private readonly ITribeBehaviour _behaviour;
 
@@ -37,6 +42,8 @@ namespace Ev.Domain.Entities
 
         public IGameAction DoMove(IWorldState state)
         {
+            if (BusyDoing != null) return BusyDoing;
+
             var move = _behaviour.DoMove(state, this);
             
             move.Tribe = this;

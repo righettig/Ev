@@ -2,7 +2,7 @@
 using Ev.Domain.Entities.Core;
 using Ev.Domain.World;
 
-namespace Ev.Domain.Actions.Core.Processors
+namespace Ev.Domain.Actions.Processors
 {
     public partial class GameActionProcessor 
     {
@@ -82,12 +82,12 @@ namespace Ev.Domain.Actions.Core.Processors
 
             world.State[x, y] = null;
 
-            if (world.State[tribe.Position.x, tribe.Position.y] is Food)
+            switch (world.State[tribe.Position.x, tribe.Position.y]) 
             {
-                tribe.Population += (world.State[tribe.Position.x, tribe.Position.y] as Food).Value;
+                case Food food: tribe.Population += food.Value; break;
+                case Wood wood: tribe.Wood       += wood.Value; break;
+                case Iron iron: tribe.Iron       += iron.Value; break;
             }
-
-            // TODO: add logic to handle iron and wood
 
             world.State[tribe.Position.x, tribe.Position.y] = tribe;
         }

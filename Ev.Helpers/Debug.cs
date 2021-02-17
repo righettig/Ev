@@ -1,4 +1,5 @@
-﻿using Ev.Domain.Actions.Core;
+﻿using Ev.Domain.Actions;
+using Ev.Domain.Actions.Core;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.World;
 using System;
@@ -28,7 +29,7 @@ namespace Ev.Helpers
                 ForegroundColor = ColorMapper.MapColor(move.Tribe.Color);
                 Write($"{move.Tribe.Name}");
                 ResetColor();
-                WriteLine($" - {move}");
+                WriteLine($" - {move} {(move is BlockingGameAction a && a.Completed ? $"COMPLETED ({a.Result()})" : "")}");
                 WriteLine($"Next:\t {next.Name}");
                 WriteLine();
             }
