@@ -18,8 +18,10 @@ namespace Ev.Domain.Actions
     {
         public Directions Direction { get; }
 
+        // unit test assignment
         public MoveAction(Directions direction) => Direction = direction;
 
+        // unit test this
         public override string ToString() => "Move " + Direction;
     }
 }
