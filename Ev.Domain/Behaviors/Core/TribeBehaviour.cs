@@ -8,6 +8,9 @@ using static System.Math;
 
 namespace Ev.Domain.Behaviours.Core
 {
+    // TODO: introduce constant for magic number "2"
+    // TODO: move static methods into a static helper class that can be unit tested
+
     public abstract class TribeBehaviour : ITribeBehaviour
     {
         protected readonly IRandom _rnd;
@@ -18,6 +21,12 @@ namespace Ev.Domain.Behaviours.Core
         }
 
         public abstract IGameAction DoMove(IWorldState state, ITribe tribe);
+
+        protected static AttackAction Attack(ITribe target) => new AttackAction(target);
+
+        protected static HoldAction Hold() => new HoldAction();
+        
+        protected static MoveAction Move(Directions direction) => new MoveAction(direction);
 
         protected static MoveAction MoveTowards((int x, int y) target)
         {
@@ -35,6 +44,8 @@ namespace Ev.Domain.Behaviours.Core
 
             if (target.x - 2 == 0 && target.y - 2 < 0)
             {
+                // TODO: create helper "Move(Direction dir)" so that all instantiation of MoveAction are centralised
+                // TODO: helper should be usabled by subclasses
                 result = new MoveAction(Directions.N);
             }
             else if (target.x - 2 == 0 && target.y - 2 >= 0)

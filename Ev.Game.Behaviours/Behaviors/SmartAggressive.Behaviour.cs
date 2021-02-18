@@ -33,7 +33,7 @@ namespace Ev.Behaviours
 
                 if (tribe.StrongerThan(enemyRef))
                 {
-                    return new AttackAction(enemyRef);
+                    return Attack(enemyRef);
                 }
                 else 
                 {

@@ -17,11 +17,11 @@ namespace Ev.Behaviours
 
             if (move == 8)
             {
-                return new HoldAction();
+                return Hold();
             }
             else 
             {
-                return new MoveAction((Directions)move);
+                return Move((Directions)move);
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using Ev.Domain.Actions;
-using Ev.Domain.Actions.Core;
+﻿using Ev.Domain.Actions.Core;
 using Ev.Domain.Behaviours.Core;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.Utils;
@@ -21,7 +20,7 @@ namespace Ev.Behaviours
             }
             else if (Close(enemy)) 
             {
-                return new AttackAction(state.GetEntity<ITribe>(enemy));
+                return Attack(state.GetEntity<ITribe>(enemy));
             }
             else
             {

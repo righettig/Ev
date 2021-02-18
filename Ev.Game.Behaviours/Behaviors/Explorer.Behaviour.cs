@@ -19,11 +19,9 @@ namespace Ev.Behaviours
             if (tribe.PrevPosition.x == tribe.Position.x && tribe.PrevPosition.y == tribe.Position.y)
             {
                 PickDirection();
-
-                return new MoveAction(_currentDir);
             }
 
-            return new MoveAction(_currentDir);
+            return Move(_currentDir);
         }
 
         private void PickDirection()
