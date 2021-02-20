@@ -15,6 +15,14 @@ namespace Ev.Helpers
                     Write("X ");
                     break;
 
+                case Wall:
+                    Write("O ");
+                    break;
+
+                case Water:
+                    Write("~ ");
+                    break;
+
                 case ICollectableWorldEntity e:
                     Write($"{e.Value} ");
                     break;

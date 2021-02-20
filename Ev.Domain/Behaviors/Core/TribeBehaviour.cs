@@ -9,8 +9,6 @@ using static System.Math;
 
 namespace Ev.Domain.Behaviours.Core
 {
-    // TODO: move static methods into a static helper class that can be unit tested
-
     public abstract class TribeBehaviour : ITribeBehaviour
     {
         protected readonly IRandom _rnd;

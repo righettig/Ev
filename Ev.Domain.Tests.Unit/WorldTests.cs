@@ -15,11 +15,11 @@ namespace Ev.Domain.Tests.Unit
     [TestClass]
     public class WorldTests
     {
-        private readonly World.World uat;
+        private readonly RandomWorld uat;
 
         public WorldTests()
         {
-            uat = new World.World(
+            uat = new RandomWorld(
                 8, 
                 new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, 
                 new Mock<IRandom>().Object
@@ -33,7 +33,7 @@ namespace Ev.Domain.Tests.Unit
         {
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                var world = new World.World(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, null);
+                var world = new RandomWorld(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, null);
             });
         }
 
@@ -42,7 +42,7 @@ namespace Ev.Domain.Tests.Unit
         {
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                var world = new World.World(10, null, new Mock<IRandom>().Object);
+                var world = new RandomWorld(10, null, new Mock<IRandom>().Object);
             });
         }
 
@@ -51,7 +51,7 @@ namespace Ev.Domain.Tests.Unit
         {
             Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
             {
-                var world = new World.World(0, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, new Mock<IRandom>().Object);
+                var world = new RandomWorld(0, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, new Mock<IRandom>().Object);
             });
         }
 
@@ -60,14 +60,14 @@ namespace Ev.Domain.Tests.Unit
         {
             Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
             {
-                var world = new World.World(2, new WorldResources { FoodCount = 10, WoodCount = 10, IronCount = 10 }, new Mock<IRandom>().Object);
+                var world = new RandomWorld(2, new WorldResources { FoodCount = 10, WoodCount = 10, IronCount = 10 }, new Mock<IRandom>().Object);
             });
         }
 
         [TestMethod]
         public void Ctor_Should_Assign_Size()
         {
-            var world = new World.World(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Utils.Random());
+            var world = new RandomWorld(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Utils.Random());
 
             Assert.AreEqual(10, world.Size);
             Assert.AreEqual(10, world.State.GetLength(0));
@@ -77,7 +77,7 @@ namespace Ev.Domain.Tests.Unit
         [TestMethod]
         public void Ctor_Should_Set_Finished_To_False()
         {
-            var world = new World.World(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Utils.Random());
+            var world = new RandomWorld(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Utils.Random());
 
             Assert.IsFalse(world.Finished);
         }
@@ -85,7 +85,7 @@ namespace Ev.Domain.Tests.Unit
         [TestMethod]
         public void Ctor_Should_Set_Winner_To_Null()
         {
-            var world = new World.World(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Utils.Random());
+            var world = new RandomWorld(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Utils.Random());
 
             Assert.IsNull(world.Winner);
         }
@@ -93,7 +93,7 @@ namespace Ev.Domain.Tests.Unit
         [TestMethod]
         public void Ctor_Should_Allocate_Correct_Number_Of_Resources()
         {
-            var world = new World.World(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Utils.Random());
+            var world = new RandomWorld(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Utils.Random());
 
             var foodCount = 0;
             var woodCount = 0;
@@ -163,7 +163,7 @@ namespace Ev.Domain.Tests.Unit
         {
             // Arrange
             var tribe = TestTribe(100);
-            var world = new World.World(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, new Mock<IRandom>().Object, new[] { tribe });
+            var world = new RandomWorld(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, new Mock<IRandom>().Object, new[] { tribe });
 
             // Act
             world.Update(tribe, new Mock<IGameAction>().Object, 1, new Mock<IGameActionProcessor>().Object);
@@ -177,7 +177,7 @@ namespace Ev.Domain.Tests.Unit
         {
             // Arrange
             var tribe = TestTribe(100);
-            var world = new World.World(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, new Mock<IRandom>().Object, new[] { tribe });
+            var world = new RandomWorld(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, new Mock<IRandom>().Object, new[] { tribe });
 
             // Act
             world.Update(tribe, new Mock<IGameAction>().Object, 1, new Mock<IGameActionProcessor>().Object);
@@ -247,7 +247,7 @@ namespace Ev.Domain.Tests.Unit
             var rnd = new Mock<IRandom>();
             rnd.Setup(m => m.Next(It.IsAny<int>())).Returns(1);
 
-            var uat = new World.World(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, rnd.Object);
+            var uat = new RandomWorld(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, rnd.Object);
 
             // Act
             uat.WithTribe("t1", Color.DarkYellow, new Mock<ITribeBehaviour>().Object);
@@ -325,7 +325,7 @@ namespace Ev.Domain.Tests.Unit
             var tribe1 = TestTribe(0);
             var tribe2 = TestTribe(100);
 
-            var world = new World.World(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, new Mock<IRandom>().Object, new[] { tribe1, tribe2 });
+            var world = new RandomWorld(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, new Mock<IRandom>().Object, new[] { tribe1, tribe2 });
 
             // Act
             var actual = world.GetAliveTribes();

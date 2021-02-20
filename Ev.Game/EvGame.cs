@@ -48,10 +48,10 @@ namespace Ev.Game
                     finished = world.Update(tribe, move, iteration, actionProcessor);
 
                     // TODO: pass as config option
-                    //Dump(world, iteration, move, next);
+                    Dump(world, iteration, move, next);
 
                     // TODO: pass as config option
-                    //ReadLine();
+                    //System.Console.ReadLine();
                 }
 
                 iteration++;
