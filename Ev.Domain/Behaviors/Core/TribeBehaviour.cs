@@ -3,12 +3,12 @@ using Ev.Domain.Actions.Core;
 using Ev.Domain.Entities.Collectables;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.Utils;
+using Ev.Domain.World;
 using Ev.Domain.World.Core;
 using static System.Math;
 
 namespace Ev.Domain.Behaviours.Core
 {
-    // TODO: introduce constant for magic number "2"
     // TODO: move static methods into a static helper class that can be unit tested
 
     public abstract class TribeBehaviour : ITribeBehaviour
@@ -26,8 +26,9 @@ namespace Ev.Domain.Behaviours.Core
 
         protected static HoldAction Hold() => new HoldAction();
         
-        protected static MoveAction Move(Directions direction) => new MoveAction(direction);
+        protected static MoveAction Move(Direction direction) => new MoveAction(direction);
 
+        // TODO: unit test this
         protected static MoveAction MoveTowards((int x, int y) target)
         {
             // Example: Target (1,3)
@@ -42,44 +43,43 @@ namespace Ev.Domain.Behaviours.Core
 
             MoveAction result = null;
 
-            if (target.x - 2 == 0 && target.y - 2 < 0)
+            if (target.x - WorldState.WORLD_STATE_SIZE == 0 && target.y - WorldState.WORLD_STATE_SIZE < 0)
             {
-                // TODO: create helper "Move(Direction dir)" so that all instantiation of MoveAction are centralised
-                // TODO: helper should be usabled by subclasses
-                result = new MoveAction(Directions.N);
+                result = Move(Direction.N);
             }
-            else if (target.x - 2 == 0 && target.y - 2 >= 0)
+            else if (target.x - WorldState.WORLD_STATE_SIZE == 0 && target.y - WorldState.WORLD_STATE_SIZE >= 0)
             {
-                result = new MoveAction(Directions.S);
+                result = Move(Direction.S);
             }
-            else if (target.x - 2 >= 0 && target.y - 2 == 0)
+            else if (target.x - WorldState.WORLD_STATE_SIZE >= 0 && target.y - WorldState.WORLD_STATE_SIZE == 0)
             {
-                result = new MoveAction(Directions.E);
+                result = Move(Direction.E);
             }
-            else if (target.x - 2 < 0 && target.y - 2 == 0)
+            else if (target.x - WorldState.WORLD_STATE_SIZE < 0 && target.y - WorldState.WORLD_STATE_SIZE == 0)
             {
-                result = new MoveAction(Directions.W);
+                result = Move(Direction.W);
             }
-            else if (target.x - 2 > 0 && target.y - 2 < 0)
+            else if (target.x - WorldState.WORLD_STATE_SIZE > 0 && target.y - WorldState.WORLD_STATE_SIZE < 0)
             {
-                result = new MoveAction(Directions.NE);
+                result = Move(Direction.NE);
             }
-            else if (target.x - 2 < 0 && target.y - 2 < 0)
+            else if (target.x - WorldState.WORLD_STATE_SIZE < 0 && target.y - WorldState.WORLD_STATE_SIZE < 0)
             {
-                result = new MoveAction(Directions.NW);
+                result = Move(Direction.NW);
             }
-            else if (target.x - 2 > 0 && target.y - 2 > 0)
+            else if (target.x - WorldState.WORLD_STATE_SIZE > 0 && target.y - WorldState.WORLD_STATE_SIZE > 0)
             {
-                result = new MoveAction(Directions.SE);
+                result = Move(Direction.SE);
             }
-            else if (target.x - 2 < 0 && target.y - 2 > 0)
+            else if (target.x - WorldState.WORLD_STATE_SIZE < 0 && target.y - WorldState.WORLD_STATE_SIZE > 0)
             {
-                result = new MoveAction(Directions.SW);
+                result = Move(Direction.SW);
             }
 
             return result;
         }
 
+        // TODO: unit test this
         protected static MoveAction MoveAwayFrom((int x, int y) target)
         {
             // Example: Target (1,3)
@@ -94,43 +94,43 @@ namespace Ev.Domain.Behaviours.Core
 
             MoveAction result = null;
 
-            if (target.x - 2 == 0 && target.y - 2 < 0)
+            if (target.x - WorldState.WORLD_STATE_SIZE == 0 && target.y - WorldState.WORLD_STATE_SIZE < 0)
             {
-                result = new MoveAction(Directions.S);
+                result = Move(Direction.S);
             }
-            else if (target.x - 2 == 0 && target.y - 2 >= 0)
+            else if (target.x - WorldState.WORLD_STATE_SIZE == 0 && target.y - WorldState.WORLD_STATE_SIZE >= 0)
             {
-                result = new MoveAction(Directions.N);
+                result = Move(Direction.N);
             }
-            else if (target.x - 2 >= 0 && target.y - 2 == 0)
+            else if (target.x - WorldState.WORLD_STATE_SIZE >= 0 && target.y - WorldState.WORLD_STATE_SIZE == 0)
             {
-                result = new MoveAction(Directions.W);
+                result = Move(Direction.W);
             }
-            else if (target.x - 2 < 0 && target.y - 2 == 0)
+            else if (target.x - WorldState.WORLD_STATE_SIZE < 0 && target.y - WorldState.WORLD_STATE_SIZE == 0)
             {
-                result = new MoveAction(Directions.E);
+                result = Move(Direction.E);
             }
-            else if (target.x - 2 > 0 && target.y - 2 < 0)
+            else if (target.x - WorldState.WORLD_STATE_SIZE > 0 && target.y - WorldState.WORLD_STATE_SIZE < 0)
             {
-                result = new MoveAction(Directions.SW);
+                result = Move(Direction.SW);
             }
-            else if (target.x - 2 < 0 && target.y - 2 < 0)
+            else if (target.x - WorldState.WORLD_STATE_SIZE < 0 && target.y - WorldState.WORLD_STATE_SIZE < 0)
             {
-                result = new MoveAction(Directions.SE);
+                result = Move(Direction.SE);
             }
-            else if (target.x - 2 > 0 && target.y - 2 > 0)
+            else if (target.x - WorldState.WORLD_STATE_SIZE > 0 && target.y - WorldState.WORLD_STATE_SIZE > 0)
             {
-                result = new MoveAction(Directions.NW);
+                result = Move(Direction.NW);
             }
-            else if (target.x - 2 < 0 && target.y - 2 > 0)
+            else if (target.x - WorldState.WORLD_STATE_SIZE < 0 && target.y - WorldState.WORLD_STATE_SIZE > 0)
             {
-                result = new MoveAction(Directions.NE);
+                result = Move(Direction.NE);
             }
 
             return result;
         }
 
-        protected MoveAction RandomWalk() => new MoveAction((Directions)_rnd.Next(8));
+        protected MoveAction RandomWalk() => new MoveAction((Direction)_rnd.Next(8));
 
         protected static (int x, int y) FindAnEnemy(IWorldState state)
         {
@@ -189,6 +189,7 @@ namespace Ev.Domain.Behaviours.Core
 
         protected static bool Found((int x, int y) target) => !NotFound(target);
 
+        // TODO: unit test this
         protected static bool Close((int x, int y) target)
         {
             // World state:
@@ -199,7 +200,7 @@ namespace Ev.Domain.Behaviours.Core
             // 0 0 0 T 0 
             // 0 0 0 0 0 
 
-            return Abs(target.x - 2) <= 1 && Abs(target.y - 2) <= 1;
+            return Abs(target.x - WorldState.WORLD_STATE_SIZE) <= 1 && Abs(target.y - WorldState.WORLD_STATE_SIZE) <= 1;
         }
     }
 }

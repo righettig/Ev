@@ -21,7 +21,7 @@ namespace Ev.Behaviours
             }
             else 
             {
-                return Move((Directions)move);
+                return Move((Direction)move);
             }
         }
     }

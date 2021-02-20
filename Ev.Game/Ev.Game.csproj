@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ev.Domain\Ev.Domain.csproj" />
+    <ProjectReference Include="..\Ev.Game.Behaviours\Ev.Behaviours.csproj" />
+    <ProjectReference Include="..\Ev.Helpers\Ev.Helpers.csproj" />
+  </ItemGroup>
+
+</Project>

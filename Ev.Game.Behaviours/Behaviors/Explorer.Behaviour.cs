@@ -9,7 +9,7 @@ namespace Ev.Behaviours
 {
     public class ExplorerTribeBehaviour : TribeBehaviour 
     {
-        private Directions _currentDir;
+        private Direction _currentDir;
 
         public ExplorerTribeBehaviour(IRandom rnd) : base(rnd) { }
 
@@ -26,7 +26,7 @@ namespace Ev.Behaviours
 
         private void PickDirection()
         {
-            _currentDir = (Directions)_rnd.Next(8);
+            _currentDir = (Direction)_rnd.Next(8);
         }
     }
 }

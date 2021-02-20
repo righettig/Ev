@@ -19,7 +19,10 @@ namespace Ev.Domain.Entities
 
         private readonly ITribeBehaviour _behaviour;
 
-        public Tribe(string name, (int x, int y) position, Color color, ITribeBehaviour behaviour)
+        public Tribe(string name,
+                     (int x, int y) position,
+                     Color color,
+                     ITribeBehaviour behaviour)
         {
             Name = name;
             Position = position;
@@ -28,7 +31,7 @@ namespace Ev.Domain.Entities
             Population = 100;
             PrevPopulation = Population;
 
-            _behaviour = behaviour;
+            _behaviour = behaviour ?? throw new System.ArgumentNullException(nameof(behaviour));
         }
 
         public bool StrongerThan(ITribe t) => Population > t.Population;
@@ -37,6 +40,11 @@ namespace Ev.Domain.Entities
 
         public IGameAction DoMove(IWorldState state)
         {
+            if (state is null)
+            {
+                throw new System.ArgumentNullException(nameof(state));
+            }
+
             var move = _behaviour.DoMove(state, this);
             
             move.Tribe = this;

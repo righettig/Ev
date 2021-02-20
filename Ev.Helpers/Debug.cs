@@ -79,7 +79,7 @@ namespace Ev.Helpers
                         ForegroundColor = ConsoleColor.DarkGray;
                         if (next != null)
                         {
-                            if (Abs(next.Position.x - j) <= 2 && Abs(next.Position.y - i) <= 2)
+                            if (Abs(next.Position.x - j) <= WorldState.WORLD_STATE_SIZE && Abs(next.Position.y - i) <= WorldState.WORLD_STATE_SIZE)
                             {
                                 ForegroundColor = ConsoleColor.White;
                             }

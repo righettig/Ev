@@ -3,7 +3,6 @@ using Ev.Domain.Behaviours.Core;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.Utils;
 using Ev.Domain.World.Core;
-using System;
 
 namespace Ev.Behaviours
 {

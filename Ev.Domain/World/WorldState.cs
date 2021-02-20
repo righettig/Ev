@@ -6,6 +6,8 @@ namespace Ev.Domain.World
 {
     public class WorldState : IWorldState
     {
+        public const int WORLD_STATE_SIZE = 2;
+
         public IWorldEntity[,] State { get; }
 
         public WorldState(IWorldEntity[,] state)
@@ -24,7 +26,7 @@ namespace Ev.Domain.World
             {
                 for (var y = 0; y < State.GetLength(1); y++)
                 {
-                    if ((x, y) != (2, 2)) // ignore self
+                    if ((x, y) != (WORLD_STATE_SIZE, WORLD_STATE_SIZE)) // ignore self
                     {
                         fn(State[x, y], x, y);
                     }
