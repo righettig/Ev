@@ -4,6 +4,6 @@ namespace Ev.Domain.Actions.Core
 {
     public abstract class GameAction : IGameAction
     {
-        public ITribe Tribe { get; set; }
+        ITribe IGameAction.Tribe { get; set; }
     }
 }

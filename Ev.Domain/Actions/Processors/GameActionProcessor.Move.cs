@@ -1,5 +1,4 @@
-﻿using Ev.Domain.Entities.Collectables;
-using Ev.Domain.Entities.Core;
+﻿using Ev.Domain.Entities.Core;
 using Ev.Domain.World;
 
 namespace Ev.Domain.Actions.Processors
@@ -11,11 +10,11 @@ namespace Ev.Domain.Actions.Processors
             var direction = action.Direction;
             var oldPos = tribe.Position;
 
-            if (CanMove(tribe.Position, direction, world))
+            if (world.CanMove(tribe.Position, direction))
             {
                 tribe.Population -= 3;
 
-                Move(tribe, direction, world);
+                world.Move(tribe, direction);
             }
             else // Hold
             {
@@ -23,73 +22,6 @@ namespace Ev.Domain.Actions.Processors
             }
 
             tribe.PrevPosition = oldPos;
-        }
-
-        private static bool CanMove((int x, int y) pos, Directions direction, IWorld world)
-        {
-            return direction switch
-            {
-                Directions.N => pos.y > 0,
-                Directions.S => pos.y < world.Size - 1,
-                Directions.W => pos.x > 0,
-                Directions.E => pos.x < world.Size - 1,
-                Directions.NW => pos.x > 0 && pos.y > 0,
-                Directions.SE => pos.x < world.Size - 1 && pos.y < world.Size - 1,
-                Directions.NE => pos.x < world.Size - 1 && pos.y > 0,
-                Directions.SW => pos.x > 0 && pos.y < world.Size - 1,
-                _ => true,
-            };
-        }
-
-        private static void Move(ITribe tribe, Directions direction, IWorld world)
-        {
-            var (x, y) = tribe.Position;
-
-            switch (direction)
-            {
-                case Directions.N:
-                    tribe.Position = (tribe.Position.x, tribe.Position.y - 1);
-                    break;
-
-                case Directions.S:
-                    tribe.Position = (tribe.Position.x, tribe.Position.y + 1);
-                    break;
-
-                case Directions.W:
-                    tribe.Position = (tribe.Position.x - 1, tribe.Position.y);
-                    break;
-
-                case Directions.E:
-                    tribe.Position = (tribe.Position.x + 1, tribe.Position.y);
-                    break;
-
-                case Directions.NW:
-                    tribe.Position = (tribe.Position.x - 1, tribe.Position.y - 1);
-                    break;
-
-                case Directions.SE:
-                    tribe.Position = (tribe.Position.x + 1, tribe.Position.y + 1);
-                    break;
-
-                case Directions.NE:
-                    tribe.Position = (tribe.Position.x + 1, tribe.Position.y - 1);
-                    break;
-
-                case Directions.SW:
-                    tribe.Position = (tribe.Position.x - 1, tribe.Position.y + 1);
-                    break;
-            }
-
-            world.State[x, y] = null;
-
-            switch (world.State[tribe.Position.x, tribe.Position.y]) 
-            {
-                case Food food: tribe.Population += food.Value; break;
-                case Wood wood: tribe.Wood       += wood.Value; break;
-                case Iron iron: tribe.Iron       += iron.Value; break;
-            }
-
-            world.State[tribe.Position.x, tribe.Position.y] = tribe;
         }
     }
 }

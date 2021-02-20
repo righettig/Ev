@@ -1,7 +1,7 @@
 ﻿using Ev.Domain.Actions.Core;
 using Ev.Domain.Entities.Core;
-using Ev.Domain.Utils;
 using Ev.Domain.World;
+using System;
 
 namespace Ev.Domain.Actions.Processors
 {
@@ -12,15 +12,30 @@ namespace Ev.Domain.Actions.Processors
         IGameActionProcessor<AttackAction>,
         IGameActionProcessor<UpgradeDefensesAction>
     {
-        private readonly IRandom _rnd;
+        private readonly IAttackOutcomePredictor _predictor;
 
-        public GameActionProcessor(IRandom rnd)
+        public GameActionProcessor(IAttackOutcomePredictor predictor)
         {
-            _rnd = rnd;
+            _predictor = predictor ?? throw new ArgumentNullException(nameof(predictor));
         }
 
         public void Update(IGameAction action, ITribe tribe, IWorld world, int iteration) 
         {
+            if (action is null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            if (tribe is null)
+            {
+                throw new ArgumentNullException(nameof(tribe));
+            }
+
+            if (world is null)
+            {
+                throw new ArgumentNullException(nameof(world));
+            }
+
             switch (action) 
             { 
                 case HoldAction h:   Update(h, tribe, world, iteration); break;

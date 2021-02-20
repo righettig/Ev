@@ -5,18 +5,18 @@ namespace Ev.Domain.Actions.Processors
 {
     public partial class GameActionProcessor
     {
+        public const int WIN_GAIN = 20;
+        public const int DEFEAT_LOSS = 20;
+
         public void Update(AttackAction action, ITribe tribe, IWorld world, int iteration)
         {
             tribe.IsAttacking = true;
             action.Target.IsAttacking = true; // TODO: introduce IsDefending ?
 
-            var won =
-                _rnd.NextDouble() <= (double)tribe.Population / (tribe.Population + action.Target.Population);
-
-            if (won)
+            if (_predictor.CanWin(tribe, action.Target))
             {
-                tribe.Population += 20;
-                action.Target.Population -= 20;
+                tribe.Population += WIN_GAIN;
+                action.Target.Population -= DEFEAT_LOSS;
 
                 if (action.Target.Population <= 0)
                 {
@@ -25,8 +25,8 @@ namespace Ev.Domain.Actions.Processors
             }
             else
             {
-                tribe.Population -= 20;
-                action.Target.Population += 20;
+                tribe.Population -= DEFEAT_LOSS;
+                action.Target.Population += WIN_GAIN;
             }
         }
     }
