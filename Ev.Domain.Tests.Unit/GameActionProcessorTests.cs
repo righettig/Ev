@@ -267,5 +267,25 @@ namespace Ev.Domain.Tests.Unit
         }
 
         #endregion
+
+        #region Suicide
+
+        [TestMethod]
+        public void Suicide_Update()
+        {
+            // Arrange
+            var tribe = new Mock<ITribe>().SetupProperty(m => m.Population).Object;
+
+            tribe.Population = 10;
+
+            // Act
+            uat.Update(new SuicideAction(), tribe, new Mock<IWorld>().Object, 0);
+
+
+            // Assert
+            Assert.AreEqual(0, tribe.Population);
+        }
+
+        #endregion
     }
 }
