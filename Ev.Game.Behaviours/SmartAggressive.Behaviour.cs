@@ -1,5 +1,4 @@
-﻿using Ev.Domain.Actions;
-using Ev.Domain.Actions.Core;
+﻿using Ev.Domain.Actions.Core;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.Utils;
 using Ev.Domain.World.Core;
@@ -33,7 +32,7 @@ namespace Ev.Behaviours
 
                 if (tribe.StrongerThan(enemyRef))
                 {
-                    return new AttackAction(enemyRef);
+                    return Attack(enemyRef);
                 }
                 else 
                 {

@@ -30,12 +30,12 @@ namespace Ev.Helpers
         {
             var key = ReadKey(true);
 
-            IGameAction action = null;
+            IGameAction action;
             do
             {
                 switch (key.Key)
                 {
-                    case ConsoleKey.S: action = new SuicideGameAction(); break;
+                    case ConsoleKey.S: action = new SuicideAction(); break;
 
                     case ConsoleKey.H: action = new HoldAction(); break;
 
@@ -48,14 +48,14 @@ namespace Ev.Helpers
                         var loc = (-1, -1);
                         switch (ReadDirection())
                         {
-                            case Directions.N: loc = (2, 1); break;
-                            case Directions.S: loc = (2, 3); break;
-                            case Directions.E: loc = (3, 2); break;
-                            case Directions.W: loc = (1, 2); break;
-                            case Directions.NE: loc = (3, 1); break;
-                            case Directions.NW: loc = (1, 1); break;
-                            case Directions.SE: loc = (3, 3); break;
-                            case Directions.SW: loc = (1, 3); break;
+                            case Direction.N:  loc = (2, 1); break;
+                            case Direction.S:  loc = (2, 3); break;
+                            case Direction.E:  loc = (3, 2); break;
+                            case Direction.W:  loc = (1, 2); break;
+                            case Direction.NE: loc = (3, 1); break;
+                            case Direction.NW: loc = (1, 1); break;
+                            case Direction.SE: loc = (3, 3); break;
+                            case Direction.SW: loc = (1, 3); break;
                         }
                         var target = state.GetEntity<ITribe>(loc);
                         if (target == null) {
@@ -77,26 +77,25 @@ namespace Ev.Helpers
             WriteLine("Choose: 0 -> N | 1 -> S | 2 -> E | 3 -> W | 4 -> NE | 5 -> NW | 6 -> SE | 7 -> SW");
         }
 
-        private static Directions ReadDirection()
+        private static Direction ReadDirection()
         {
             var key = ReadKey(true);
 
-            Directions? dir;
+            Direction? dir;
             do
             {
-                switch (key.Key)
+                dir = key.Key switch
                 {
-                    case ConsoleKey.D0: dir = Directions.N; break;
-                    case ConsoleKey.D1: dir = Directions.S; break;
-                    case ConsoleKey.D2: dir = Directions.E; break;
-                    case ConsoleKey.D3: dir = Directions.W; break;
-                    case ConsoleKey.D4: dir = Directions.NE; break;
-                    case ConsoleKey.D5: dir = Directions.NW; break;
-                    case ConsoleKey.D6: dir = Directions.SE; break;
-                    case ConsoleKey.D7: dir = Directions.SW; break;
-                    default: dir = null; break;
-                }
-
+                    ConsoleKey.D0 => Direction.N,
+                    ConsoleKey.D1 => Direction.S,
+                    ConsoleKey.D2 => Direction.E,
+                    ConsoleKey.D3 => Direction.W,
+                    ConsoleKey.D4 => Direction.NE,
+                    ConsoleKey.D5 => Direction.NW,
+                    ConsoleKey.D6 => Direction.SE,
+                    ConsoleKey.D7 => Direction.SW,
+                    _ => null,
+                };
             } while (!dir.HasValue);
 
             return dir.Value;
@@ -111,7 +110,7 @@ namespace Ev.Helpers
                 ForegroundColor = ColorMapper.MapColor(move.Tribe.Color);
                 Write($"{move.Tribe.Name}");
                 ResetColor();
-                WriteLine($" - {move}");
+                WriteLine($" - {move} {(move is BlockingGameAction a && a.Completed ? $"COMPLETED ({a.Result()})" : "")}");
                 WriteLine($"Next:\t {next.Name}");
                 WriteLine();
             }
@@ -162,7 +161,7 @@ namespace Ev.Helpers
                         ForegroundColor = ConsoleColor.DarkGray;
                         if (next != null)
                         {
-                            if (Abs(next.Position.x - j) <= 2 && Abs(next.Position.y - i) <= 2)
+                            if (Abs(next.Position.x - j) <= WorldState.WORLD_STATE_SIZE && Abs(next.Position.y - i) <= WorldState.WORLD_STATE_SIZE)
                             {
                                 ForegroundColor = ConsoleColor.White;
                             }

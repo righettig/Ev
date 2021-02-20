@@ -20,5 +20,17 @@ namespace Ev.Domain.Entities.Core
 
         bool StrongerThan(ITribe other);
         bool WeakerThan(ITribe other);
+
+        int? LockedForNTurns { get; internal set; }
+        internal int Defense { get; set; } // TODO: Attack
+        IGameAction BusyDoing { get; set; }
+
+        #region Resources
+        
+        int Wood { get; internal set; }
+        
+        int Iron { get; internal set; }
+
+        #endregion
     }
 }

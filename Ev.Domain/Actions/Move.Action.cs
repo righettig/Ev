@@ -2,7 +2,7 @@
 
 namespace Ev.Domain.Actions
 {
-    public enum Directions
+    public enum Direction
     {
         N,
         S,
@@ -16,9 +16,9 @@ namespace Ev.Domain.Actions
 
     public class MoveAction : GameAction
     {
-        public Directions Direction { get; }
+        public Direction Direction { get; }
 
-        public MoveAction(Directions direction) => Direction = direction;
+        public MoveAction(Direction direction) => Direction = direction;
 
         public override string ToString() => "Move " + Direction;
     }

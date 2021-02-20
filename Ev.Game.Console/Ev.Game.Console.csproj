@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Ev.Domain\Ev.Domain.csproj" />
     <ProjectReference Include="..\Ev.Game.Behaviours\Ev.Behaviours.csproj" />
+    <ProjectReference Include="..\Ev.Game\Ev.Game.csproj" />
     <ProjectReference Include="..\Ev.Helpers\Ev.Helpers.csproj" />
   </ItemGroup>
 
