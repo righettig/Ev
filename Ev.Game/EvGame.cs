@@ -11,10 +11,9 @@ using static Ev.Helpers.Debug;
 namespace Ev.Game
 {
     // TODO: Dump, etc. => Renderer?
-
     public static class EvGame
     {
-        public static void GameLoop(IWorld world, IRandom rnd)
+        public static void GameLoop(EvGameOptions options, IWorld world, IRandom rnd)
         {
             var finished = false;
             var iteration = 0;
@@ -47,11 +46,14 @@ namespace Ev.Game
 
                     finished = world.Update(tribe, move, iteration, actionProcessor);
 
-                    // TODO: pass as config option
-                    Dump(world, iteration, move, next);
+                    if (options.RenderEachTurn) {
+                        Dump(world, iteration, move, next);
 
-                    // TODO: pass as config option
-                    //System.Console.ReadLine();
+                    }
+
+                    if (options.WaitAfterEachMove) {
+                        System.Console.ReadLine();
+                    }
                 }
 
                 iteration++;
@@ -60,9 +62,10 @@ namespace Ev.Game
 
             Dump(world, iteration++);
 
-            // TODO: pass as config option
-            DumpHistory(
+            if (options.DumpWinnerHistory) {
+                DumpHistory(
                 history.Where(el => el.Item1.Tribe == world.Winner).Select(el => el.Item1).ToList());
+            }
         }
     }
 }

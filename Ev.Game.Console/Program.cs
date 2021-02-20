@@ -68,7 +68,14 @@ namespace Ev.Game
 
             CreateTribes(world, new Random(1));
 
-            EvGame.GameLoop(world, new Random(1));
+            var options = new EvGameOptions
+            {
+                RenderEachTurn = true,
+                WaitAfterEachMove = false,
+                DumpWinnerHistory = true,
+            };
+
+            EvGame.GameLoop(options, world, new Random(1));
         }
     }
 }
