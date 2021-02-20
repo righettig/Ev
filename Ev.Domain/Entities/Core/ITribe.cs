@@ -8,7 +8,7 @@ namespace Ev.Domain.Entities.Core
         string Name { get; }
 
         int Population { get; set; }
-        int PrevPopulation { get; set; } // TODO: add setter for Population to update PrevPopulation
+        int PrevPopulation { get; set; }
         int DeadAtIteration { get; set; }
 
         bool IsAttacking { get; set; }

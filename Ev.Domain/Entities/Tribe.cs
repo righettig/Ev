@@ -8,7 +8,16 @@ namespace Ev.Domain.Entities
 {
     public class Tribe : ITribe 
     {
-        public int Population { get; set; }
+        public int Population
+        {
+            get => _population;
+            set
+            {
+                PrevPopulation = _population;
+
+                _population = value;
+            }
+        }
         public int PrevPopulation { get; set; }
         public int DeadAtIteration { get; set; }
         public string Name { get; }
@@ -22,6 +31,8 @@ namespace Ev.Domain.Entities
         int ITribe.Wood { get; set; }
         int ITribe.Iron { get; set; }
 
+        private int _population;
+
         private readonly ITribeBehaviour _behaviour;
 
         public Tribe(string name,
@@ -34,7 +45,7 @@ namespace Ev.Domain.Entities
             PrevPosition = Position;
             Color = color;
             Population = 100;
-            PrevPopulation = Population;
+            PrevPopulation = 100;
 
             _behaviour = behaviour ?? throw new System.ArgumentNullException(nameof(behaviour));
         }
