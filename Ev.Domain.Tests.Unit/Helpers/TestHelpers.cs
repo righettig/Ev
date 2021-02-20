@@ -11,6 +11,11 @@ namespace Ev.Domain.Tests.Unit.Helpers
                 .SetupProperty(m => m.Population)
                 .SetupProperty(m => m.Position)
                 .SetupProperty(m => m.DeadAtIteration)
+                .SetupProperty(m => m.Wood)
+                .SetupProperty(m => m.Iron)
+                .SetupProperty(m => m.Defense)
+                .SetupProperty(m => m.LockedForNTurns)
+                .SetupProperty(m => m.BusyDoing)
                 .Object;
 
             result.Population = population;

@@ -54,5 +54,25 @@ namespace Ev.Domain.Tests.Unit
 
             Assert.AreEqual("Move S", action.ToString());
         }
+
+        [TestMethod]
+        public void UpgradeDefenses_OnComplete_Should_Update_Tribe()
+        {
+            // Arrange
+            var tribe = Helpers.TestHelpers.TestTribe(100);
+            tribe.Iron = 5;
+            tribe.Wood = 10;
+            tribe.Defense = 0;
+
+            var action = new UpgradeDefensesAction();
+
+            // Act
+            action.OnComplete(tribe);
+
+            // Assert
+            Assert.AreEqual(0, tribe.Wood);
+            Assert.AreEqual(0, tribe.Iron);
+            Assert.AreEqual(5, tribe.Defense);
+        }
     }
 }
