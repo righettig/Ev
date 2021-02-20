@@ -1,6 +1,6 @@
 ﻿using Ev.Domain.Actions;
 using Ev.Domain.Actions.Core;
-using Ev.Domain.Actions.Core.Processors;
+using Ev.Domain.Actions.Processors;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.World;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -227,6 +227,43 @@ namespace Ev.Domain.Tests.Unit
 
             // Assert
             Assert.AreEqual(99, tribe.Population);
+        }
+
+        #endregion
+
+        #region UpgradeDefenses
+
+        [TestMethod]
+        public void Update_Should_Lock_Tribe_For_2_Turns() 
+        {
+            // Arrange
+            var tribe = TestTribe(100);
+            tribe.LockedForNTurns = null;
+
+            // Act
+            var action = new UpgradeDefensesAction();
+            uat.Update(action, tribe, new Mock<IWorld>().Object, 0);
+
+            // Assert
+            Assert.AreSame(action, tribe.BusyDoing);
+            Assert.AreEqual(2, tribe.LockedForNTurns);
+        }
+
+        [TestMethod]
+        public void Update_When_Lock_Finishes_Should_Unlock_Tribe()
+        {
+            // Arrange
+            var tribe = TestTribe(100);
+            tribe.LockedForNTurns = 1;
+
+            // Act
+            var action = new UpgradeDefensesAction();
+            uat.Update(action, tribe, new Mock<IWorld>().Object, 0);
+
+            // Assert
+            Assert.IsNull(tribe.LockedForNTurns);
+            Assert.IsNull(tribe.BusyDoing);
+            Assert.IsTrue(action.Completed);
         }
 
         #endregion

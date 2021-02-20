@@ -1,14 +1,16 @@
-﻿using Ev.Domain.Entities.Core;
+﻿using Ev.Domain.Actions.Core;
+using Ev.Domain.Entities.Core;
 using Ev.Domain.World;
 using System;
 
-namespace Ev.Domain.Actions.Core.Processors
+namespace Ev.Domain.Actions.Processors
 {
     public partial class GameActionProcessor :
         IGameActionProcessor,
         IGameActionProcessor<HoldAction>,
         IGameActionProcessor<MoveAction>,
-        IGameActionProcessor<AttackAction>
+        IGameActionProcessor<AttackAction>,
+        IGameActionProcessor<UpgradeDefensesAction>
     {
         private readonly IAttackOutcomePredictor _predictor;
 
@@ -39,6 +41,7 @@ namespace Ev.Domain.Actions.Core.Processors
                 case HoldAction h:   Update(h, tribe, world, iteration); break;
                 case MoveAction m:   Update(m, tribe, world, iteration); break;
                 case AttackAction a: Update(a, tribe, world, iteration); break;
+                case UpgradeDefensesAction ad: Update(ad, tribe, world, iteration); break;
             }
         }
     }

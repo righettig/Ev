@@ -22,14 +22,16 @@ namespace Ev.Domain.Behaviours.Core
 
         public abstract IGameAction DoMove(IWorldState state, ITribe tribe);
 
-        protected static AttackAction Attack(ITribe target) => new AttackAction(target);
+        protected static IGameAction Attack(ITribe target) => new AttackAction(target);
 
-        protected static HoldAction Hold() => new HoldAction();
+        protected static IGameAction Hold() => new HoldAction();
         
-        protected static MoveAction Move(Direction direction) => new MoveAction(direction);
+        protected static IGameAction Move(Direction direction) => new MoveAction(direction);
+
+        protected static IGameAction UpgradeDefenses() => new UpgradeDefensesAction();
 
         // TODO: unit test this
-        protected static MoveAction MoveTowards((int x, int y) target)
+        protected static IGameAction MoveTowards((int x, int y) target)
         {
             // Example: Target (1,3)
 
@@ -41,7 +43,7 @@ namespace Ev.Domain.Behaviours.Core
             // 0 T 0 0 0 
             // 0 0 0 0 0 
 
-            MoveAction result = null;
+            IGameAction result = null;
 
             if (target.x - WorldState.WORLD_STATE_SIZE == 0 && target.y - WorldState.WORLD_STATE_SIZE < 0)
             {
@@ -80,7 +82,7 @@ namespace Ev.Domain.Behaviours.Core
         }
 
         // TODO: unit test this
-        protected static MoveAction MoveAwayFrom((int x, int y) target)
+        protected static IGameAction MoveAwayFrom((int x, int y) target)
         {
             // Example: Target (1,3)
 
@@ -92,7 +94,7 @@ namespace Ev.Domain.Behaviours.Core
             // 0 T 0 0 0 
             // 0 0 0 0 0 
 
-            MoveAction result = null;
+            IGameAction result = null;
 
             if (target.x - WorldState.WORLD_STATE_SIZE == 0 && target.y - WorldState.WORLD_STATE_SIZE < 0)
             {
@@ -130,7 +132,7 @@ namespace Ev.Domain.Behaviours.Core
             return result;
         }
 
-        protected MoveAction RandomWalk() => new MoveAction((Direction)_rnd.Next(8));
+        protected IGameAction RandomWalk() => new MoveAction((Direction)_rnd.Next(8));
 
         protected static (int x, int y) FindAnEnemy(IWorldState state)
         {

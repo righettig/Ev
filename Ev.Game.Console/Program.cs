@@ -13,6 +13,7 @@ namespace Ev.Game
 
         static void CreateTribes(IWorld world, IRandom rnd) =>
             world
+                //.WithTribe("Engineer", Color.DarkYellow, new EngineerTribeBehaviour(rnd))
                 .WithTribe("RandomW",  Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd))
                 .WithTribe("Explorer", Color.Red,        new ExplorerTribeBehaviour(rnd))
                 .WithTribe("Gatherer", Color.Cyan,       new JackOfAllTradesTribeBehaviour(rnd))

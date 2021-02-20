@@ -1,5 +1,6 @@
 ﻿using Ev.Domain.Actions.Core;
 using Ev.Domain.Actions.Core.Processors;
+using Ev.Domain.Actions.Processors;
 using Ev.Domain.Utils;
 using Ev.Domain.World;
 using Ev.Domain.World.Core;
@@ -34,6 +35,7 @@ namespace Ev.Game
 
                     var state = world.GetWorldState(tribe);
                     var move = tribe.DoMove(state);
+
                     history.Add((move, state));
 
                     finished = world.Update(tribe, move, iteration, actionProcessor);

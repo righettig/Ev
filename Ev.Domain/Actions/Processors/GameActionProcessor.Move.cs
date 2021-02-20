@@ -1,7 +1,7 @@
 ﻿using Ev.Domain.Entities.Core;
 using Ev.Domain.World;
 
-namespace Ev.Domain.Actions.Core.Processors
+namespace Ev.Domain.Actions.Processors
 {
     public partial class GameActionProcessor 
     {

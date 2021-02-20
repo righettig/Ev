@@ -12,13 +12,6 @@ using System.Linq;
 
 namespace Ev.Domain.World
 {
-    public class WorldResources 
-    {
-        public int FoodCount { get; set; }
-        public int WoodCount { get; set; }
-        public int IronCount { get; set; }
-    }
-
     public class World : IWorld
     {
         public IWorldEntity[,] State => _state;
@@ -242,12 +235,12 @@ namespace Ev.Domain.World
 
             State[x, y] = null;
 
-            if (State[tribe.Position.x, tribe.Position.y] is Food)
+            switch (State[tribe.Position.x, tribe.Position.y])
             {
-                tribe.Population += (State[tribe.Position.x, tribe.Position.y] as Food).Value;
+                case Food food: tribe.Population += food.Value; break;
+                case Wood wood: tribe.Wood       += wood.Value; break;
+                case Iron iron: tribe.Iron       += iron.Value; break;
             }
-
-            // TODO: add logic to handle iron and wood
 
             State[tribe.Position.x, tribe.Position.y] = tribe;
         }
