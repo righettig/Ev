@@ -2,6 +2,7 @@
 using Ev.Domain.Actions.Core;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.World;
+using Ev.Domain.World.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +11,94 @@ using static System.Math;
 
 namespace Ev.Helpers
 {
-    public static class Debug 
+    public static class Debug
     {
-        public static void DumpHistory(IList<IGameAction> history) 
+        public static void DumpHistory(IList<IGameAction> history)
         {
             for (int i = 0; i < history.Count; i++)
             {
                 WriteLine($"{i} - {history[i]}");
             }
+        }
+
+        public static void DumpActions() 
+        {
+            WriteLine("Choose: (H)old (A)attack (M)ove (S)uicide");
+        }
+
+        public static IGameAction ReadAction(IWorldState state) 
+        {
+            var key = ReadKey(true);
+
+            IGameAction action;
+            do
+            {
+                switch (key.Key)
+                {
+                    case ConsoleKey.S: action = new SuicideAction(); break;
+
+                    case ConsoleKey.H: action = new HoldAction(); break;
+
+                    case ConsoleKey.M:
+                        DumpDirections();
+                        action = new MoveAction(ReadDirection()); break;
+
+                    case ConsoleKey.A:
+                        DumpDirections();
+                        var loc = (-1, -1);
+                        switch (ReadDirection())
+                        {
+                            case Direction.N:  loc = (2, 1); break;
+                            case Direction.S:  loc = (2, 3); break;
+                            case Direction.E:  loc = (3, 2); break;
+                            case Direction.W:  loc = (1, 2); break;
+                            case Direction.NE: loc = (3, 1); break;
+                            case Direction.NW: loc = (1, 1); break;
+                            case Direction.SE: loc = (3, 3); break;
+                            case Direction.SW: loc = (1, 3); break;
+                        }
+                        var target = state.GetEntity<ITribe>(loc);
+                        if (target == null) {
+                            WriteLine("Invalid Target!" + Environment.NewLine);
+                            DumpActions();
+                            return ReadAction(state);
+                        }
+                        return new AttackAction(target);
+
+                    default: action = null; break;
+                }
+            } while (action == null);
+            
+            return action;
+        }
+
+        private static void DumpDirections()
+        {
+            WriteLine("Choose: 0 -> N | 1 -> S | 2 -> E | 3 -> W | 4 -> NE | 5 -> NW | 6 -> SE | 7 -> SW");
+        }
+
+        private static Direction ReadDirection()
+        {
+            var key = ReadKey(true);
+
+            Direction? dir;
+            do
+            {
+                dir = key.Key switch
+                {
+                    ConsoleKey.D0 => Direction.N,
+                    ConsoleKey.D1 => Direction.S,
+                    ConsoleKey.D2 => Direction.E,
+                    ConsoleKey.D3 => Direction.W,
+                    ConsoleKey.D4 => Direction.NE,
+                    ConsoleKey.D5 => Direction.NW,
+                    ConsoleKey.D6 => Direction.SE,
+                    ConsoleKey.D7 => Direction.SW,
+                    _ => null,
+                };
+            } while (!dir.HasValue);
+
+            return dir.Value;
         }
 
         public static void Dump(IWorld world, int iteration, IGameAction move = null, ITribe next = null) 

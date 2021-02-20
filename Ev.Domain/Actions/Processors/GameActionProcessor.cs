@@ -36,11 +36,12 @@ namespace Ev.Domain.Actions.Processors
                 throw new ArgumentNullException(nameof(world));
             }
 
-            switch (action) 
-            { 
-                case HoldAction h:   Update(h, tribe, world, iteration); break;
-                case MoveAction m:   Update(m, tribe, world, iteration); break;
+            switch (action)
+            {
+                case HoldAction h: Update(h, tribe, world, iteration); break;
+                case MoveAction m: Update(m, tribe, world, iteration); break;
                 case AttackAction a: Update(a, tribe, world, iteration); break;
+                case SuicideAction s: Update(s, tribe, world, iteration); break;
                 case UpgradeDefensesAction ad: Update(ad, tribe, world, iteration); break;
             }
         }

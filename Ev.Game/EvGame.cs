@@ -36,6 +36,13 @@ namespace Ev.Game
                     var state = world.GetWorldState(tribe);
                     var move = tribe.DoMove(state);
 
+                    if (move is PlayerControlledGameAction)
+                    {
+                        DumpActions();
+                        move = ReadAction(state);
+                        move.Tribe = tribe;
+                    }
+
                     history.Add((move, state));
 
                     finished = world.Update(tribe, move, iteration, actionProcessor);
