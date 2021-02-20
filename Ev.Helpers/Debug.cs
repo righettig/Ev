@@ -206,7 +206,7 @@ namespace Ev.Helpers
                 delta = $"({sign}{Abs(tribe.PrevPopulation - tribe.Population)})";
             }
 
-            Write($":\t{tribe.Population} {delta}");
+            Write($":\t{tribe.Population} {delta}\t[Iron: {tribe.Iron} Wood: {tribe.Wood}]");
 
             if (tribe.IsAttacking)
             {

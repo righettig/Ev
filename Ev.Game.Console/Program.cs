@@ -49,10 +49,10 @@ namespace Ev.Game
         static void CreateTribes(IWorld world, IRandom rnd) =>
             world
                 //.WithTribe("Player1",  Color.White,      new PlayerControlledTribeBehaviour(rnd))
-                //.WithTribe("Engineer", Color.DarkYellow, new EngineerTribeBehaviour(rnd))
-                .WithTribe("RandomW",  Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd))
+                .WithTribe("Engineer", Color.DarkYellow, new EngineerTribeBehaviour(rnd))
+                //.WithTribe("RandomW",  Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd))
                 //.WithTribe("Explorer", Color.Red,        new ExplorerTribeBehaviour(rnd))
-                //.WithTribe("Gatherer", Color.Cyan,       new JackOfAllTradesTribeBehaviour(rnd))
+                .WithTribe("Gatherer", Color.Cyan,       new JackOfAllTradesTribeBehaviour(rnd))
                 //.WithTribe("Lazy",     Color.White,      new LazyTribeBehaviour(rnd))
                 //.WithTribe("Aggr",     Color.Yellow,     new AggressiveTribeBehaviour(rnd))
                 .WithTribe("SmrtAggr", Color.Magenta,    new SmartAggressiveTribeBehaviour(rnd))
@@ -70,8 +70,8 @@ namespace Ev.Game
 
             var options = new EvGameOptions
             {
-                RenderEachTurn = true,
-                WaitAfterEachMove = false,
+                //RenderEachTurn = true,
+                //WaitAfterEachMove = true,
                 DumpWinnerHistory = true,
             };
 
