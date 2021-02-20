@@ -1,5 +1,4 @@
-﻿using Ev.Domain.Actions;
-using Ev.Domain.Actions.Core;
+﻿using Ev.Domain.Actions.Core;
 using Ev.Domain.Behaviours.Core;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.Utils;
@@ -15,7 +14,7 @@ namespace Ev.Behaviours
         {
             if (tribe.Wood >= 10 && tribe.Iron >= 5) 
             {
-                return new UpgradeDefensesAction();
+                return UpgradeDefenses();
             }
 
             return RandomWalk();
