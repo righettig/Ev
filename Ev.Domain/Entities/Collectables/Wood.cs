@@ -3,7 +3,7 @@ using Ev.Domain.Utils;
 
 namespace Ev.Domain.Entities.Collectables
 {
-    class Wood : CollectableWorldEntity
+    public class Wood : CollectableWorldEntity
     {
         private const int MAX_VALUE = 9;
 

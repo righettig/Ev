@@ -1,6 +1,7 @@
 ﻿using Ev.Behaviours;
 using Ev.Domain.Utils;
 using Ev.Domain.World;
+using System.Threading.Tasks;
 
 namespace Ev.Game
 {
@@ -42,29 +43,29 @@ namespace Ev.Game
         }
 
         static IWorld CreateWorld(IRandom rnd) => new RandomWorld(
-            size: 6,
-            new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 },
+            size: 24,
+            new WorldResources { FoodCount = 100, WoodCount = 40, IronCount = 10 },
             rnd);
 
         static void CreateTribes(IWorld world, IRandom rnd) =>
             world
                 //.WithTribe("Player1",  Color.White,      new PlayerControlledTribeBehaviour(rnd))
-                .WithTribe("Engineer", Color.DarkYellow, new EngineerTribeBehaviour(rnd))
-                //.WithTribe("RandomW",  Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd))
-                //.WithTribe("Explorer", Color.Red,        new ExplorerTribeBehaviour(rnd))
-                .WithTribe("Gatherer", Color.Cyan,       new JackOfAllTradesTribeBehaviour(rnd))
-                //.WithTribe("Lazy",     Color.White,      new LazyTribeBehaviour(rnd))
-                //.WithTribe("Aggr",     Color.Yellow,     new AggressiveTribeBehaviour(rnd))
-                .WithTribe("SmrtAggr", Color.Magenta,    new SmartAggressiveTribeBehaviour(rnd))
-                .WithTribe("Flee",     Color.DarkCyan,   new FleeTribeBehaviour(rnd));
+                //.WithTribe("Engineer", Color.DarkYellow, new EngineerTribeBehaviour(rnd))
+                .WithTribe("RandomW", Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd))
+                //.WithTribe("Explorer", Color.Red, new ExplorerTribeBehaviour(rnd))
+                .WithTribe("Gatherer", Color.Cyan, new JackOfAllTradesTribeBehaviour(rnd))
+                //.WithTribe("Lazy", Color.White, new LazyTribeBehaviour(rnd))
+                .WithTribe("Aggr", Color.Yellow, new AggressiveTribeBehaviour(rnd))
+                .WithTribe("SmrtAggr", Color.Magenta, new SmartAggressiveTribeBehaviour(rnd));
+                //.WithTribe("Flee",     Color.DarkCyan,   new FleeTribeBehaviour(rnd));
 
         // TODO: implement e2e test based on history and initial conditions
-        static void Main()
+        static async Task Main()
         {
             // TODO: it should be possible to specify parameters like how much population you lose by standing still, win gain etc.
 
-            //var world = CreateWorld(new Random(1));
-            var world = CreateWorldFromMap(new Random(1234));
+            var world = CreateWorld(new Random(1));
+            //var world = CreateWorldFromMap(new Random(1));
 
             CreateTribes(world, new Random(1));
 
@@ -75,7 +76,7 @@ namespace Ev.Game
                 DumpWinnerHistory = true,
             };
 
-            EvGame.GameLoop(options, world, new Random(1));
+            await EvGame.GameLoop(options, world, new Random(1));
         }
     }
 }

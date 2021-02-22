@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ev.Behaviours", "Ev.Game.Be
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ev.Helpers", "Ev.Helpers\Ev.Helpers.csproj", "{C42B0A08-4ACF-4178-92E1-F91B4F5CF2C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ev.Game.Console", "Ev.Game.Console\Ev.Game.Console.csproj", "{E1B3D9FD-EEF1-493D-ACAF-62EC83E3648C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ev.Game.Console", "Ev.Game.Console\Ev.Game.Console.csproj", "{E1B3D9FD-EEF1-493D-ACAF-62EC83E3648C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ev.Game", "Ev.Game\Ev.Game.csproj", "{2BAA49A6-002A-4A26-BB91-E23682FD0B53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ev.Game", "Ev.Game\Ev.Game.csproj", "{2BAA49A6-002A-4A26-BB91-E23682FD0B53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ev.Serialization", "Ev.Serialization\Ev.Serialization.csproj", "{6E030A59-D9AC-45CE-97CA-2C6D501CBA24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{2BAA49A6-002A-4A26-BB91-E23682FD0B53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BAA49A6-002A-4A26-BB91-E23682FD0B53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BAA49A6-002A-4A26-BB91-E23682FD0B53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E030A59-D9AC-45CE-97CA-2C6D501CBA24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E030A59-D9AC-45CE-97CA-2C6D501CBA24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E030A59-D9AC-45CE-97CA-2C6D501CBA24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E030A59-D9AC-45CE-97CA-2C6D501CBA24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

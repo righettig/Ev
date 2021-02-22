@@ -2,7 +2,7 @@
 
 namespace Ev.Domain.Entities.Core
 {
-    internal abstract class CollectableWorldEntity : ICollectableWorldEntity
+    public abstract class CollectableWorldEntity : ICollectableWorldEntity
     {
         public int Value { get; protected set; }
 
