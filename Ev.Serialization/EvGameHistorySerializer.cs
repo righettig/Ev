@@ -73,7 +73,7 @@ namespace Ev.Serialization
                             worldEntityDto = _mapper.Map<CollectableWorldEntityDto>(entity).WithPosition(x, y);
                             break;
 
-                        case IBlockingEntity:
+                        case IBlockingWorldEntity:
                             worldEntityDto = _mapper.Map<BlockingWorldEntityDto>(entity).WithPosition(x, y);
                             break;
 

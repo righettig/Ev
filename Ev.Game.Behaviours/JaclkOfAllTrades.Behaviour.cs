@@ -12,7 +12,7 @@ namespace Ev.Behaviours
 
         public override IGameAction DoMove(IWorldState state, ITribe tribe)
         {
-            var collectable = FindACollectable(state);
+            var collectable = FindACollectable();
 
             if (NotFound(collectable))
             {

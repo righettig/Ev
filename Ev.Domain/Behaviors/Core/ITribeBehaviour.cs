@@ -6,6 +6,8 @@ namespace Ev.Domain.Behaviours.Core
 {
     public interface ITribeBehaviour 
     {
+        internal IWorldState State { get; set; }
+
         IGameAction DoMove(IWorldState state, ITribe tribe);
     }
 }

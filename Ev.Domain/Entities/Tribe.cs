@@ -63,6 +63,8 @@ namespace Ev.Domain.Entities
 
             if (BusyDoing != null) return BusyDoing;
 
+            _behaviour.State = state;
+
             var move = _behaviour.DoMove(state, this);
             
             move.Tribe = this;

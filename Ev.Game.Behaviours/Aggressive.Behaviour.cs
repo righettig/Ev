@@ -12,7 +12,7 @@ namespace Ev.Behaviours
 
         public override IGameAction DoMove(IWorldState state, ITribe tribe)
         {
-            var enemy = FindAnEnemy(state);
+            var enemy = FindAnEnemy();
 
             if (NotFound(enemy))
             {

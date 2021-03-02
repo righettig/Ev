@@ -12,7 +12,7 @@ namespace Ev.Behaviours
         
         public override IGameAction DoMove(IWorldState state, ITribe tribe)
         {
-            var food = FindHighestValueFood(state);
+            var food = FindHighestValueFood();
 
             if (NotFound(food))
             {

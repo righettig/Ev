@@ -7,6 +7,21 @@ namespace Ev.Domain.Actions.Processors
     {
         public void Update(MoveAction action, ITribe tribe, IWorld world, int iteration)
         {
+            if (action is null)
+            {
+                throw new System.ArgumentNullException(nameof(action));
+            }
+
+            if (tribe is null)
+            {
+                throw new System.ArgumentNullException(nameof(tribe));
+            }
+
+            if (world is null)
+            {
+                throw new System.ArgumentNullException(nameof(world));
+            }
+
             var direction = action.Direction;
             var oldPos = tribe.Position;
 

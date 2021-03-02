@@ -38,6 +38,12 @@ namespace Ev.Domain.World.Core
             _rnd = rnd ?? throw new ArgumentNullException(nameof(rnd));
         }
 
+        /// <summary>
+        /// Generates the world state for the given tribe.
+        /// </summary>
+        /// <remarks>The world state is defined as the 5x5 matrix surrounding the given tribe.</remarks>
+        /// <param name="tribe">The tribe which the returned world state is centered on.</param>
+        /// <returns>The world state.</returns>
         public IWorldState GetWorldState(ITribe tribe)
         {
             if (tribe is null)
@@ -71,38 +77,71 @@ namespace Ev.Domain.World.Core
             return new WorldState(result);
         }
 
+        /// <summary>
+        /// Gets all the alive tribes.
+        /// </summary>
+        /// <remarks>A tribe is considered alive as long as it has a non-zero population.</remarks>
+        /// <returns>An array of tribes.</returns>
         public ITribe[] GetAliveTribes()
         {
             return _tribes.FindAll(t => t.Population > 0).ToArray();
         }
 
+        /// <summary>
+        /// Checks whether it's possible to move in the given direction from the specified position.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="direction"></param>
+        /// <returns>True if it's possible to move.</returns>
         bool IWorld.CanMove((int x, int y) position, Direction direction)
         {
             return CanMove(position, direction);
         }
 
+        /// <summary>
+        /// Updates the tribe's position by moving in the given direction.
+        /// </summary>
+        /// <param name="tribe"></param>
+        /// <param name="direction"></param>
         void IWorld.Move(ITribe tribe, Direction direction)
         {
+            if (tribe is null)
+            {
+                throw new ArgumentNullException(nameof(tribe));
+            }
+
             Move(tribe, direction);
         }
 
         #region Internal members
 
         // TODO: unit test
+        // TODO: check that the destination does not contain a tribe.
+        /// <summary>
+        /// Checks whether it's possible to move in the given direction from the specified position.
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="direction"></param>
+        /// <returns>True if it's possible to move.</returns>
         internal bool CanMove((int x, int y) pos, Direction direction) => direction switch
         {
-            Direction.N => pos.y > 0 && !(State[pos.x, pos.y - 1] is IBlockingEntity),
-            Direction.S => pos.y < Size - 1 && !(State[pos.x, pos.y + 1] is IBlockingEntity),
-            Direction.W => pos.x > 0 && !(State[pos.x -1, pos.y] is IBlockingEntity),
-            Direction.E => pos.x < Size - 1 && !(State[pos.x + 1, pos.y] is IBlockingEntity),
-            Direction.NW => pos.x > 0 && pos.y > 0 && !(State[pos.x - 1, pos.y - 1] is IBlockingEntity),
-            Direction.SE => pos.x < Size - 1 && pos.y < Size - 1 && !(State[pos.x + 1, pos.y + 1] is IBlockingEntity),
-            Direction.NE => pos.x < Size - 1 && pos.y > 0 && !(State[pos.x + 1, pos.y - 1] is IBlockingEntity),
-            Direction.SW => pos.x > 0 && pos.y < Size - 1 && !(State[pos.x - 1, pos.y + 1] is IBlockingEntity),
+            Direction.N  => pos.y > 0 && !(State[pos.x, pos.y - 1] is IBlockingWorldEntity),
+            Direction.S  => pos.y < Size - 1 && !(State[pos.x, pos.y + 1] is IBlockingWorldEntity),
+            Direction.W  => pos.x > 0 && !(State[pos.x - 1, pos.y] is IBlockingWorldEntity),
+            Direction.E  => pos.x < Size - 1 && !(State[pos.x + 1, pos.y] is IBlockingWorldEntity),
+            Direction.NW => pos.x > 0 && pos.y > 0 && !(State[pos.x - 1, pos.y - 1] is IBlockingWorldEntity),
+            Direction.SE => pos.x < Size - 1 && pos.y < Size - 1 && !(State[pos.x + 1, pos.y + 1] is IBlockingWorldEntity),
+            Direction.NE => pos.x < Size - 1 && pos.y > 0 && !(State[pos.x + 1, pos.y - 1] is IBlockingWorldEntity),
+            Direction.SW => pos.x > 0 && pos.y < Size - 1 && !(State[pos.x - 1, pos.y + 1] is IBlockingWorldEntity),
             _ => false,
         };
 
         // TODO: unit test
+        /// <summary>
+        /// Updates the tribe's position by moving in the given direction.
+        /// </summary>
+        /// <param name="tribe"></param>
+        /// <param name="direction"></param>
         internal void Move(ITribe tribe, Direction direction)
         {
             if (tribe is null)
@@ -163,6 +202,14 @@ namespace Ev.Domain.World.Core
 
         public abstract IWorld WithTribe(string tribeName, Color darkYellow, ITribeBehaviour behaviour);
 
+        /// <summary>
+        /// Updates the world state by having the specified tribe executing the given move.
+        /// </summary>
+        /// <param name="tribe"></param>
+        /// <param name="move"></param>
+        /// <param name="iteration"></param>
+        /// <param name="actionProcessor"></param>
+        /// <returns>True if game has finished after the turn.</returns>
         public bool Update(ITribe tribe, IGameAction move, int iteration, IGameActionProcessor actionProcessor)
         {
             if (tribe is null)
@@ -199,6 +246,11 @@ namespace Ev.Domain.World.Core
             return Finished;
         }
 
+        /// <summary>
+        /// Removes the specified from the world state.
+        /// </summary>
+        /// <param name="tribe"></param>
+        /// <param name="iteration"></param>
         public void WipeTribe(ITribe tribe, int iteration)
         {
             if (tribe is null)

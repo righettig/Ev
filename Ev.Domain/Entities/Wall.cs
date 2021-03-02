@@ -2,7 +2,7 @@
 
 namespace Ev.Domain.Entities.Core
 {
-    public class Wall : IBlockingEntity
+    public class Wall : IBlockingWorldEntity
     {
         public Color Color => Color.White;
     }
