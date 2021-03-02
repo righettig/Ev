@@ -151,48 +151,27 @@ namespace Ev.Domain.World.Core
 
             var (x, y) = tribe.Position;
 
-            switch (direction)
+            tribe.Position = direction switch
             {
-                case Direction.N:
-                    tribe.Position = (tribe.Position.x, tribe.Position.y - 1);
-                    break;
+                Direction.N  => (tribe.Position.x,     tribe.Position.y - 1),
+                Direction.S  => (tribe.Position.x,     tribe.Position.y + 1),
+                Direction.W  => (tribe.Position.x - 1, tribe.Position.y),
+                Direction.E  => (tribe.Position.x + 1, tribe.Position.y),
+                Direction.NW => (tribe.Position.x - 1, tribe.Position.y - 1),
+                Direction.SE => (tribe.Position.x + 1, tribe.Position.y + 1),
+                Direction.NE => (tribe.Position.x + 1, tribe.Position.y - 1),
+                Direction.SW => (tribe.Position.x - 1, tribe.Position.y + 1),
 
-                case Direction.S:
-                    tribe.Position = (tribe.Position.x, tribe.Position.y + 1);
-                    break;
-
-                case Direction.W:
-                    tribe.Position = (tribe.Position.x - 1, tribe.Position.y);
-                    break;
-
-                case Direction.E:
-                    tribe.Position = (tribe.Position.x + 1, tribe.Position.y);
-                    break;
-
-                case Direction.NW:
-                    tribe.Position = (tribe.Position.x - 1, tribe.Position.y - 1);
-                    break;
-
-                case Direction.SE:
-                    tribe.Position = (tribe.Position.x + 1, tribe.Position.y + 1);
-                    break;
-
-                case Direction.NE:
-                    tribe.Position = (tribe.Position.x + 1, tribe.Position.y - 1);
-                    break;
-
-                case Direction.SW:
-                    tribe.Position = (tribe.Position.x - 1, tribe.Position.y + 1);
-                    break;
-            }
+                _ => throw new NotImplementedException()
+            };
 
             State[x, y] = null;
 
             switch (State[tribe.Position.x, tribe.Position.y])
             {
                 case Food food: tribe.Population += food.Value; break;
-                case Wood wood: tribe.Wood += wood.Value; break;
-                case Iron iron: tribe.Iron += iron.Value; break;
+                case Wood wood: tribe.Wood       += wood.Value; break;
+                case Iron iron: tribe.Iron       += iron.Value; break;
             }
 
             State[tribe.Position.x, tribe.Position.y] = tribe;
