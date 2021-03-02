@@ -125,16 +125,21 @@ namespace Ev.Domain.World.Core
         /// <returns>True if it's possible to move.</returns>
         internal bool CanMove((int x, int y) pos, Direction direction) => direction switch
         {
-            Direction.N  => pos.y > 0 && !(State[pos.x, pos.y - 1] is IBlockingWorldEntity),
-            Direction.S  => pos.y < Size - 1 && !(State[pos.x, pos.y + 1] is IBlockingWorldEntity),
-            Direction.W  => pos.x > 0 && !(State[pos.x - 1, pos.y] is IBlockingWorldEntity),
-            Direction.E  => pos.x < Size - 1 && !(State[pos.x + 1, pos.y] is IBlockingWorldEntity),
-            Direction.NW => pos.x > 0 && pos.y > 0 && !(State[pos.x - 1, pos.y - 1] is IBlockingWorldEntity),
-            Direction.SE => pos.x < Size - 1 && pos.y < Size - 1 && !(State[pos.x + 1, pos.y + 1] is IBlockingWorldEntity),
-            Direction.NE => pos.x < Size - 1 && pos.y > 0 && !(State[pos.x + 1, pos.y - 1] is IBlockingWorldEntity),
-            Direction.SW => pos.x > 0 && pos.y < Size - 1 && !(State[pos.x - 1, pos.y + 1] is IBlockingWorldEntity),
+            Direction.N  => pos.y > 0                            && Available(pos.x,     pos.y - 1),
+            Direction.S  => pos.y < Size - 1                     && Available(pos.x,     pos.y + 1),
+            Direction.W  => pos.x > 0                            && Available(pos.x - 1, pos.y    ),
+            Direction.E  => pos.x < Size - 1                     && Available(pos.x + 1, pos.y    ),
+            Direction.NW => pos.x > 0        && pos.y > 0        && Available(pos.x - 1, pos.y - 1),
+            Direction.SE => pos.x < Size - 1 && pos.y < Size - 1 && Available(pos.x + 1, pos.y + 1),
+            Direction.NE => pos.x < Size - 1 && pos.y > 0        && Available(pos.x + 1, pos.y - 1),
+            Direction.SW => pos.x > 0        && pos.y < Size - 1 && Available(pos.x - 1, pos.y + 1),
             _ => false,
         };
+
+        private bool Available(int x, int y)
+        {
+            return !(State[x, y] is IBlockingWorldEntity || State[x, y] is ITribe);
+        }
 
         // TODO: unit test
         /// <summary>
