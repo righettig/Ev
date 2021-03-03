@@ -39,6 +39,7 @@ namespace Ev.Serialization
                 cfg.CreateMap<AttackAction,          AttackActionDto>();
                 cfg.CreateMap<SuicideAction,         SuicideActionDto>();
                 cfg.CreateMap<UpgradeDefensesAction, UpgradeDefensesActionDto>();
+                cfg.CreateMap<UpgradeAttackAction,   UpgradeDefensesActionDto>();
             });
 
             _mapper = config.CreateMapper();
@@ -59,6 +60,7 @@ namespace Ev.Serialization
                     AttackAction a          => _mapper.Map<AttackActionDto>(a),
                     SuicideAction a         => _mapper.Map<SuicideActionDto>(a),
                     UpgradeDefensesAction a => _mapper.Map<UpgradeDefensesActionDto>(a),
+                    UpgradeAttackAction   a => _mapper.Map<UpgradeAttackActionDto>(a),
                     _ => throw new ArgumentException("Unknown type: " + item.Item1.GetType()),
                 };
                 var gameState = new GameState { Action = actionDto };
@@ -106,6 +108,7 @@ namespace Ev.Serialization
                         new HoldActionDtoConverter(),
                         new SuicideActionDtoConverter(),
                         new UpgradeDefensesActionDtoConverter(),
+                        new UpgradeAttackActionDtoConverter(),
                         new MoveActionDtoConverter()
                     }
                 });

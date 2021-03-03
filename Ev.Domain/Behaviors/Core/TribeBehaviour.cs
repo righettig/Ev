@@ -132,6 +132,12 @@ namespace Ev.Domain.Behaviours.Core
         protected static IGameAction Move(Direction direction) => new MoveAction(direction);
 
         /// <summary>
+        /// Factory method that creates the Upgrade attack action.
+        /// </summary>
+        /// <returns>The upgrade attack action.</returns>
+        protected static IGameAction UpgradeAttack() => new UpgradeAttackAction();
+
+        /// <summary>
         /// Factory method that creates the Upgrade defenses action.
         /// </summary>
         /// <returns>The upgrade defenses action.</returns>

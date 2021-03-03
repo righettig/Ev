@@ -1,5 +1,6 @@
 ﻿using Ev.Domain.Entities.Core;
 using Ev.Domain.World;
+using System.Diagnostics;
 
 namespace Ev.Domain.Actions.Processors
 {
@@ -7,20 +8,10 @@ namespace Ev.Domain.Actions.Processors
     {
         public void Update(MoveAction action, ITribe tribe, IWorld world, int iteration)
         {
-            if (action is null)
-            {
-                throw new System.ArgumentNullException(nameof(action));
-            }
-
-            if (tribe is null)
-            {
-                throw new System.ArgumentNullException(nameof(tribe));
-            }
-
-            if (world is null)
-            {
-                throw new System.ArgumentNullException(nameof(world));
-            }
+            Debug.Assert(action != null);
+            Debug.Assert(tribe != null);
+            Debug.Assert(world != null);
+            Debug.Assert(iteration >= 0);
 
             var direction = action.Direction;
             var oldPos = tribe.Position;

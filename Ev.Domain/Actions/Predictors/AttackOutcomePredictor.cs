@@ -22,7 +22,15 @@ namespace Ev.Domain.Actions.Core.Processors
                 throw new ArgumentNullException(nameof(defender));
             }
 
-            return _rnd.NextDouble() <= (double)attacker.Population / (attacker.Population + defender.Population);
+            // Example
+            //--------
+            // Attacker: 100, Defender = 100
+            // 
+            // Normal     = 100 / 200 => p = .5
+            // +1 Attack  = 110 / 210 => p = .5238
+            // +1 Defense = 100 / 210 => p = .4761
+
+            return _rnd.NextDouble() <= (attacker.Population + (attacker.Population * attacker.Attack)) / (attacker.Population + (attacker.Population * attacker.Attack) + defender.Population + (defender.Population * defender.Defense));
         }
     }
 }

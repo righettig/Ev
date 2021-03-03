@@ -14,7 +14,16 @@ namespace Ev.Behaviours
         {
             if (tribe.Wood >= 10 && tribe.Iron >= 5) 
             {
-                return UpgradeDefenses();
+                var p = _rnd.NextDouble();
+
+                if (p <= 0.5) 
+                {
+                    return UpgradeAttack();
+
+                } else 
+                {
+                    return UpgradeDefenses();
+                }
             }
 
             return RandomWalk();

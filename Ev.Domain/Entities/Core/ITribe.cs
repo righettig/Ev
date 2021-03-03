@@ -22,7 +22,8 @@ namespace Ev.Domain.Entities.Core
         bool WeakerThan(ITribe other);
 
         int? LockedForNTurns { get; internal set; }
-        internal int Defense { get; set; } // TODO: Attack
+        internal float Attack { get; set; }
+        internal float Defense { get; set; }
         IGameAction BusyDoing { get; set; }
 
         #region Resources

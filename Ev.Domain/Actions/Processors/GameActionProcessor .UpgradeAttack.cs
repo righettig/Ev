@@ -6,7 +6,7 @@ namespace Ev.Domain.Actions.Processors
 {
     public partial class GameActionProcessor
     {
-        public void Update(UpgradeDefensesAction action, ITribe tribe, IWorld world, int iteration)
+        public void Update(UpgradeAttackAction action, ITribe tribe, IWorld world, int iteration)
         {
             Debug.Assert(action != null);
             Debug.Assert(tribe != null);

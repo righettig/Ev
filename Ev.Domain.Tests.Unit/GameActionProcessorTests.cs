@@ -268,6 +268,43 @@ namespace Ev.Domain.Tests.Unit
 
         #endregion
 
+        #region UpgradeAttack
+
+        [TestMethod]
+        public void Update_Should_Lock_Tribe_For_2_Turns_When_Upgrading_The_Attack()
+        {
+            // Arrange
+            var tribe = TestTribe(100);
+            tribe.LockedForNTurns = null;
+
+            // Act
+            var action = new UpgradeAttackAction();
+            uat.Update(action, tribe, new Mock<IWorld>().Object, 0);
+
+            // Assert
+            Assert.AreSame(action, tribe.BusyDoing);
+            Assert.AreEqual(2, tribe.LockedForNTurns);
+        }
+
+        [TestMethod]
+        public void Update_When_Lock_Finishes_Should_Unlock_Tribe_When_Upgrading_The_Attack ()
+        {
+            // Arrange
+            var tribe = TestTribe(100);
+            tribe.LockedForNTurns = 1;
+
+            // Act
+            var action = new UpgradeAttackAction();
+            uat.Update(action, tribe, new Mock<IWorld>().Object, 0);
+
+            // Assert
+            Assert.IsNull(tribe.LockedForNTurns);
+            Assert.IsNull(tribe.BusyDoing);
+            Assert.IsTrue(action.Completed);
+        }
+
+        #endregion
+
         #region Suicide
 
         [TestMethod]

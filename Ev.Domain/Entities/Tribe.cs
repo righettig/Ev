@@ -26,7 +26,8 @@ namespace Ev.Domain.Entities
         public Color Color { get; init; }
         public bool IsAttacking { get; set; }
         int? ITribe.LockedForNTurns { get; set; }
-        int ITribe.Defense { get; set; }
+        float ITribe.Attack { get; set; }
+        float ITribe.Defense { get; set; }
         public IGameAction BusyDoing { get; set; }
         int ITribe.Wood { get; set; }
         int ITribe.Iron { get; set; }

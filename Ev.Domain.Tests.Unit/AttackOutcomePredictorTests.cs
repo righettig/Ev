@@ -109,5 +109,150 @@ namespace Ev.Domain.Tests.Unit
         }
 
         #endregion
+
+        #region CanWin with Defense Bonus
+
+        /*
+            0.5 (rnd)
+	            20  / (20+110) = 20  / 130 = 0.153 => FALSE
+	            80  / (80+110) = 80  / 190 = 0.421 => FALSE
+	            100 / (100+88) = 100 / 188 = 0.531 => TRUE
+        */
+
+        [TestMethod]
+        public void CanWin1_DefenseBonus()
+        {
+            // Arrange
+            var rnd = new Mock<IRandom>();
+            rnd.Setup(m => m.NextDouble()).Returns(0.5);
+
+            var uat = new AttackOutcomePredictor(rnd.Object);
+
+            ITribe attacker = TestTribe(20);
+            ITribe defender = TestTribe(100);
+            defender.Defense = .1f;
+
+            // Act
+            var actual = uat.CanWin(attacker, defender);
+
+            // Assert
+            Assert.AreEqual(false, actual);
+        }
+
+        [TestMethod]
+        public void CanWin2_DefenseBonus()
+        {
+            // Arrange
+            var rnd = new Mock<IRandom>();
+            rnd.Setup(m => m.NextDouble()).Returns(0.5);
+
+            var uat = new AttackOutcomePredictor(rnd.Object);
+
+            ITribe attacker = TestTribe(80);
+            ITribe defender = TestTribe(100);
+            defender.Defense = .1f;
+
+            // Act
+            var actual = uat.CanWin(attacker, defender);
+
+            // Assert
+            Assert.AreEqual(false, actual);
+        }
+
+        [TestMethod]
+        public void CanWin3_DefenseBonus()
+        {
+            // Arrange
+            var rnd = new Mock<IRandom>();
+            rnd.Setup(m => m.NextDouble()).Returns(0.5);
+
+            var uat = new AttackOutcomePredictor(rnd.Object);
+
+            ITribe attacker = TestTribe(100);
+            ITribe defender = TestTribe(80);
+            defender.Defense = .1f;
+
+            // Act
+            var actual = uat.CanWin(TestTribe(100), TestTribe(80));
+
+            // Assert
+            Assert.AreEqual(true, actual);
+        }
+
+        #endregion
+
+        #region CanWin with Attack Bonus
+
+        /*
+            0.5 (rnd)
+	            22  / (22+100) = 22  / 122 = 0.180 => FALSE
+	            88  / (88+100) = 88  / 188 = 0.468 => FALSE
+	            110 / (110+80) = 110 / 190 = 0.578 => TRUE
+        */
+
+        [TestMethod]
+        public void CanWin1_AttackBonus()
+        {
+            // Arrange
+            var rnd = new Mock<IRandom>();
+            rnd.Setup(m => m.NextDouble()).Returns(0.5);
+
+            var uat = new AttackOutcomePredictor(rnd.Object);
+
+            ITribe attacker = TestTribe(20);
+            attacker.Attack = .1f;
+
+            ITribe defender = TestTribe(100);
+
+            // Act
+            var actual = uat.CanWin(attacker, defender);
+
+            // Assert
+            Assert.AreEqual(false, actual);
+        }
+
+        [TestMethod]
+        public void CanWin2_AttackBonus()
+        {
+            // Arrange
+            var rnd = new Mock<IRandom>();
+            rnd.Setup(m => m.NextDouble()).Returns(0.5);
+
+            var uat = new AttackOutcomePredictor(rnd.Object);
+
+            ITribe attacker = TestTribe(80);
+            attacker.Attack = .1f;
+
+            ITribe defender = TestTribe(100);
+
+            // Act
+            var actual = uat.CanWin(attacker, defender);
+
+            // Assert
+            Assert.AreEqual(false, actual);
+        }
+
+        [TestMethod]
+        public void CanWin3_AttackBonus()
+        {
+            // Arrange
+            var rnd = new Mock<IRandom>();
+            rnd.Setup(m => m.NextDouble()).Returns(0.5);
+
+            var uat = new AttackOutcomePredictor(rnd.Object);
+
+            ITribe attacker = TestTribe(100);
+            attacker.Attack = .1f;
+
+            ITribe defender = TestTribe(80);
+
+            // Act
+            var actual = uat.CanWin(attacker, defender);
+
+            // Assert
+            Assert.AreEqual(true, actual);
+        }
+
+        #endregion
     }
 }

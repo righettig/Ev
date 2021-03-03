@@ -14,6 +14,7 @@ namespace Ev.Domain.Tests.Unit.Helpers
                 .SetupProperty(m => m.Wood)
                 .SetupProperty(m => m.Iron)
                 .SetupProperty(m => m.Defense)
+                .SetupProperty(m => m.Attack)
                 .SetupProperty(m => m.LockedForNTurns)
                 .SetupProperty(m => m.BusyDoing)
                 .Object;
