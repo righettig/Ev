@@ -9,7 +9,7 @@ namespace Ev.Domain.World
     {
         public const int WORLD_STATE_SIZE = 2;
 
-        private IWorldEntity[,] State { get; }
+        public IWorldEntity[,] State { get; }
 
         public WorldState(IWorldEntity[,] state)
         {
@@ -99,7 +99,7 @@ namespace Ev.Domain.World
         // d=1 => [1,1] [2,1] [3,1] [3,2] [3,3] [2,3] [1.3] [1,2]
         // d=2 => [0,0] [1,0] [2,0] [3,0] [4,0] [4,1] [4,2] [4,3] [4,4] [3,4] [2,4] [1,4] [0,4] [0,3] [0,2] [0,1]
 
-        private int[][,] traverseList = new int[2][,]
+        private readonly int[][,] traverseList = new int[2][,]
         {
             new int[,] {
                 { 1, 1 }, { 2, 1 }, { 3, 1 }, { 3, 2 }, { 3, 3 }, { 2, 3 }, { 1, 3 }, { 1, 2 }

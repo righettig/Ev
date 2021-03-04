@@ -11,7 +11,7 @@ namespace Ev.Helpers
 
             switch (entity) 
             {
-                case ITribe:
+                case ITribeState:
                     Write("X ");
                     break;
 

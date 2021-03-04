@@ -179,6 +179,31 @@ namespace Ev.Helpers
             WriteLine();
         }
 
+        public static void DumpWorldState(WorldState worldState)
+        {
+            int rowLength = worldState.State.GetLength(0);
+            int colLength = worldState.State.GetLength(1);
+
+            for (int i = 0; i < rowLength; i++)
+            {
+                for (int j = 0; j < colLength; j++)
+                {
+                    if (worldState.State[j, i] != null)
+                    {
+                        ConsoleRenderer.Render(worldState.State[j, i]);
+                    }
+                    else
+                    {
+                        ForegroundColor = ConsoleColor.DarkGray;
+                        Write("0 ");
+                        ResetColor();
+                    }
+                }
+
+                Write(Environment.NewLine);
+            }
+        }
+
         private static void AsWinner(ITribe tribe) 
         {
             ForegroundColor = ConsoleColor.Yellow;
