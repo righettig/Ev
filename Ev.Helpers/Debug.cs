@@ -13,6 +13,8 @@ namespace Ev.Helpers
 {
     public static class Debug
     {
+        private static int WORLD_STATE_SIZE = WorldState.WORLD_STATE_SIZE;
+
         public static void DumpHistory(IList<IGameAction> history)
         {
             for (int i = 0; i < history.Count; i++)
@@ -161,7 +163,7 @@ namespace Ev.Helpers
                         ForegroundColor = ConsoleColor.DarkGray;
                         if (next != null)
                         {
-                            if (Abs(next.Position.x - j) <= WorldState.WORLD_STATE_SIZE && Abs(next.Position.y - i) <= WorldState.WORLD_STATE_SIZE)
+                            if (Abs(next.Position.x - j) <= WORLD_STATE_SIZE && Abs(next.Position.y - i) <= WORLD_STATE_SIZE)
                             {
                                 ForegroundColor = ConsoleColor.White;
                             }

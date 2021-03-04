@@ -12,6 +12,8 @@ namespace Ev.Domain.World.Core
 {
     public abstract class BaseWorld : IWorld 
     {
+        private const int WORLD_STATE_SIZE = WorldState.WORLD_STATE_SIZE;
+
         public IWorldEntity[,] State => _state;
 
         public int Size => _size;
@@ -53,15 +55,15 @@ namespace Ev.Domain.World.Core
 
             var pos = tribe.Position;
 
-            var result = new IWorldEntity[1 + 2 * WorldState.WORLD_STATE_SIZE, 1 + 2 * WorldState.WORLD_STATE_SIZE];
+            var result = new IWorldEntity[1 + 2 * WORLD_STATE_SIZE, 1 + 2 * WORLD_STATE_SIZE];
 
             var ws_y = 0;
 
-            for (var y = pos.y - WorldState.WORLD_STATE_SIZE; y <= pos.y + WorldState.WORLD_STATE_SIZE; y++)
+            for (var y = pos.y - WORLD_STATE_SIZE; y <= pos.y + WORLD_STATE_SIZE; y++)
             {
                 var ws_x = 0;
 
-                for (var x = pos.x - WorldState.WORLD_STATE_SIZE; x <= pos.x + WorldState.WORLD_STATE_SIZE; x++)
+                for (var x = pos.x - WORLD_STATE_SIZE; x <= pos.x + WORLD_STATE_SIZE; x++)
                 {
                     if (x >= 0 && y >= 0 && x < Size && y < Size && State[x, y] != null)
                     {
