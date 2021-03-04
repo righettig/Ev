@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ev.Domain\Ev.Domain.csproj" />
+    <ProjectReference Include="..\..\Ev.Domain\Ev.Domain.csproj" />
   </ItemGroup>
 
 </Project>

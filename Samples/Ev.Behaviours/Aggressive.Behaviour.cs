@@ -4,7 +4,7 @@ using Ev.Domain.Entities.Core;
 using Ev.Domain.Utils;
 using Ev.Domain.World.Core;
 
-namespace Ev.Behaviours
+namespace Ev.Samples.Behaviours
 {
     public class AggressiveTribeBehaviour : TribeBehaviour
     {

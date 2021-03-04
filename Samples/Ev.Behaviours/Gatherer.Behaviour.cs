@@ -4,24 +4,24 @@ using Ev.Domain.Entities.Core;
 using Ev.Domain.Utils;
 using Ev.Domain.World.Core;
 
-namespace Ev.Behaviours
+namespace Ev.Samples.Behaviours
 {
-    public class JackOfAllTradesTribeBehaviour : TribeBehaviour
+    public class GathererTribeBehaviour : TribeBehaviour
     {
-        public JackOfAllTradesTribeBehaviour(IRandom rnd) : base(rnd) { }
-
+        public GathererTribeBehaviour(IRandom rnd) : base(rnd) { }
+        
         public override IGameAction DoMove(IWorldState state, ITribeState tribe)
         {
-            var collectable = FindACollectable();
+            var food = FindHighestValueFood();
 
-            if (NotFound(collectable))
+            if (NotFound(food))
             {
                 return RandomWalk();
             }
-            else
+            else 
             {
-                return MoveTowards(collectable);
-            }
+                return MoveTowards(food);
+            }            
         }
     }
 }

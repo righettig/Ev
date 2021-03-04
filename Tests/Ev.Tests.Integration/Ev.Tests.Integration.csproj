@@ -14,13 +14,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ev.Domain\Ev.Domain.csproj" />
-    <ProjectReference Include="..\Ev.Game.Behaviours\Ev.Behaviours.csproj" />
-    <ProjectReference Include="..\Ev.Game\Ev.Game.csproj" />
+    <Folder Include="Expected\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Expected\" />
+    <ProjectReference Include="..\..\Ev.Domain\Ev.Domain.csproj" />
+    <ProjectReference Include="..\..\Ev.Game\Ev.Game.csproj" />
+    <ProjectReference Include="..\..\Samples\Ev.Behaviours\Ev.Samples.Behaviours.csproj" />
   </ItemGroup>
 
   <ItemGroup>

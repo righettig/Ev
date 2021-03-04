@@ -1,7 +1,7 @@
-using Ev.Behaviours;
 using Ev.Domain.Utils;
 using Ev.Domain.World;
 using Ev.Game;
+using Ev.Samples.Behaviours;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Threading.Tasks;
@@ -82,7 +82,7 @@ namespace Ev.Tests.Integration
             AssertSameFinalState("FourTribesOnStaticMap");
         }
 
-        private void AssertSameFinalState(string testName) 
+        private static void AssertSameFinalState(string testName) 
         {
             var expected = File.ReadAllText($"Expected/expected_{testName}.json");
             var actual   = File.ReadAllText($"actual_{testName}.json");
