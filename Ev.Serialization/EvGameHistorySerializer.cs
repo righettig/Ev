@@ -113,7 +113,10 @@ namespace Ev.Serialization
                     }
                 });
 
-            await File.WriteAllTextAsync($"{filename}-{Guid.NewGuid()}.json", json);
+            string fullFileName = 
+                filename != null ? filename : $"ev_winner_history-{Guid.NewGuid()}.json";
+                
+            await File.WriteAllTextAsync(fullFileName, json);
         }
     }
 }

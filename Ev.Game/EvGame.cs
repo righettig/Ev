@@ -73,7 +73,7 @@ namespace Ev.Game
                 DumpHistory(winnerHistory.Select(el => el.Item1).ToList());
 
                 var serializer = new EvGameHistorySerializer();
-                await serializer.SaveToFile(winnerHistory, "ev_winner_history");
+                await serializer.SaveToFile(winnerHistory, options.WinnerHistoryFilename);
             }
         }
     }
