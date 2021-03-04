@@ -32,6 +32,10 @@ namespace Ev.Domain.Entities
         int ITribe.Wood { get; set; }
         int ITribe.Iron { get; set; }
 
+        public int Wood { get; set; }
+
+        public int Iron { get; set; }
+
         private int _population;
 
         private readonly ITribeBehaviour _behaviour;
@@ -41,19 +45,15 @@ namespace Ev.Domain.Entities
                      Color color,
                      ITribeBehaviour behaviour)
         {
-            Name = name;
-            Position = position;
-            PrevPosition = Position;
-            Color = color;
-            Population = 100;
+            Name           = name;
+            Position       = position;
+            PrevPosition   = Position;
+            Color          = color;
+            Population     = 100;
             PrevPopulation = 100;
 
             _behaviour = behaviour ?? throw new System.ArgumentNullException(nameof(behaviour));
         }
-
-        public bool StrongerThan(ITribe t) => Population > t.Population;
-
-        public bool WeakerThan(ITribe t) => Population < t.Population;
 
         public IGameAction DoMove(IWorldState state)
         {
@@ -66,11 +66,20 @@ namespace Ev.Domain.Entities
 
             _behaviour.State = state;
 
-            var move = _behaviour.DoMove(state, this);
-            
+            var move = _behaviour.DoMove(state, ToImmutable() as ITribeState);
+
             move.Tribe = this;
 
             return move;
         }
+
+        public IWorldEntity ToImmutable()
+        {
+            return new TribeState(this);
+        }
+
+        public bool StrongerThan(ITribeState other) => Population > other.Population;
+
+        public bool WeakerThan(ITribeState other) => Population < other.Population;
     }
 }

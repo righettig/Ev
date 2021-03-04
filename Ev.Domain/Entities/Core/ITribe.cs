@@ -3,23 +3,18 @@ using Ev.Domain.World.Core;
 
 namespace Ev.Domain.Entities.Core
 {
-    public interface ITribe : IWorldEntity
+    public interface ITribe : ITribeState
     {
-        string Name { get; }
-
-        int Population { get; set; }
+        new int Population { get; set; }
         int PrevPopulation { get; set; }
         int DeadAtIteration { get; set; }
 
         bool IsAttacking { get; set; }
 
-        (int x, int y) Position { get; set; }
-        (int x, int y) PrevPosition { get; set; }
+        new (int x, int y) Position { get; set; }
+        new (int x, int y) PrevPosition { get; set; }
 
         IGameAction DoMove(IWorldState state);
-
-        bool StrongerThan(ITribe other);
-        bool WeakerThan(ITribe other);
 
         int? LockedForNTurns { get; internal set; }
         internal float Attack { get; set; }
@@ -28,9 +23,9 @@ namespace Ev.Domain.Entities.Core
 
         #region Resources
         
-        int Wood { get; internal set; }
+        new int Wood { get; internal set; }
         
-        int Iron { get; internal set; }
+        new int Iron { get; internal set; }
 
         #endregion
     }

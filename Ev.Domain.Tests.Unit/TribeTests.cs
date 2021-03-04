@@ -19,7 +19,7 @@ namespace Ev.Domain.Tests.Unit
         public TribeTests()
         {
             var tribeBehaviour = new Mock<ITribeBehaviour>();
-            tribeBehaviour.Setup(m => m.DoMove(It.IsAny<IWorldState>(), It.IsAny<ITribe>())).Returns(new HoldAction());
+            tribeBehaviour.Setup(m => m.DoMove(It.IsAny<IWorldState>(), It.IsAny<ITribeState>())).Returns(new HoldAction());
 
             uat = new Tribe("t1", (0, 0), Utils.Color.DarkYellow, tribeBehaviour.Object);
         }
@@ -57,7 +57,7 @@ namespace Ev.Domain.Tests.Unit
         {
             uat.Population = 100;
 
-            var actual = uat.StrongerThan(TestTribe(20));
+            var actual = uat.StrongerThan(TestTribeState(20));
 
             Assert.IsTrue(actual);
         }
@@ -67,7 +67,7 @@ namespace Ev.Domain.Tests.Unit
         {
             uat.Population = 20;
 
-            var actual = uat.StrongerThan(TestTribe(100));
+            var actual = uat.StrongerThan(TestTribeState(100));
 
             Assert.IsFalse(actual);
         }
@@ -81,7 +81,7 @@ namespace Ev.Domain.Tests.Unit
         {
             uat.Population = 20;
 
-            var actual = uat.WeakerThan(TestTribe(100));
+            var actual = uat.WeakerThan(TestTribeState(100));
 
             Assert.IsTrue(actual);
         }
@@ -91,7 +91,7 @@ namespace Ev.Domain.Tests.Unit
         {
             uat.Population = 100;
 
-            var actual = uat.WeakerThan(TestTribe(20));
+            var actual = uat.WeakerThan(TestTribeState(20));
 
             Assert.IsFalse(actual);
         }

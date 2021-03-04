@@ -6,10 +6,12 @@ namespace Ev.Domain.Actions
 {
     public class AttackAction : GameAction
     {
-        public ITribe Target { get; init; }
+        public string TargetName { get; init; } // client-side
 
-        public AttackAction(ITribe target) => Target = target ?? throw new ArgumentNullException(nameof(target));
+        public ITribe Target { get; set; } // server-side
 
-        public override string ToString() => "Attack " + Target.Name;
+        public AttackAction(string target) => TargetName = target ?? throw new ArgumentNullException(nameof(target));
+
+        public override string ToString() => "Attack " + TargetName;
     }
 }

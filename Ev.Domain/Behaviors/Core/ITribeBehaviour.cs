@@ -8,6 +8,6 @@ namespace Ev.Domain.Behaviours.Core
     {
         internal IWorldState State { get; set; }
 
-        IGameAction DoMove(IWorldState state, ITribe tribe);
+        IGameAction DoMove(IWorldState state, ITribeState tribe);
     }
 }

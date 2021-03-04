@@ -53,7 +53,7 @@ namespace Ev.Domain.Behaviours.Core
         /// <param name="state">The current world state.</param>
         /// <param name="tribe">The current tribe state.</param>
         /// <returns>The action chosen to be performed by the given Tribe during the current turn with the specified world state.</returns>
-        public abstract IGameAction DoMove(IWorldState state, ITribe tribe);
+        public abstract IGameAction DoMove(IWorldState state, ITribeState tribe);
 
         // TODO: create a separate class for the factory methods for action so thay can be unit-testable.
         // This will force those who define a concrete class to pass an instance of the TribeActionFactory
@@ -74,17 +74,17 @@ namespace Ev.Domain.Behaviours.Core
         /// <returns>The attack action.</returns>
         protected IGameAction Attack((int x, int y) targetPosition)
         {
-            ITribe enemy = null;
+            ITribeState enemy = null;
 
             _state.Traverse((el, x, y) =>
             {
                 if (x == targetPosition.x && y == targetPosition.y)
                 {
-                    enemy = _state.GetEntity<ITribe>((x, y));
+                    enemy = _state.GetEntity<ITribeState>((x, y));
 
                     if (enemy is null)
                     {
-                        throw new ArgumentException("target is not an instance of ITribe.", nameof(targetPosition));
+                        throw new ArgumentException("target is not an instance of ITribeState.", nameof(targetPosition));
                     }
                 }
             });
@@ -95,7 +95,7 @@ namespace Ev.Domain.Behaviours.Core
             }
             else
             {
-                return new AttackAction(enemy);
+                return new AttackAction(enemy.Name);
             }
         }
 
@@ -108,14 +108,14 @@ namespace Ev.Domain.Behaviours.Core
         /// If invalid - for instance trying to attack a tribe which is too far away - the tribe gets disqualified.
         /// </remarks>
         /// <returns>The attack action.</returns>
-        protected static IGameAction Attack(ITribe target)
+        protected static IGameAction Attack(ITribeState target)
         {
             if (target is null)
             {
                 throw new ArgumentNullException(nameof(target));
             }
 
-            return new AttackAction(target);
+            return new AttackAction(target.Name);
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Ev.Domain.Behaviours.Core
         /// Returns the world state position of the tribe found first.
         /// </summary>
         /// <returns>The world state position as a (x,y) tuple if a tribe if found, (-1, -1) otherwise.</returns>
-        protected (int x, int y) FindAnEnemy() => FindPosition(el => el is ITribe);
+        protected (int x, int y) FindAnEnemy() => FindPosition(el => el is ITribeState);
 
         /// <summary>
         /// Returns the position of the collectable found first.
@@ -343,7 +343,7 @@ namespace Ev.Domain.Behaviours.Core
         /// </summary>
         /// <param name="other">The tribe to check.</param>
         /// <returns>True if the specified tribe is in proxitiy of the tribe.</returns>
-        protected static bool Close(ITribe other) => Close(other.Position);
+        protected static bool Close(ITribeState other) => Close(other.Position);
 
         /// <summary>
         /// Checks if a generic world entity is close enough to be reached in a single turn.

@@ -15,9 +15,9 @@ namespace Ev.Domain.Tests.Unit
         {
             var tribe = new Tribe("t1", (0,0), Utils.Color.White, new Mock<ITribeBehaviour>().Object);
 
-            var action = new AttackAction(tribe);
+            var action = new AttackAction(tribe.Name);
 
-            Assert.AreSame(tribe, action.Target);
+            Assert.AreSame(tribe.Name, action.TargetName);
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace Ev.Domain.Tests.Unit
         {
             var tribe = new Tribe("t1", (0, 0), Utils.Color.White, new Mock<ITribeBehaviour>().Object);
 
-            var action = new AttackAction(tribe);
+            var action = new AttackAction(tribe.Name);
 
             Assert.AreEqual("Attack t1", action.ToString());
         }

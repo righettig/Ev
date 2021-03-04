@@ -10,6 +10,6 @@ namespace Ev.Behaviours
     {
         public LazyTribeBehaviour(IRandom rnd) : base(rnd) { }
 
-        public override IGameAction DoMove(IWorldState state, ITribe tribe) => Hold();
+        public override IGameAction DoMove(IWorldState state, ITribeState tribe) => Hold();
     }
 }

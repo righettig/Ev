@@ -43,13 +43,16 @@ namespace Ev.Game
                         move.Tribe = tribe;
                     }
                     
+                    if (move is Domain.Actions.AttackAction a) { // mapping client-side action to server-side
+                        a.Target = alive.First(el => el.Name == a.TargetName);
+                    }
+
                     history.Add((move, state));
 
                     finished = world.Update(tribe, move, iteration, actionProcessor);
 
                     if (options.RenderEachTurn) {
                         Dump(world, iteration, move, next);
-
                     }
 
                     if (options.WaitAfterEachMove) {

@@ -24,8 +24,8 @@ namespace Ev.Serialization
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<ITribe,                TribeDto>();
-                cfg.CreateMap<ITribe,                EnemyTribeDto>();
+                cfg.CreateMap<ITribeState,        TribeDto>();
+                cfg.CreateMap<ITribeState,        EnemyTribeDto>();
 
                 cfg.CreateMap<Food,                  CollectableWorldEntityDto>().AfterMap((_, result) => result.EntityType = "Food");
                 cfg.CreateMap<Iron,                  CollectableWorldEntityDto>().AfterMap((_, result) => result.EntityType = "Iron");
@@ -79,7 +79,7 @@ namespace Ev.Serialization
                             worldEntityDto = _mapper.Map<BlockingWorldEntityDto>(entity).WithPosition(x, y);
                             break;
 
-                        case ITribe e when e.Name != item.Item1.Tribe.Name:
+                        case ITribeState e when e.Name != item.Item1.Tribe.Name:
                             worldEntityDto = _mapper.Map<EnemyTribeDto>(entity).WithPosition(x, y);
                             break;
                     }

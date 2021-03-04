@@ -57,13 +57,13 @@ namespace Ev.Helpers
                             case Direction.SE: loc = (3, 3); break;
                             case Direction.SW: loc = (1, 3); break;
                         }
-                        var target = state.GetEntity<ITribe>(loc);
+                        var target = state.GetEntity<ITribeState>(loc);
                         if (target == null) {
                             WriteLine("Invalid Target!" + Environment.NewLine);
                             DumpActions();
                             return ReadAction(state);
                         }
-                        return new AttackAction(target);
+                        return new AttackAction(target.Name);
 
                     default: action = null; break;
                 }

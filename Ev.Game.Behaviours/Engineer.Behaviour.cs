@@ -10,7 +10,7 @@ namespace Ev.Behaviours
     {
         public EngineerTribeBehaviour(IRandom rnd) : base(rnd) { }
 
-        public override IGameAction DoMove(IWorldState state, ITribe tribe)
+        public override IGameAction DoMove(IWorldState state, ITribeState tribe)
         {
             if (tribe.Wood >= 10 && tribe.Iron >= 5) 
             {

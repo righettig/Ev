@@ -63,9 +63,9 @@ namespace Ev.Domain.World.Core
 
                 for (var x = pos.x - WorldState.WORLD_STATE_SIZE; x <= pos.x + WorldState.WORLD_STATE_SIZE; x++)
                 {
-                    if (x >= 0 && y >= 0 && x < Size && y < Size)
+                    if (x >= 0 && y >= 0 && x < Size && y < Size && State[x, y] != null)
                     {
-                        result[ws_x, ws_y] = State[x, y];
+                        result[ws_x, ws_y] = State[x, y].ToImmutable();
                     }
 
                     ws_x++;

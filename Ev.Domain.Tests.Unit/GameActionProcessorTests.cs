@@ -92,8 +92,10 @@ namespace Ev.Domain.Tests.Unit
             var attacker = new Mock<ITribe>().SetupProperty(m => m.IsAttacking).Object;
             var defender = new Mock<ITribe>().SetupProperty(m => m.IsAttacking).Object;
 
+            var action = new AttackAction("defender") { Target = defender };
+
             // Act
-            uat.Update(new AttackAction(defender), attacker, new Mock<IWorld>().Object, 0);
+            uat.Update(action, attacker, new Mock<IWorld>().Object, 0);
 
             // Assert
             Assert.IsTrue(attacker.IsAttacking);
@@ -112,8 +114,10 @@ namespace Ev.Domain.Tests.Unit
             attacker.Population = 100;
             defender.Population = 100;
 
+            var action = new AttackAction("defender") { Target = defender };
+
             // Act
-            uat.Update(new AttackAction(defender), attacker, new Mock<IWorld>().Object, 0);
+            uat.Update(action, attacker, new Mock<IWorld>().Object, 0);
 
             // Assert
             Assert.AreEqual(100 + GameActionProcessor.WIN_GAIN, attacker.Population);
@@ -132,8 +136,10 @@ namespace Ev.Domain.Tests.Unit
             attacker.Population = 100;
             defender.Population = 100;
 
+            var action = new AttackAction("defender") { Target = defender };
+
             // Act
-            uat.Update(new AttackAction(defender), attacker, new Mock<IWorld>().Object, 0);
+            uat.Update(action, attacker, new Mock<IWorld>().Object, 0);
 
             // Assert
             Assert.AreEqual(100 - GameActionProcessor.DEFEAT_LOSS, attacker.Population);
@@ -148,15 +154,17 @@ namespace Ev.Domain.Tests.Unit
 
             var attacker = new Mock<ITribe>().SetupProperty(m => m.Population).Object;
             var defender = new Mock<ITribe>().SetupProperty(m => m.Population).Object;
-
+                
             var world = new Mock<IWorld>();
             world.Setup(m => m.WipeTribe(It.Is<ITribe>(t => t == defender), It.IsAny<int>())).Verifiable();
 
             attacker.Population = 100;
             defender.Population = 20;
 
+            var action = new AttackAction("defender") { Target = defender };
+
             // Act
-            uat.Update(new AttackAction(defender), attacker, world.Object, 0);
+            uat.Update(action, attacker, world.Object, 0);
 
             // Assert
             Assert.AreEqual(0, defender.Population);
@@ -175,8 +183,10 @@ namespace Ev.Domain.Tests.Unit
             attacker.Population = 20;
             defender.Population = 100;
 
+            var action = new AttackAction("defender") { Target = defender };
+
             // Act
-            uat.Update(new AttackAction(defender), attacker, new Mock<IWorld>().Object, 0);
+            uat.Update(action, attacker, new Mock<IWorld>().Object, 0);
 
             // Assert
             Assert.AreEqual(0, attacker.Population);

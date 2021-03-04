@@ -10,7 +10,7 @@ namespace Ev.Behaviours
     {
         public GathererTribeBehaviour(IRandom rnd) : base(rnd) { }
         
-        public override IGameAction DoMove(IWorldState state, ITribe tribe)
+        public override IGameAction DoMove(IWorldState state, ITribeState tribe)
         {
             var food = FindHighestValueFood();
 

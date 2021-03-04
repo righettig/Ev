@@ -13,7 +13,7 @@ namespace Ev.Behaviours
 
         public ExplorerTribeBehaviour(IRandom rnd) : base(rnd) { }
 
-        public override IGameAction DoMove(IWorldState state, ITribe tribe)
+        public override IGameAction DoMove(IWorldState state, ITribeState tribe)
         {
             // initial move OR can no longer move in the same direction
             if (tribe.PrevPosition.x == tribe.Position.x && tribe.PrevPosition.y == tribe.Position.y)

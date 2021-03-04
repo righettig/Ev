@@ -11,7 +11,7 @@ namespace Ev.Behaviours
     {
         public RandomWalkerTribeBehaviour(IRandom rnd) : base(rnd) { }
 
-        public override IGameAction DoMove(IWorldState state, ITribe tribe)
+        public override IGameAction DoMove(IWorldState state, ITribeState tribe)
         {
             var move = _rnd.Next(9);
 

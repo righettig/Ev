@@ -9,7 +9,7 @@ namespace Ev.Behaviours
     {
         public SmartAggressiveTribeBehaviour(IRandom rnd) : base(rnd) { }
 
-        public override IGameAction DoMove(IWorldState state, ITribe tribe)
+        public override IGameAction DoMove(IWorldState state, ITribeState tribe)
         {
             var enemy = FindAnEnemy();
 
@@ -28,7 +28,7 @@ namespace Ev.Behaviours
             }
             else if (Close(enemy))
             {
-                var enemyRef = state.GetEntity<ITribe>(enemy);
+                var enemyRef = state.GetEntity<ITribeState>(enemy);
 
                 if (tribe.StrongerThan(enemyRef))
                 {

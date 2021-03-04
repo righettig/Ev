@@ -10,7 +10,7 @@ namespace Ev.Behaviours
     {
         public PlayerControlledTribeBehaviour(IRandom rnd) : base(rnd) { }
 
-        public override IGameAction DoMove(IWorldState state, ITribe tribe)
+        public override IGameAction DoMove(IWorldState state, ITribeState tribe)
         {
             return new PlayerControlledGameAction();
         }
