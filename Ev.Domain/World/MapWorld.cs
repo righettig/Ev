@@ -6,6 +6,7 @@ using Ev.Domain.Utils;
 using Ev.Domain.World.Core;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Ev.Domain.World
@@ -13,6 +14,15 @@ namespace Ev.Domain.World
     public class MapWorld : BaseWorld
     {
         private readonly List<(int x, int y)> _spawnPoints = new List<(int x, int y)>();
+
+        public static MapWorld LoadFromFile(string filename, IRandom rnd)
+        {
+            var header = File.ReadLines(filename).First().Replace(" ", "");
+
+            var map = File.ReadAllText(filename);
+            
+            return new MapWorld(header.Length, map, rnd);
+        }
 
         // TODO: unit test
         public MapWorld(int size, string map, IRandom rnd) : base(size, rnd)
