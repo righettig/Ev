@@ -119,9 +119,7 @@ namespace Ev.Helpers
 
             if (world.Finished)
             {
-                var winner = world.Tribes.First(t => t.Population > 0);
-
-                AsWinner(winner);
+                AsWinner(world.Winner);
 
                 foreach (var t in world.Tribes
                     .Where(t => t.Population <= 0)

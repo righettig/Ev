@@ -221,12 +221,21 @@ namespace Ev.Domain.World.Core
                 WipeTribe(tribe, iteration);
             }
 
-            if (_tribes.Count(t => t.Population > 0) == 1) // when only one tribe is left alive
+            // when only one tribe is left alive OR the only tribe has died
+            if (_tribes.Count > 1) 
+            {
+                if (_tribes.Count(t => t.Population > 0) == 1) 
+                {
+                    Finished = true;
+                    Winner = _tribes.First(t => t.Population > 0);
+                }
+            }
+            else if (_tribes[0].Population <= 0)
             {
                 Finished = true;
-                Winner = _tribes.First(t => t.Population > 0);
+                Winner = _tribes[0];
             }
-
+            
             _tribes.ForEach(t => t.IsAttacking = false);
 
             return Finished;
