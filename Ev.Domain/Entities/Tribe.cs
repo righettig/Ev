@@ -81,5 +81,10 @@ namespace Ev.Domain.Entities
         public bool StrongerThan(ITribeState other) => Population > other.Population;
 
         public bool WeakerThan(ITribeState other) => Population < other.Population;
+
+        public string DebugBehaviour() 
+        {
+            return (_behaviour as TribeBehaviour).DebugBehaviour();
+        }
     }
 }

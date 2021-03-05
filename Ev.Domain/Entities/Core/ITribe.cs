@@ -28,5 +28,7 @@ namespace Ev.Domain.Entities.Core
         new int Iron { get; internal set; }
 
         #endregion
+
+        public string DebugBehaviour();
     }
 }

@@ -55,6 +55,8 @@ namespace Ev.Domain.Behaviours.Core
         /// <returns>The action chosen to be performed by the given Tribe during the current turn with the specified world state.</returns>
         public abstract IGameAction DoMove(IWorldState state, ITribeState tribe);
 
+        public virtual string DebugBehaviour() => "";
+
         // TODO: create a separate class for the factory methods for action so thay can be unit-testable.
         // This will force those who define a concrete class to pass an instance of the TribeActionFactory
         // Do I really want this? I could create two ctor overloads, one that accepts an ITribeActionFactory
