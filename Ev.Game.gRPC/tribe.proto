@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/struct.proto";
+
+package ev.tribe;
+
+service EvTribe {
+  rpc Start (StartRequest) returns (google.protobuf.Empty) {}
+
+  rpc DoMove (DoMoveRequest) returns (DoMoveReply) {}
+
+  // invoked when the game finished either by winning or losing
+  rpc End (EndRequest) returns (google.protobuf.Empty) {}
+}
+
+message StartRequest {
+}
+
+message DoMoveRequest {
+	message Collectable {
+		string type = 1; // TODO: create enum: food/iron/wood
+		int32 value = 2;
+	}
+
+	message EnemyTribe {
+		string name = 1; // TODO: we do not need to send both name and color for each turn. This data doesn't change. I can send it on the Start event
+		string color = 2;
+		int32 population = 3;
+		Position position = 4;
+	}
+	
+	message Position {
+		int32 x = 1;
+		int32 y = 2;
+	}
+
+	message TribeState {
+		int32 population = 1;
+		Position position = 2;
+		Position prevPosition = 3; // TODO: assuming the tribe agent remembers the previous action. This can be computed on the client
+		int32 defense = 4;
+		int32 wood = 5;
+		int32 iron = 6;
+	}
+
+	message WorldState {
+		oneof kind {
+			google.protobuf.NullValue null = 1;
+			string blockingEntityType = 2; // water/wall
+			EnemyTribe tribe = 3;
+			Collectable collectable = 4;
+		}
+    }
+
+	TribeState tribeState = 1;
+	repeated WorldState worldState = 2;
+	bool busy = 3;
+}
+
+message DoMoveReply {
+	enum direction {
+		N = 0;
+		S = 1;
+		E = 2;
+		W = 3;
+		NE = 4;
+		NW = 5;
+		SE = 6;
+		SW = 7;
+	}
+
+	enum actions {
+		MOVE = 0;
+		ATTACK = 1;
+		SUICIDE = 2;
+		UPGRADE_DEFENSE = 3;
+		HOLD = 4;
+	}
+
+	message Action {
+		actions type = 1;
+		oneof payload {
+			direction direction = 2;		
+			string enemy = 3;
+		}
+	}
+
+	oneof kind {
+		google.protobuf.NullValue null = 1;
+		Action action = 2;
+	}
+}
+
+message EndRequest {
+	string gameResult = 1;
+}

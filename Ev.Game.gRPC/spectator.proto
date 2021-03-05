@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package ev.spectator;
+
+service EvSpectator {
+  rpc Start (StartRequest) returns (StartReply) {}
+
+  rpc Update (UpdateRequest) returns (UpdateReply) {}
+
+  // invoked when the game finished either by winning or losing
+  rpc End (EndRequest) returns (EndReply) {}
+}
+	
+message StartRequest {
+}
+
+message StartReply {
+}
+
+message UpdateRequest {
+}
+
+message UpdateReply {
+}
+
+message EndRequest {
+	string gameResult = 1;
+}
+
+message EndReply {
+}

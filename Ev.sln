@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ev.Domain.Tests.Unit", "Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ev.Tests.Integration", "Tests\Ev.Tests.Integration\Ev.Tests.Integration.csproj", "{ABF12CC8-7215-4CC8-A788-F2DC2C83FA8C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ev.Game.gRPC", "Ev.Game.gRPC\Ev.Game.gRPC.csproj", "{A0B80EF4-F56F-4A9F-A1B8-C4319F2E1659}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{ABF12CC8-7215-4CC8-A788-F2DC2C83FA8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABF12CC8-7215-4CC8-A788-F2DC2C83FA8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABF12CC8-7215-4CC8-A788-F2DC2C83FA8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0B80EF4-F56F-4A9F-A1B8-C4319F2E1659}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0B80EF4-F56F-4A9F-A1B8-C4319F2E1659}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0B80EF4-F56F-4A9F-A1B8-C4319F2E1659}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0B80EF4-F56F-4A9F-A1B8-C4319F2E1659}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
