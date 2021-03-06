@@ -32,8 +32,8 @@ namespace Ev.Domain.Behaviours.Core
         /// </remarks>
         IWorldState ITribeBehaviour.State 
         {
-            get { return _state; }
-            set { _state = value; }
+            get => _state;
+            set => _state = value;
         }
 
         protected readonly IRandom _rnd;
@@ -42,7 +42,7 @@ namespace Ev.Domain.Behaviours.Core
 
         private const int WORLD_STATE_SIZE = WorldState.WORLD_STATE_SIZE;
 
-        public TribeBehaviour(IRandom rnd)
+        protected TribeBehaviour(IRandom rnd)
         {
             _rnd = rnd ?? throw new ArgumentNullException(nameof(rnd));
         }
@@ -54,6 +54,8 @@ namespace Ev.Domain.Behaviours.Core
         /// <param name="tribe">The current tribe state.</param>
         /// <returns>The action chosen to be performed by the given Tribe during the current turn with the specified world state.</returns>
         public abstract IGameAction DoMove(IWorldState state, ITribeState tribe);
+
+        public virtual string DebugBehaviour() => "";
 
         // TODO: create a separate class for the factory methods for action so thay can be unit-testable.
         // This will force those who define a concrete class to pass an instance of the TribeActionFactory

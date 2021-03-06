@@ -18,13 +18,13 @@ namespace Ev.Domain.Actions.Processors
 
             if (world.CanMove(tribe.Position, direction))
             {
-                tribe.Population -= 3;
+                tribe.Population -= GameParams.Instance.MoveLoss;
 
                 world.Move(tribe, direction);
             }
             else // Hold
             {
-                tribe.Population--;
+                tribe.Population -= GameParams.Instance.IdleLoss;
             }
 
             tribe.PrevPosition = oldPos;

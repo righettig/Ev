@@ -7,7 +7,6 @@ using Ev.Domain.World.Core;
 using Ev.Serialization.Dto.Actions;
 using Ev.Serialization.Dto.Actions.Core;
 using Ev.Serialization.Dto.Entities;
-using Ev.Serialization.Dto.Entities.Core;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -24,8 +23,8 @@ namespace Ev.Serialization
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<ITribeState,        TribeDto>();
-                cfg.CreateMap<ITribeState,        EnemyTribeDto>();
+                cfg.CreateMap<ITribeState,           TribeDto>();
+                cfg.CreateMap<ITribeState,           EnemyTribeDto>();
 
                 cfg.CreateMap<Food,                  CollectableWorldEntityDto>().AfterMap((_, result) => result.EntityType = "Food");
                 cfg.CreateMap<Iron,                  CollectableWorldEntityDto>().AfterMap((_, result) => result.EntityType = "Iron");
@@ -49,11 +48,11 @@ namespace Ev.Serialization
         {
             var result = new List<GameState>();
 
-            foreach (var item in winnerHistory)
+            foreach (var (gameAction, worldState) in winnerHistory)
             {
                 IGameActionDto actionDto = null;
 
-                actionDto = item.Item1 switch
+                actionDto = gameAction switch
                 {
                     MoveAction a            => _mapper.Map<MoveActionDto>(a),
                     HoldAction a            => _mapper.Map<HoldActionDto>(a),
@@ -61,28 +60,21 @@ namespace Ev.Serialization
                     SuicideAction a         => _mapper.Map<SuicideActionDto>(a),
                     UpgradeDefensesAction a => _mapper.Map<UpgradeDefensesActionDto>(a),
                     UpgradeAttackAction   a => _mapper.Map<UpgradeAttackActionDto>(a),
-                    _ => throw new ArgumentException("Unknown type: " + item.Item1.GetType()),
+
+                    _ => throw new ArgumentException("Unknown type: " + gameAction.GetType()),
                 };
                 var gameState = new GameState { Action = actionDto };
 
-                item.Item2.Traverse((entity, x, y) =>
+                worldState.Traverse((entity, x, y) =>
                 {
-                    IWorldEntityDto worldEntityDto = null;
-
-                    switch (entity)
+                    var worldEntityDto = entity switch
                     {
-                        case CollectableWorldEntity:
-                            worldEntityDto = _mapper.Map<CollectableWorldEntityDto>(entity).WithPosition(x, y);
-                            break;
+                        CollectableWorldEntity                             => _mapper.Map<CollectableWorldEntityDto>(entity).WithPosition(x, y),
+                        IBlockingWorldEntity                               => _mapper.Map<BlockingWorldEntityDto>(entity).WithPosition(x, y),
+                        ITribeState e when e.Name != gameAction.Tribe.Name => _mapper.Map<EnemyTribeDto>(entity).WithPosition(x, y),
 
-                        case IBlockingWorldEntity:
-                            worldEntityDto = _mapper.Map<BlockingWorldEntityDto>(entity).WithPosition(x, y);
-                            break;
-
-                        case ITribeState e when e.Name != item.Item1.Tribe.Name:
-                            worldEntityDto = _mapper.Map<EnemyTribeDto>(entity).WithPosition(x, y);
-                            break;
-                    }
+                        _ => null
+                    };
 
                     if (worldEntityDto != null)
                     {
@@ -93,7 +85,7 @@ namespace Ev.Serialization
                 result.Add(gameState);
             }
 
-            string json = JsonConvert.SerializeObject(
+            var json = JsonConvert.SerializeObject(
                 result, 
                 Formatting.Indented,
                 new JsonSerializerSettings
@@ -113,8 +105,7 @@ namespace Ev.Serialization
                     }
                 });
 
-            string fullFileName = 
-                filename != null ? filename : $"ev_winner_history-{Guid.NewGuid()}.json";
+            var fullFileName = filename ?? $"ev_winner_history-{Guid.NewGuid()}.json";
                 
             await File.WriteAllTextAsync(fullFileName, json);
         }

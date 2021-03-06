@@ -28,7 +28,7 @@ namespace Ev.Game
             {
                 var alive = world.GetAliveTribes();
 
-                for (int i = 0; i < alive.Length; i++)
+                for (var i = 0; i < alive.Length; i++)
                 {
                     var tribe = alive[i];
                     var next = alive[(i + 1) % alive.Length];
@@ -64,7 +64,7 @@ namespace Ev.Game
 
             } while (!finished);
 
-            Dump(world, iteration++);
+            Dump(world, iteration);
 
             if (options.DumpWinnerHistory) 
             {

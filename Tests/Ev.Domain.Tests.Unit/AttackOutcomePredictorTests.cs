@@ -10,11 +10,11 @@ namespace Ev.Domain.Tests.Unit
     using static Helpers.TestHelpers;
 
     [TestClass]
-    public class AttackOutcomePredicotorTests
+    public class AttackOutcomePredictorTests
     {
         private readonly AttackOutcomePredictor uat;
 
-        public AttackOutcomePredicotorTests()
+        public AttackOutcomePredictorTests()
         {
             uat = new AttackOutcomePredictor(new Mock<IRandom>().Object);
         }

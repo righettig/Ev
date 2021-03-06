@@ -1,12 +1,13 @@
 ﻿using Ev.Domain.Entities.Core;
 using Ev.Domain.World;
 using System.Diagnostics;
+using Ev.Domain.Actions.Core;
 
 namespace Ev.Domain.Actions.Processors
 {
     public partial class GameActionProcessor
     {
-        public void Update(UpgradeAttackAction action, ITribe tribe, IWorld world, int iteration)
+        public void Update(BlockingGameAction action, ITribe tribe, IWorld world, int iteration)
         {
             Debug.Assert(action != null);
             Debug.Assert(tribe != null);
@@ -15,7 +16,7 @@ namespace Ev.Domain.Actions.Processors
 
             if (!tribe.LockedForNTurns.HasValue)
             {
-                tribe.LockedForNTurns = 2;
+                tribe.LockedForNTurns = GameParams.Instance.UpgradeActionsLength;
                 tribe.BusyDoing = action;
             }
             else
