@@ -13,7 +13,7 @@ namespace Ev.Helpers
 {
     public static class Debug
     {
-        private static int WORLD_STATE_SIZE = WorldState.WORLD_STATE_SIZE;
+        private static readonly int WORLD_STATE_SIZE = WorldState.WORLD_STATE_SIZE;
 
         public static void DumpHistory(IList<IGameAction> history)
         {

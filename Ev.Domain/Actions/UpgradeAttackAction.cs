@@ -9,12 +9,12 @@ namespace Ev.Domain.Actions
 
         public override string ToString() => "UpgradeAttack";
 
-        internal void OnComplete(ITribe tribe)
+        internal override void OnComplete(ITribe tribe)
         {
-            tribe.Wood -= 10;
-            tribe.Iron -= 5;
+            tribe.Wood   -= GameParams.Instance.UpgradeActionsCost.WoodCount;
+            tribe.Iron   -= GameParams.Instance.UpgradeActionsCost.IronCount;
 
-            tribe.Attack += .1f;
+            tribe.Attack += GameParams.Instance.UpgradeBonus;
         }
     }
 }

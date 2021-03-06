@@ -6,8 +6,8 @@ namespace Ev.Domain.Actions.Processors
 {
     public partial class GameActionProcessor
     {
-        public const int WIN_GAIN = 20;
-        public const int DEFEAT_LOSS = 20;
+        public static readonly int WIN_GAIN    = GameParams.Instance.WinGain;
+        public static readonly int DEFEAT_LOSS = GameParams.Instance.DefeatLoss;
 
         public void Update(AttackAction action, ITribe tribe, IWorld world, int iteration)
         {

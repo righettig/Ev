@@ -13,7 +13,7 @@ namespace Ev.Domain.Actions.Processors
             Debug.Assert(world != null);
             Debug.Assert(iteration >= 0);
 
-            tribe.Population--;
+            tribe.Population -= GameParams.Instance.IdleLoss;
         }
     }
 }
