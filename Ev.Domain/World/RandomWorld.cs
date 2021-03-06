@@ -22,9 +22,9 @@ namespace Ev.Domain.World
             if ((resources.FoodCount + resources.WoodCount + resources.IronCount) > size * size)
                 throw new ArgumentOutOfRangeException(nameof(resources), "Too many collectables requested.");
 
-            InitCollectable(resources.FoodCount, (rnd) => new Food(rnd));
-            InitCollectable(resources.WoodCount, (rnd) => new Wood(rnd));
-            InitCollectable(resources.IronCount, (rnd) => new Iron(rnd));
+            InitCollectable(resources.FoodCount, rnd => new Food(rnd));
+            InitCollectable(resources.WoodCount, rnd => new Wood(rnd));
+            InitCollectable(resources.IronCount, rnd => new Iron(rnd));
         }
 
         // for unit-testing purpose only

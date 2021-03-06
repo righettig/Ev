@@ -32,8 +32,8 @@ namespace Ev.Domain.Behaviours.Core
         /// </remarks>
         IWorldState ITribeBehaviour.State 
         {
-            get { return _state; }
-            set { _state = value; }
+            get => _state;
+            set => _state = value;
         }
 
         protected readonly IRandom _rnd;
@@ -42,7 +42,7 @@ namespace Ev.Domain.Behaviours.Core
 
         private const int WORLD_STATE_SIZE = WorldState.WORLD_STATE_SIZE;
 
-        public TribeBehaviour(IRandom rnd)
+        protected TribeBehaviour(IRandom rnd)
         {
             _rnd = rnd ?? throw new ArgumentNullException(nameof(rnd));
         }

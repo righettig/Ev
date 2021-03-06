@@ -12,7 +12,7 @@ namespace Ev.Domain.Behaviours.Fsm
 
         public Func<IWorldState, ITribeState, IGameAction> ActionFn { get; init; }
 
-        public Func<IWorldState, ITribeState, Enumeration> TransitionFn { get; set; }
+        public Func<IWorldState, ITribeState, Enumeration> TransitionFn { get; init; }
 
         public FsmState(Enumeration id)
         {

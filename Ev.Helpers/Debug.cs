@@ -17,7 +17,7 @@ namespace Ev.Helpers
 
         public static void DumpHistory(IList<IGameAction> history)
         {
-            for (int i = 0; i < history.Count; i++)
+            for (var i = 0; i < history.Count; i++)
             {
                 WriteLine($"{i} - {history[i]}");
             }
@@ -112,8 +112,8 @@ namespace Ev.Helpers
                 ForegroundColor = ColorMapper.MapColor(move.Tribe.Color);
                 Write($"{move.Tribe.Name}");
                 ResetColor();
-                WriteLine($" - {move} {(move is BlockingGameAction a && a.Completed ? $"COMPLETED ({a.Result()})" : "")}");
-                WriteLine($"Next:\t {next.Name}");
+                WriteLine($" - {move} {(move is BlockingGameAction {Completed: true} a ? $"COMPLETED ({a.Result()})" : "")}");
+                if (next != null) WriteLine($"Next:\t {next.Name}");
                 WriteLine();
             }
 
@@ -145,12 +145,12 @@ namespace Ev.Helpers
 
             WriteLine();
 
-            int rowLength = world.Size;
-            int colLength = world.Size;
+            var rowLength = world.Size;
+            var colLength = world.Size;
 
-            for (int i = 0; i < rowLength; i++)
+            for (var i = 0; i < rowLength; i++)
             {
-                for (int j = 0; j < colLength; j++)
+                for (var j = 0; j < colLength; j++)
                 {
                     if (world.State[j, i] != null)
                     {
@@ -179,12 +179,12 @@ namespace Ev.Helpers
 
         public static void DumpWorldState(WorldState worldState)
         {
-            int rowLength = worldState.State.GetLength(0);
-            int colLength = worldState.State.GetLength(1);
+            var rowLength = worldState.State.GetLength(0);
+            var colLength = worldState.State.GetLength(1);
 
-            for (int i = 0; i < rowLength; i++)
+            for (var i = 0; i < rowLength; i++)
             {
-                for (int j = 0; j < colLength; j++)
+                for (var j = 0; j < colLength; j++)
                 {
                     if (worldState.State[j, i] != null)
                     {

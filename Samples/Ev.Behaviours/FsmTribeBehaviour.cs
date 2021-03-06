@@ -6,9 +6,9 @@ namespace Ev.Samples.Behaviours
 {
     public class StateEnum : Enumeration
     {
-        public static StateEnum Idle     = new StateEnum(1, nameof(Idle));
-        public static StateEnum SeekFood = new StateEnum(2, nameof(SeekFood));
-        public static StateEnum Flee     = new StateEnum(3, nameof(Flee));
+        public static StateEnum Idle     = new(1, nameof(Idle));
+        public static StateEnum SeekFood = new(2, nameof(SeekFood));
+        public static StateEnum Flee     = new(3, nameof(Flee));
 
         public StateEnum(int id, string name) : base(id, name)
         {
@@ -19,7 +19,7 @@ namespace Ev.Samples.Behaviours
     {
         public FsmTribeBehaviour(IRandom rnd) : base(rnd) { }
 
-        public override FiniteStateMachine BuildFsm()
+        protected override FiniteStateMachine BuildFsm()
         {
             return new FiniteStateMachine()
 

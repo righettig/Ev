@@ -8,11 +8,11 @@ namespace Ev.Domain.Behaviours.Fsm
 {
     public class FiniteStateMachine 
     {
-        private Dictionary<string, FsmState> _states = new Dictionary<string, FsmState>();
+        private readonly Dictionary<string, FsmState> _states = new();
 
         private FsmState _current;
 
-        private string debug;
+        private string _debug;
 
         public FiniteStateMachine WithState(FsmState state) 
         {
@@ -32,9 +32,11 @@ namespace Ev.Domain.Behaviours.Fsm
         {
             var action = _current.ActionFn(state, tribe);
 
-            debug = _current.ToString();
+            _debug = _current.ToString();
+            
             SetState(_current.TransitionFn(state, tribe));
-            debug += $" -> {_current}";
+
+            _debug += $" -> {_current}";
 
             return action;
         }
@@ -44,6 +46,6 @@ namespace Ev.Domain.Behaviours.Fsm
             _current = _states[stateId.Name];
         }
 
-        public override string ToString() => debug;
+        public override string ToString() => _debug;
     }
 }

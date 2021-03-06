@@ -7,9 +7,9 @@ namespace Ev.Game
 {
     public class EvGameHistory 
     {
-        private readonly List<(IGameAction, IWorldState)> _states = new List<(IGameAction, IWorldState)>();
+        private readonly List<(IGameAction, IWorldState)> _states = new();
 
-        public List<(IGameAction, IWorldState)> States { get => _states; }
+        public IEnumerable<(IGameAction, IWorldState)> States => _states;
 
         public void Add((IGameAction, IWorldState) state) 
         {

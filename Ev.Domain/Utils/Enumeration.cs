@@ -2,9 +2,9 @@
 {
     public abstract class Enumeration
     {
-        public string Name { get; private set; }
+        public string Name { get; }
 
-        public int Id { get; private set; }
+        public int Id { get; }
 
         protected Enumeration(int id, string name) => (Id, Name) = (id, name);
 

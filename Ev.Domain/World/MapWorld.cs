@@ -13,7 +13,7 @@ namespace Ev.Domain.World
 {
     public class MapWorld : BaseWorld
     {
-        private readonly List<(int x, int y)> _spawnPoints = new List<(int x, int y)>();
+        private readonly List<(int x, int y)> _spawnPoints = new();
 
         public static MapWorld LoadFromFile(string filename, IRandom rnd)
         {

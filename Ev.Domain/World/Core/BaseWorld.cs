@@ -20,17 +20,17 @@ namespace Ev.Domain.World.Core
 
         public ITribe[] Tribes => _tribes.ToArray();
 
-        public bool Finished { get; protected set; }
+        public bool Finished { get; private set; }
 
-        public ITribe Winner { get; protected set; }
+        public ITribe Winner { get; private set; }
 
-        protected List<ITribe> _tribes = new List<ITribe>();
+        protected List<ITribe> _tribes = new();
 
         protected readonly IWorldEntity[,] _state;
         protected readonly IRandom _rnd;
         protected readonly int _size;
 
-        public BaseWorld(int size, IRandom rnd)
+        protected BaseWorld(int size, IRandom rnd)
         {
             if (size <= 0)
                 throw new ArgumentOutOfRangeException(nameof(size), "Size must be a positive value.");

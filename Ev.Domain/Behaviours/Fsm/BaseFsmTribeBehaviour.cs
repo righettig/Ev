@@ -11,17 +11,17 @@ namespace Ev.Domain.Behaviours.Fsm
     /// </summary>
     public abstract class BaseFsmTribeBehaviour : TribeBehaviour 
     {
-        protected FiniteStateMachine fsm;
+        private readonly FiniteStateMachine _fsm;
 
-        public BaseFsmTribeBehaviour(IRandom rnd) : base(rnd) 
+        protected BaseFsmTribeBehaviour(IRandom rnd) : base(rnd) 
         {
-            fsm = BuildFsm();    
+            _fsm = BuildFsm();    
         }
 
-        public abstract FiniteStateMachine BuildFsm();
+        protected abstract FiniteStateMachine BuildFsm();
 
-        public override IGameAction DoMove(IWorldState state, ITribeState tribe) => fsm.DoMove(state, tribe);
+        public override IGameAction DoMove(IWorldState state, ITribeState tribe) => _fsm.DoMove(state, tribe);
 
-        public override string DebugBehaviour() => fsm.ToString();
+        public override string DebugBehaviour() => _fsm.ToString();
     }
 }
