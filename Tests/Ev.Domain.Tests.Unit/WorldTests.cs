@@ -150,19 +150,20 @@ namespace Ev.Domain.Tests.Unit
         {
             // Arrange
             var tribe = TestTribe(0);
+            var world = new RandomWorld(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, new Mock<IRandom>().Object, new[] { tribe });
 
             // Act
-            uat.Update(tribe, new Mock<IGameAction>().Object, 1, new Mock<IGameActionProcessor>().Object);
+            world.Update(tribe, new Mock<IGameAction>().Object, 1, new Mock<IGameActionProcessor>().Object);
 
             // Assert
             Assert.AreEqual(1, tribe.DeadAtIteration);
         }
 
         [TestMethod]
-        public void Update_Should_Set_Finished()
+        public void Update_Should_Set_Finished_When_Only_1_Tribe()
         {
             // Arrange
-            var tribe = TestTribe(100);
+            var tribe = TestTribe(0);
             var world = new RandomWorld(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, new Mock<IRandom>().Object, new[] { tribe });
 
             // Act
@@ -173,10 +174,10 @@ namespace Ev.Domain.Tests.Unit
         }
 
         [TestMethod]
-        public void Update_Should_Set_Winner()
+        public void Update_Should_Set_Winner_When_Only_1_Tribe()
         {
             // Arrange
-            var tribe = TestTribe(100);
+            var tribe = TestTribe(0);
             var world = new RandomWorld(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, new Mock<IRandom>().Object, new[] { tribe });
 
             // Act
@@ -184,6 +185,36 @@ namespace Ev.Domain.Tests.Unit
 
             // Assert
             Assert.AreSame(tribe, world.Winner);
+        }
+
+        [TestMethod]
+        public void Update_Should_Set_Finished_When_More_Than_1_Tribe()
+        {
+            // Arrange
+            var tribe1 = TestTribe(0);
+            var tribe2 = TestTribe(100);
+            var world = new RandomWorld(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, new Mock<IRandom>().Object, new[] { tribe1, tribe2 });
+
+            // Act
+            world.Update(tribe1, new Mock<IGameAction>().Object, 1, new Mock<IGameActionProcessor>().Object);
+
+            // Assert
+            Assert.IsTrue(world.Finished);
+        }
+
+        [TestMethod]
+        public void Update_Should_Set_Winner_When_More_Than_1_Tribe()
+        {
+            // Arrange
+            var tribe1 = TestTribe(0);
+            var tribe2 = TestTribe(100);
+            var world = new RandomWorld(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, new Mock<IRandom>().Object, new[] { tribe1, tribe2 });
+
+            // Act
+            world.Update(tribe1, new Mock<IGameAction>().Object, 1, new Mock<IGameActionProcessor>().Object);
+
+            // Assert
+            Assert.AreSame(tribe2, world.Winner);
         }
 
         #endregion
