@@ -26,21 +26,6 @@ namespace Ev.Serialization.Dto.Entities
         {
             writer.WriteStartObject();
 
-            //writer.WritePropertyName("Type");
-            //writer.WriteValue("EnemyTribe");
-
-            //writer.WritePropertyName("Name");
-            //writer.WriteValue(value.Name);
-
-            //writer.WritePropertyName("Population");
-            //writer.WriteValue(value.Population);
-
-            //writer.WritePropertyName("X");
-            //writer.WriteValue(value.X);
-
-            //writer.WritePropertyName("Y");
-            //writer.WriteValue(value.Y);
-
             writer.WritePropertyName("Value");
             writer.WriteValue($"Enemy,{value.Name},{value.Population},{value.X},{value.Y}");
 

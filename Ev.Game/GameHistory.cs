@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Ev.Game
 {
-    public class EvGameHistory 
+    public class GameHistory 
     {
         private readonly List<(IGameAction, IWorldState)> _states = new();
 

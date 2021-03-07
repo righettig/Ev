@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Ev.Game.gRPC\Ev.Game.gRPC.csproj" />
+    <ProjectReference Include="..\..\Ev.Helpers\Ev.Helpers.csproj" />
+    <ProjectReference Include="..\Ev.Agents.Core\Ev.Agents.Core.csproj" />
+  </ItemGroup>
+
+</Project>

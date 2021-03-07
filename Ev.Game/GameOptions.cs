@@ -1,6 +1,6 @@
 ﻿namespace Ev.Game
 {
-    public class EvGameOptions 
+    public class GameOptions 
     {
         public bool RenderEachTurn { get; set; }
         public bool WaitAfterEachMove { get; set; }

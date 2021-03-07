@@ -200,6 +200,8 @@ namespace Ev.Helpers
 
                 Write(Environment.NewLine);
             }
+
+            WriteLine();
         }
 
         private static void AsWinner(ITribe tribe) 
@@ -232,8 +234,6 @@ namespace Ev.Helpers
             }
 
             Write($":\t{tribe.Population} {delta}\t[Iron: {tribe.Iron} Wood: {tribe.Wood}] ");
-
-            Write(tribe.DebugBehaviour());
 
             if (tribe.IsAttacking)
             {

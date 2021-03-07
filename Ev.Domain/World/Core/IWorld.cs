@@ -1,12 +1,9 @@
 ﻿using Ev.Domain.Actions;
 using Ev.Domain.Actions.Core;
-using Ev.Domain.Behaviours.Core;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.Utils;
-using Ev.Domain.World.Core;
-using System.Collections.Generic;
 
-namespace Ev.Domain.World
+namespace Ev.Domain.World.Core
 {
     public interface IWorld
     {
@@ -20,7 +17,7 @@ namespace Ev.Domain.World
 
         ITribe Winner { get; }
 
-        IWorld WithTribe(string tribeName, Color darkYellow, ITribeBehaviour behaviour);
+        IWorld AddTribe(string tribeName, Color color);
 
         ITribe[] GetAliveTribes();
 

@@ -20,7 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Ev.Domain\Ev.Domain.csproj" />
     <ProjectReference Include="..\..\Ev.Game\Ev.Game.csproj" />
-    <ProjectReference Include="..\..\Samples\Ev.Behaviours\Ev.Samples.Behaviours.csproj" />
+    <ProjectReference Include="..\..\Samples\Ev.Samples.Behaviours\Ev.Samples.Behaviours.csproj" />
   </ItemGroup>
 
   <ItemGroup>

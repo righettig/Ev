@@ -1,8 +1,12 @@
-﻿namespace Ev.Domain.Entities.Core
+﻿using Ev.Domain.Utils;
+
+namespace Ev.Domain.Entities.Core
 {
     public interface ITribeState : IWorldEntity
     {
         string Name { get; }
+        
+        Color Color { get; }
 
         int Population { get; }
 

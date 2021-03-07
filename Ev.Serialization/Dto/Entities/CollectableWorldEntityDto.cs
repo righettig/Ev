@@ -17,21 +17,6 @@ namespace Ev.Serialization.Dto.Entities
         {
             writer.WriteStartObject();
 
-            //writer.WritePropertyName("Type");
-            //writer.WriteValue("CollectableWorldEntity");
-
-            //writer.WritePropertyName("EntityType"); 
-            //writer.WriteValue(value.EntityType);
-
-            //writer.WritePropertyName("Value");
-            //writer.WriteValue(value.Value);
-
-            //writer.WritePropertyName("X");
-            //writer.WriteValue(value.X);
-
-            //writer.WritePropertyName("Y");
-            //writer.WriteValue(value.Y);
-
             writer.WritePropertyName("Value");
             writer.WriteValue($"Collectable,{value.EntityType},{value.Value},{value.X},{value.Y}");
 

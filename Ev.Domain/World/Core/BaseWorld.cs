@@ -1,6 +1,6 @@
 ﻿using Ev.Domain.Actions;
 using Ev.Domain.Actions.Core;
-using Ev.Domain.Behaviours.Core;
+using Ev.Domain.Entities;
 using Ev.Domain.Entities.Collectables;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.Utils;
@@ -56,6 +56,15 @@ namespace Ev.Domain.World.Core
             var pos = tribe.Position;
 
             var result = new IWorldEntity[1 + 2 * WORLD_STATE_SIZE, 1 + 2 * WORLD_STATE_SIZE];
+            var notReachable = new NotReachable();
+
+            for (int x = 0; x < result.GetLength(0); x++)
+            {
+                for (int y = 0; y < result.GetLength(1); y++)
+                {
+                    result[x, y] = notReachable;
+                }
+            }
 
             var ws_y = 0;
 
@@ -95,10 +104,7 @@ namespace Ev.Domain.World.Core
         /// <param name="position"></param>
         /// <param name="direction"></param>
         /// <returns>True if it's possible to move.</returns>
-        bool IWorld.CanMove((int x, int y) position, Direction direction)
-        {
-            return CanMove(position, direction);
-        }
+        bool IWorld.CanMove((int x, int y) position, Direction direction) => CanMove(position, direction);
 
         /// <summary>
         /// Updates the tribe's position by moving in the given direction.
@@ -138,10 +144,7 @@ namespace Ev.Domain.World.Core
             _ => false,
         };
 
-        private bool Available(int x, int y)
-        {
-            return !(State[x, y] is IBlockingWorldEntity || State[x, y] is ITribe);
-        }
+        private bool Available(int x, int y) => !(State[x, y] is IBlockingWorldEntity || State[x, y] is ITribe);
 
         // TODO: unit test
         /// <summary>
@@ -186,7 +189,7 @@ namespace Ev.Domain.World.Core
 
         #endregion
 
-        public abstract IWorld WithTribe(string tribeName, Color darkYellow, ITribeBehaviour behaviour);
+        public abstract IWorld AddTribe(string tribeName, Color color);
 
         /// <summary>
         /// Updates the world state by having the specified tribe executing the given move.

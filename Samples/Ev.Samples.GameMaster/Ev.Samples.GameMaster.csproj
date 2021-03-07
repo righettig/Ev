@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Agents\Ev.Agents.GameMaster\Ev.Agents.GameMaster.csproj" />
+    <ProjectReference Include="..\..\Ev.Domain\Ev.Domain.csproj" />
+    <ProjectReference Include="..\..\Ev.Game\Ev.Game.csproj" />
+  </ItemGroup>
+
+</Project>

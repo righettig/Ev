@@ -13,7 +13,7 @@ namespace Ev.Domain.Tests.Unit
         [TestMethod]
         public void Attack_Ctor_Should_Assign_Target()
         {
-            var tribe = new Tribe("t1", (0,0), Utils.Color.White, new Mock<ITribeBehaviour>().Object);
+            var tribe = new Tribe("t1", (0,0), Utils.Color.White);
 
             var action = new AttackAction(tribe.Name);
 
@@ -32,7 +32,7 @@ namespace Ev.Domain.Tests.Unit
         [TestMethod]
         public void Attack_ToString()
         {
-            var tribe = new Tribe("t1", (0, 0), Utils.Color.White, new Mock<ITribeBehaviour>().Object);
+            var tribe = new Tribe("t1", (0, 0), Utils.Color.White);
 
             var action = new AttackAction(tribe.Name);
 

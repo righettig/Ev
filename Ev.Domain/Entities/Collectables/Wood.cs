@@ -9,7 +9,11 @@ namespace Ev.Domain.Entities.Collectables
 
         public Wood(IRandom rnd) : base(rnd, MAX_VALUE)
         {
-            Color = Color.DarkRed;
+        }
+
+        public Wood(int value)
+        {
+            Value = value;
         }
     }
 }

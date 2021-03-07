@@ -260,16 +260,7 @@ namespace Ev.Domain.Tests.Unit
 
         #endregion
 
-        #region WithTribe
-
-        [TestMethod]
-        public void WithTribe_Should_Throw_ArgumentNullException_When_Behaviour_Is_Null()
-        {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                uat.WithTribe("t1", Color.DarkYellow, null);
-            });
-        }
+        #region AddTribe
 
         [TestMethod]
         public void WithTribe_Should_Assign_Tribe_State()
@@ -281,7 +272,7 @@ namespace Ev.Domain.Tests.Unit
             var uat = new RandomWorld(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, rnd.Object);
 
             // Act
-            uat.WithTribe("t1", Color.DarkYellow, new Mock<ITribeBehaviour>().Object);
+            uat.AddTribe("t1", Color.DarkYellow);
 
             // Assert
             Assert.IsTrue(uat.State[1, 1] is ITribe);

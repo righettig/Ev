@@ -1,11 +1,8 @@
-﻿using Ev.Domain.Utils;
+﻿using Ev.Domain.Entities.Core;
 
-namespace Ev.Domain.Entities.Core
+namespace Ev.Domain.Entities
 {
     public class Wall : BaseBlockingWorldEntity
     {
-        public Wall() : base(Color.White)
-        {
-        }
     }
 }

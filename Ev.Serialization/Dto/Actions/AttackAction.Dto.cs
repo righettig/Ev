@@ -25,7 +25,6 @@ namespace Ev.Serialization.Dto.Actions
             serializer.Serialize(writer, value.Tribe.Population);
 
             writer.WritePropertyName("Target");
-            //serializer.Serialize(writer, value.Target);
             writer.WriteValue($"{value.Target.Name},{value.Target.Population}");
 
             writer.WriteEndObject();

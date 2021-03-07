@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Ev.Domain.Actions;
 using Ev.Domain.Actions.Core;
+using Ev.Domain.Entities;
 using Ev.Domain.Entities.Collectables;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.World.Core;
@@ -69,6 +70,7 @@ namespace Ev.Serialization
                 {
                     var worldEntityDto = entity switch
                     {
+                        NotReachable                                       => null,
                         CollectableWorldEntity                             => _mapper.Map<CollectableWorldEntityDto>(entity).WithPosition(x, y),
                         IBlockingWorldEntity                               => _mapper.Map<BlockingWorldEntityDto>(entity).WithPosition(x, y),
                         ITribeState e when e.Name != gameAction.Tribe.Name => _mapper.Map<EnemyTribeDto>(entity).WithPosition(x, y),

@@ -1,5 +1,4 @@
-﻿using Ev.Domain.Behaviours.Core;
-using Ev.Domain.Entities;
+﻿using Ev.Domain.Entities;
 using Ev.Domain.Entities.Collectables;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.Utils;
@@ -34,16 +33,11 @@ namespace Ev.Domain.World
             _tribes = tribes.ToList();
         }
 
-        public override IWorld WithTribe(string tribeName, Color color, ITribeBehaviour behaviour)
+        public override IWorld AddTribe(string tribeName, Color color)
         {
-            if (behaviour is null)
-            {
-                throw new ArgumentNullException(nameof(behaviour));
-            }
-
             var coord = NextEmptyRandomTile();
 
-            var tribe = new Tribe(tribeName, coord, color, behaviour);
+            var tribe = new Tribe(tribeName, coord, color);
             State[coord.x, coord.y] = tribe;
 
             _tribes.Add(tribe);

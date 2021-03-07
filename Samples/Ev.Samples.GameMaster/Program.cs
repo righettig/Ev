@@ -1,13 +1,16 @@
-﻿using Ev.Domain.Utils;
+﻿using Ev.Agents.GameMaster;
+using Ev.Domain.Utils;
 using Ev.Domain.World;
-using Ev.Samples.Behaviours;
-using System.Threading.Tasks;
+using Ev.Domain.World.Core;
+using Ev.Game;
+using System;
+using Random = Ev.Domain.Utils.Random;
 
-namespace Ev.Game
+namespace Ev.Samples.GameMaster
 {
     class Program
     {
-        static IWorld CreateWorldFromMap(IRandom rnd) 
+        static IWorld CreateWorldFromMap(IRandom rnd)
         {
             //var map = // 2 tribes
             //    @"
@@ -47,35 +50,24 @@ namespace Ev.Game
             new WorldResources { FoodCount = 100, WoodCount = 40, IronCount = 10 },
             rnd);
 
-        static void CreateTribes(IWorld world, IRandom rnd) =>
-            world
-                //.WithTribe("Player1",  Color.White,      new PlayerControlledTribeBehaviour(rnd))
-                //.WithTribe("Engineer", Color.DarkYellow, new EngineerTribeBehaviour(rnd))
-                .WithTribe("RandomW",  Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd))
-                //.WithTribe("Explorer", Color.Red,        new ExplorerTribeBehaviour(rnd))
-                .WithTribe("Gatherer", Color.Cyan,       new JackOfAllTradesTribeBehaviour(rnd))
-                //.WithTribe("Lazy",     Color.White,      new LazyTribeBehaviour(rnd))
-                .WithTribe("Aggr",     Color.Yellow,     new AggressiveTribeBehaviour(rnd))
-                .WithTribe("SmrtAggr", Color.Magenta,    new SmartAggressiveTribeBehaviour(rnd));
-                //.WithTribe("Flee",     Color.DarkCyan,   new FleeTribeBehaviour(rnd));
-
-        static async Task Main()
+        static void Main()
         {
-            // TODO: it should be possible to specify parameters like how much population you lose by standing still, win gain etc.
-
             var world = CreateWorld(new Random(1));
             //var world = CreateWorldFromMap(new Random(1));
 
-            CreateTribes(world, new Random(1));
-
-            var options = new EvGameOptions
+            var options = new GameOptions
             {
                 //RenderEachTurn = true,
                 //WaitAfterEachMove = true,
-                DumpWinnerHistory = true,
+                DumpWinnerHistory = false,
             };
 
-            await EvGame.GameLoop(options, world, new Random(1));
+            var master = new GameMasterAgent(options, world, new Random(1), 2).Start();
+
+            Console.WriteLine("Press any key to exit..." + Environment.NewLine);
+            Console.ReadKey();
+
+            master.Shutdown();
         }
     }
 }

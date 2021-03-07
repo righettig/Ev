@@ -1,5 +1,4 @@
 ﻿using Ev.Domain.Actions.Core;
-using Ev.Domain.World.Core;
 
 namespace Ev.Domain.Entities.Core
 {
@@ -14,8 +13,6 @@ namespace Ev.Domain.Entities.Core
         new (int x, int y) Position { get; set; }
         new (int x, int y) PrevPosition { get; set; }
 
-        IGameAction DoMove(IWorldState state);
-
         int? LockedForNTurns { get; internal set; }
         internal float Attack { get; set; }
         internal float Defense { get; set; }
@@ -23,12 +20,10 @@ namespace Ev.Domain.Entities.Core
 
         #region Resources
         
-        new int Wood { get; internal set; }
-        
-        new int Iron { get; internal set; }
+        new int Wood { get; set; }
+
+        new int Iron { get; set; }
 
         #endregion
-
-        public string DebugBehaviour();
     }
 }

@@ -1,11 +1,6 @@
-using Ev.Domain.Actions;
-using Ev.Domain.Behaviours.Core;
 using Ev.Domain.Entities;
 using Ev.Domain.Entities.Core;
-using Ev.Domain.World.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
 
 namespace Ev.Domain.Tests.Unit
 {
@@ -18,27 +13,15 @@ namespace Ev.Domain.Tests.Unit
 
         public TribeTests()
         {
-            var tribeBehaviour = new Mock<ITribeBehaviour>();
-            tribeBehaviour.Setup(m => m.DoMove(It.IsAny<IWorldState>(), It.IsAny<ITribeState>())).Returns(new HoldAction());
-
-            uat = new Tribe("t1", (0, 0), Utils.Color.DarkYellow, tribeBehaviour.Object);
+            uat = new Tribe("t1", (0, 0), Utils.Color.DarkYellow);
         }
 
         #region Ctor
 
         [TestMethod]
-        public void Ctor_Should_Throw_ArgumentNullException_If_Behaviour_Is_Null()
-        {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                var tribe = new Tribe("t1", (0,0), Utils.Color.DarkYellow, null);
-            });
-        }
-
-        [TestMethod]
         public void Ctor_Should_Assign_Parameters_To_Members()
         {
-            var tribe = new Tribe("t1", (0, 0), Utils.Color.DarkYellow, new Mock<ITribeBehaviour>().Object);
+            var tribe = new Tribe("t1", (0, 0), Utils.Color.DarkYellow);
 
             Assert.AreEqual("t1", tribe.Name);
             Assert.AreEqual((0, 0), tribe.Position);
@@ -94,27 +77,6 @@ namespace Ev.Domain.Tests.Unit
             var actual = uat.WeakerThan(TestTribeState(20));
 
             Assert.IsFalse(actual);
-        }
-
-        #endregion
-
-        #region DoMove
-
-        [TestMethod]
-        public void DoMove_Should_Throw_ArgumentNullException_If_World_Is_Null()
-        {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                uat.DoMove(null);
-            });
-        }
-
-        [TestMethod]
-        public void DoMove()
-        {
-            var move = uat.DoMove(new Mock<IWorldState>().Object);
-
-            Assert.AreSame(uat, move.Tribe);
         }
 
         #endregion

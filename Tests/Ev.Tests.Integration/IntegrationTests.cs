@@ -1,8 +1,11 @@
+using Ev.Domain.Behaviours.Core;
 using Ev.Domain.Utils;
 using Ev.Domain.World;
+using Ev.Domain.World.Core;
 using Ev.Game;
 using Ev.Samples.Behaviours;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -11,6 +14,8 @@ namespace Ev.Tests.Integration
     [TestClass]
     public class IntegrationTests
     {
+        private readonly IRandom _rnd = new Random(1);
+
         static IWorld CreateWorldFromMap(IRandom rnd)
         {
             var map = // 4 tribes
@@ -41,12 +46,14 @@ namespace Ev.Tests.Integration
             new WorldResources { FoodCount = 100, WoodCount = 40, IronCount = 10 },
             rnd);
 
-        static void CreateTribes(IWorld world, IRandom rnd) =>
+        static void CreateTribes(IWorld world)
+        {
             world
-                .WithTribe("RandomW",  Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd))
-                .WithTribe("Gatherer", Color.Cyan,       new JackOfAllTradesTribeBehaviour(rnd))
-                .WithTribe("Aggr",     Color.Yellow,     new AggressiveTribeBehaviour(rnd))
-                .WithTribe("SmrtAggr", Color.Magenta,    new SmartAggressiveTribeBehaviour(rnd));
+                .AddTribe("RandomW",  Color.DarkYellow)
+                .AddTribe("Gatherer", Color.Cyan)
+                .AddTribe("Aggr",     Color.Yellow)
+                .AddTribe("SmrtAggr", Color.Magenta);
+        }
 
         [TestMethod]
         public async Task FourTribesOnRandomMap()
@@ -54,12 +61,22 @@ namespace Ev.Tests.Integration
             // Arrange
             var world = CreateWorld(new Random(1));
 
-            CreateTribes(world, new Random(1));
+            CreateTribes(world);
 
-            var options = new EvGameOptions { DumpWinnerHistory = true, WinnerHistoryFilename = "actual_FourTribesOnRandomMap.json" };
+            var tribeBehaviourRnd = new Random(1);
+
+            var behaviours = new Dictionary<string, ITribeBehaviour>
+            {
+                { "RandomW",  new RandomWalkerTribeBehaviour    (tribeBehaviourRnd) },
+                { "Gatherer", new JackOfAllTradesTribeBehaviour (tribeBehaviourRnd) },
+                { "Aggr",     new AggressiveTribeBehaviour      (tribeBehaviourRnd) },
+                { "SmrtAggr", new SmartAggressiveTribeBehaviour (tribeBehaviourRnd) }
+            };
+
+            var options = new GameOptions { DumpWinnerHistory = true, WinnerHistoryFilename = "actual_FourTribesOnRandomMap.json" };
 
             // Act
-            await EvGame.GameLoop(options, world, new Random(1));
+            await new EvGame(behaviours, options, world, new Random(1)).GameLoop();
 
             // Assertions
             AssertSameFinalState("FourTribesOnRandomMap");
@@ -71,12 +88,20 @@ namespace Ev.Tests.Integration
             // Arrange
             var world = CreateWorldFromMap(new Random(1));
 
-            CreateTribes(world, new Random(1));
+            CreateTribes(world);
 
-            var options = new EvGameOptions { DumpWinnerHistory = true, WinnerHistoryFilename = "actual_FourTribesOnStaticMap.json" };
+            var behaviours = new Dictionary<string, ITribeBehaviour>
+            {
+                { "RandomW",  new RandomWalkerTribeBehaviour   (_rnd) },
+                { "Gatherer", new JackOfAllTradesTribeBehaviour(_rnd) },
+                { "Aggr",     new AggressiveTribeBehaviour     (_rnd) },
+                { "SmrtAggr", new SmartAggressiveTribeBehaviour(_rnd) }
+            };
+
+            var options = new GameOptions { DumpWinnerHistory = true, WinnerHistoryFilename = "actual_FourTribesOnStaticMap.json" };
 
             // Act
-            await EvGame.GameLoop(options, world, new Random(1));
+            await new EvGame(behaviours, options, world, _rnd).GameLoop();
 
             // Assertions
             AssertSameFinalState("FourTribesOnStaticMap");

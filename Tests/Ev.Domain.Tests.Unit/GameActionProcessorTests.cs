@@ -2,10 +2,10 @@
 using Ev.Domain.Actions.Core;
 using Ev.Domain.Actions.Processors;
 using Ev.Domain.Entities.Core;
-using Ev.Domain.World;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using Ev.Domain.World.Core;
 
 namespace Ev.Domain.Tests.Unit
 {

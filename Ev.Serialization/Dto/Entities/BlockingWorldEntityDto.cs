@@ -16,18 +16,6 @@ namespace Ev.Serialization.Dto.Entities
         {
             writer.WriteStartObject();
 
-            //writer.WritePropertyName("Type");
-            //writer.WriteValue("BlockingWorldEntity");
-
-            //writer.WritePropertyName("EntityType");
-            //writer.WriteValue(value.EntityType);
-
-            //writer.WritePropertyName("X");
-            //writer.WriteValue(value.X);
-
-            //writer.WritePropertyName("Y");
-            //writer.WriteValue(value.Y);
-
             writer.WritePropertyName("Value");
             writer.WriteValue($"Blocking,{value.EntityType},{value.X},{value.Y}");
 

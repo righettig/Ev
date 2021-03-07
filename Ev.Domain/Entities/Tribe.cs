@@ -1,13 +1,13 @@
 ﻿using Ev.Domain.Actions.Core;
-using Ev.Domain.Behaviours.Core;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.Utils;
-using Ev.Domain.World.Core;
 
 namespace Ev.Domain.Entities
 {
     public class Tribe : ITribe 
     {
+        public Color Color { get; }
+
         public int Population
         {
             get => _population;
@@ -23,7 +23,7 @@ namespace Ev.Domain.Entities
         public string Name { get; }
         public (int x, int y) Position { get; set; }
         public (int x, int y) PrevPosition { get; set; }
-        public Color Color { get; init; }
+
         public bool IsAttacking { get; set; }
         int? ITribe.LockedForNTurns { get; set; }
         float ITribe.Attack { get; set; }
@@ -38,12 +38,7 @@ namespace Ev.Domain.Entities
 
         private int _population;
 
-        private readonly ITribeBehaviour _behaviour;
-
-        public Tribe(string name,
-                     (int x, int y) position,
-                     Color color,
-                     ITribeBehaviour behaviour)
+        public Tribe(string name, (int x, int y) position, Color color)
         {
             Name           = name;
             Position       = position;
@@ -51,26 +46,6 @@ namespace Ev.Domain.Entities
             Color          = color;
             Population     = 100;
             PrevPopulation = 100;
-
-            _behaviour = behaviour ?? throw new System.ArgumentNullException(nameof(behaviour));
-        }
-
-        public IGameAction DoMove(IWorldState state)
-        {
-            if (state is null)
-            {
-                throw new System.ArgumentNullException(nameof(state));
-            }
-
-            if (BusyDoing != null) return BusyDoing;
-
-            _behaviour.State = state;
-
-            var move = _behaviour.DoMove(state, ToImmutable() as ITribeState);
-
-            move.Tribe = this;
-
-            return move;
         }
 
         public IWorldEntity ToImmutable()
@@ -81,10 +56,5 @@ namespace Ev.Domain.Entities
         public bool StrongerThan(ITribeState other) => Population > other.Population;
 
         public bool WeakerThan(ITribeState other) => Population < other.Population;
-
-        public string DebugBehaviour() 
-        {
-            return (_behaviour as TribeBehaviour).DebugBehaviour();
-        }
     }
 }

@@ -9,7 +9,11 @@ namespace Ev.Domain.Entities.Collectables
 
         public Food(IRandom rnd) : base(rnd, MAX_VALUE)
         {
-            Color = Color.Green;
+        }
+
+        public Food(int value)
+        {
+            Value = value;
         }
     }
 }
