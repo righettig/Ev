@@ -2,6 +2,7 @@
 using Ev.Domain.Actions;
 using Ev.Domain.Actions.Core;
 using Ev.Domain.Entities.Blocking;
+using Ev.Domain.Entities.Collectables;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.World.Core;
 using Ev.Serialization.Dto.Actions;

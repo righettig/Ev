@@ -1,6 +1,6 @@
-﻿using Ev.Domain.Entities.Collectables;
+﻿using Ev.Domain.Entities.Core;
 
-namespace Ev.Domain.Entities.Core
+namespace Ev.Domain.Entities.Collectables
 {
     public interface ICollectableWorldEntity : IWorldEntity 
     {
