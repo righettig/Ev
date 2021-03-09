@@ -27,7 +27,7 @@ namespace Ev.Agents.Core
             {
                 Busy = tribe.BusyDoing != null,
 
-                TribeState = new DoMoveRequest.Types.TribeState
+                TribeState = new TribeState
                 {
                     Population   = tribe.Population,
                     Position     = new Position { X = tribe.Position.x,     Y = tribe.Position.y     },
@@ -141,7 +141,7 @@ namespace Ev.Agents.Core
                             new Domain.Entities.Tribe(
                                 request.WorldState[i].Tribe.Name,
                                 (request.WorldState[i].Tribe.Position.X, request.WorldState[i].Tribe.Position.Y),
-                                _color)
+                                Enum.Parse<Color>(request.WorldState[i].Tribe.Color))
                             {
                                 Population = request.WorldState[i].Tribe.Population
                             },
