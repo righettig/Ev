@@ -15,14 +15,12 @@ namespace Ev.Samples.Behaviours
         {
             var move = _rnd.Next(9);
 
-            if (move == 8)
-            {
-                return Hold();
-            }
-            else 
+            if (move != 8)
             {
                 return Move((Direction)move);
             }
+        
+            return Hold();
         }
     }
 }

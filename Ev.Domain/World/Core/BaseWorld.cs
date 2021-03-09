@@ -1,6 +1,6 @@
 ﻿using Ev.Domain.Actions;
 using Ev.Domain.Actions.Core;
-using Ev.Domain.Entities;
+using Ev.Domain.Entities.Blocking;
 using Ev.Domain.Entities.Collectables;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.Utils;
@@ -56,11 +56,11 @@ namespace Ev.Domain.World.Core
             var pos = tribe.Position;
 
             var result = new IWorldEntity[1 + 2 * WORLD_STATE_SIZE, 1 + 2 * WORLD_STATE_SIZE];
-            var notReachable = new NotReachable();
+            var notReachable = new BlockingWorldEntity { Type = BlockingWorldEntityType.NotReachable };
 
-            for (int x = 0; x < result.GetLength(0); x++)
+            for (var x = 0; x < result.GetLength(0); x++)
             {
-                for (int y = 0; y < result.GetLength(1); y++)
+                for (var y = 0; y < result.GetLength(1); y++)
                 {
                     result[x, y] = notReachable;
                 }
@@ -177,11 +177,17 @@ namespace Ev.Domain.World.Core
 
             State[x, y] = null;
 
-            switch (State[tribe.Position.x, tribe.Position.y])
+            if (State[tribe.Position.x, tribe.Position.y] is CollectableWorldEntity c)
             {
-                case Food food: tribe.Population += food.Value; break;
-                case Wood wood: tribe.Wood       += wood.Value; break;
-                case Iron iron: tribe.Iron       += iron.Value; break;
+                switch (c.Type)
+                {
+                    case CollectableWorldEntityType.Food: tribe.Population += c.Value; break;
+                    case CollectableWorldEntityType.Wood: tribe.Wood       += c.Value; break;
+                    case CollectableWorldEntityType.Iron: tribe.Iron       += c.Value; break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
             }
 
             State[tribe.Position.x, tribe.Position.y] = tribe;

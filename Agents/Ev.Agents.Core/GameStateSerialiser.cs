@@ -1,6 +1,6 @@
 ﻿using Ev.Domain.Actions;
 using Ev.Domain.Actions.Core;
-using Ev.Domain.Entities;
+using Ev.Domain.Entities.Blocking;
 using Ev.Domain.Entities.Collectables;
 using Ev.Domain.Entities.Core;
 using Ev.Domain.Utils;
@@ -45,23 +45,24 @@ namespace Ev.Agents.Core
                 {
                     null => new WorldState { Null = Google.Protobuf.WellKnownTypes.NullValue.NullValue },
 
-                    NotReachable  => new WorldState { BlockingEntityType = nameof(NotReachable) },
-                    Water         => new WorldState { BlockingEntityType = nameof(Water) },
-                    Wall          => new WorldState { BlockingEntityType = nameof(Wall) },
-                    // TODO: BlockingWorldEntity e => new WorldState { BlockingEntityType = e.Type },
+                    IBlockingWorldEntity    blocking    => new WorldState { BlockingEntityType = blocking.Type.ToString() },
 
-                    Food f        => new WorldState { Collectable = new Collectable { Type = nameof(Food), Value = f.Value } },
-                    Wood w        => new WorldState { Collectable = new Collectable { Type = nameof(Wood), Value = w.Value } },
-                    Iron i        => new WorldState { Collectable = new Collectable { Type = nameof(Iron), Value = i.Value } },
-                    // TODO: CollectableWorldEntity e => new WorldState { Collectable = new Collectable { Type = e.Type, Value = f.Value } },
+                    ICollectableWorldEntity collectable => new WorldState
+                    {
+                        Collectable = new Collectable
+                        {
+                            Type  = collectable.Type.ToString(),
+                            Value = collectable.Value
+                        }
+                    },
 
                     ITribeState t => new WorldState
                     {
                         Tribe = new EnemyTribe
                         {
-                            Name = t.Name,
+                            Name       = t.Name,
                             Population = t.Population,
-                            Position = new Position { X = t.Position.x, Y = t.Position.y }
+                            Position   = new Position { X = t.Position.x, Y = t.Position.y }
                         }
                     },
 
@@ -130,27 +131,16 @@ namespace Ev.Agents.Core
 
                     worldStateEntities[x, y] = request.WorldState[i].KindCase switch
                     {
-                        WorldState.KindOneofCase.BlockingEntityType =>
-                            request.WorldState[i].BlockingEntityType switch
-                            {
-                                nameof(NotReachable) => new NotReachable(),
-                                nameof(Wall)         => new Wall(),
-                                nameof(Water)        => new Water(),
-                                // TODO: => BlockingWorldEntity { Type = convert from BlockingEntityType }
+                        WorldState.KindOneofCase.BlockingEntityType => new BlockingWorldEntity
+                        {
+                            Type = Enum.Parse<BlockingWorldEntityType>(request.WorldState[i].BlockingEntityType)
+                        },
 
-                                _ => throw new NotImplementedException()
-                            },
-
-                        WorldState.KindOneofCase.Collectable =>
-                            request.WorldState[i].Collectable.Type switch
-                            {
-                                nameof(Food) => new Food(request.WorldState[i].Collectable.Value),
-                                nameof(Wood) => new Wood(request.WorldState[i].Collectable.Value),
-                                nameof(Iron) => new Iron(request.WorldState[i].Collectable.Value),
-                                // TODO: => CollectableWorldEntity { Type = convert from Collectable.Type }
-
-                                _ => throw new NotImplementedException(),
-                            },
+                        WorldState.KindOneofCase.Collectable => new CollectableWorldEntity
+                        {
+                            Type  = Enum.Parse<CollectableWorldEntityType>(request.WorldState[i].Collectable.Type),
+                            Value = request.WorldState[i].Collectable.Value
+                        },
 
                         WorldState.KindOneofCase.Tribe =>
                             // TODO: can I use TribeState in here?!

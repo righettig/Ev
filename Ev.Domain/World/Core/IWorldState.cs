@@ -1,4 +1,6 @@
-﻿using Ev.Domain.Entities.Core;
+﻿using Ev.Domain.Entities.Blocking;
+using Ev.Domain.Entities.Collectables;
+using Ev.Domain.Entities.Core;
 using System;
 
 namespace Ev.Domain.World.Core
@@ -9,8 +11,7 @@ namespace Ev.Domain.World.Core
 
         void Traverse(Action<IWorldEntity, int, int> fn, bool ignoreSelf = true);
 
-        // TODO: I haven't introduced the enum in this branch yet
-        //ICollectableWorldEntity[] GetCollectables(CollectableType? type = null);
+        ICollectableWorldEntity[] GetCollectables(CollectableWorldEntityType? type = null);
         ICollectableWorldEntity[] GetCollectables();
 
         ITribe[] GetTribes(); // tribes except for "self"

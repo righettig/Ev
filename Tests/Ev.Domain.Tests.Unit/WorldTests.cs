@@ -103,9 +103,9 @@ namespace Ev.Domain.Tests.Unit
             {
                 for (var j = 0; j < world.Size; j++)
                 {
-                    if (world.State[i, j] is Food) foodCount++;
-                    if (world.State[i, j] is Wood) woodCount++;
-                    if (world.State[i, j] is Iron) ironCount++;
+                    if (world.State[i, j] is ICollectableWorldEntity { Type: CollectableWorldEntityType.Food }) foodCount++;
+                    if (world.State[i, j] is ICollectableWorldEntity { Type: CollectableWorldEntityType.Wood }) woodCount++;
+                    if (world.State[i, j] is ICollectableWorldEntity { Type: CollectableWorldEntityType.Iron }) ironCount++;
                 }
             }
 

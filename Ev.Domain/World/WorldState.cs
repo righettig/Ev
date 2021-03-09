@@ -1,4 +1,6 @@
-﻿using Ev.Domain.Entities.Core;
+﻿using Ev.Domain.Entities.Blocking;
+using Ev.Domain.Entities.Collectables;
+using Ev.Domain.Entities.Core;
 using Ev.Domain.World.Core;
 using System;
 using System.Linq;
@@ -51,15 +53,15 @@ namespace Ev.Domain.World
             }
         }
 
-        //public ICollectable[] GetCollectables(CollectableType? type = null)
-        //{
-        //    if (type is null)
-        //    {
-        //        return State.OfType<ICollectable>().ToArray();
-        //    }
+        public ICollectableWorldEntity[] GetCollectables(CollectableWorldEntityType? type = null)
+        {
+            if (type is null)
+            {
+                return State.OfType<ICollectableWorldEntity>().ToArray();
+            }
 
-        //    return State.OfType<ICollectable>().Where(el => el.Type == type).ToArray();
-        //}
+            return State.OfType<ICollectableWorldEntity>().Where(el => el.Type == type).ToArray();
+        }
 
         /// <summary>
         /// Returns all the available collectable entities.

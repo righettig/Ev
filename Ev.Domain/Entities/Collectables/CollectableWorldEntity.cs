@@ -1,11 +1,14 @@
-﻿using Ev.Domain.Utils;
+﻿using Ev.Domain.Entities.Core;
+using Ev.Domain.Utils;
 
-namespace Ev.Domain.Entities.Core
+namespace Ev.Domain.Entities.Collectables
 {
-    public abstract class CollectableWorldEntity : ICollectableWorldEntity
+    public class CollectableWorldEntity : ICollectableWorldEntity
     {
-        public int Value { get; protected set; }
+        public CollectableWorldEntityType Type { get; init; }
 
+        public int Value { get; init; }
+        
         public CollectableWorldEntity(IRandom rnd, int maxValue)
         {
             Value = rnd.Next(1, maxValue + 1);

@@ -57,7 +57,7 @@ namespace Ev.Domain.Behaviours.Core
 
         public virtual string DebugBehaviour() => "";
 
-        // TODO: create a separate class for the factory methods for action so thay can be unit-testable.
+        // TODO: create a separate class for the factory methods for action so that can be unit-testable.
         // This will force those who define a concrete class to pass an instance of the TribeActionFactory
         // Do I really want this? I could create two ctor overloads, one that accepts an ITribeActionFactory
         // and another that uses a singleton instance of it.
@@ -174,7 +174,7 @@ namespace Ev.Domain.Behaviours.Core
         /// <summary>
         /// Moves the tribe towards the specified target position.
         /// </summary>
-        /// <remarks>The position is consired to be a world state position.</remarks>
+        /// <remarks>The position is considered to be a world state position.</remarks>
         /// <example>
         /// Say that the entity position is at NW with respect to the tribe, the Move(NW) action gets generated.
         /// </example>
@@ -228,7 +228,7 @@ namespace Ev.Domain.Behaviours.Core
         /// <summary>
         /// Moves the tribe away from the specified world state position.
         /// </summary>
-        /// <remarks>The position is consired to be a world state position.</remarks>
+        /// <remarks>The position is considered to be a world state position.</remarks>
         /// <param name="targetPosition">The position of the target you wish to move away from.</param>
         /// <example>
         /// Say that the entity position is at NW with respect to the tribe, the Move(SE) action gets generated.
@@ -287,13 +287,10 @@ namespace Ev.Domain.Behaviours.Core
 
             _state.Traverse((el, x, y) =>
             {
-                if (el is Food c)
+                if (el is ICollectableWorldEntity {Type: CollectableWorldEntityType.Food} c && c.Value > highest)
                 {
-                    if (c.Value > highest)
-                    {
-                        highest = c.Value;
-                        highestPos = (x, y);
-                    }
+                    highest = c.Value;
+                    highestPos = (x, y);
                 }
             });
 
