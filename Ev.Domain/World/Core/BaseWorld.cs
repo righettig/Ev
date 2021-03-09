@@ -56,7 +56,7 @@ namespace Ev.Domain.World.Core
             var pos = tribe.Position;
 
             var result = new IWorldEntity[1 + 2 * WORLD_STATE_SIZE, 1 + 2 * WORLD_STATE_SIZE];
-            var notReachable = new BlockingWorldEntity { Type = BlockingWorldEntityType.NotReachable };
+            var notReachable = Blocking.NotReachable();
 
             for (var x = 0; x < result.GetLength(0); x++)
             {

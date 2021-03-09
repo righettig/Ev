@@ -131,16 +131,10 @@ namespace Ev.Agents.Core
 
                     worldStateEntities[x, y] = request.WorldState[i].KindCase switch
                     {
-                        WorldState.KindOneofCase.BlockingEntityType => new BlockingWorldEntity
-                        {
-                            Type = Enum.Parse<BlockingWorldEntityType>(request.WorldState[i].BlockingEntityType)
-                        },
+                        WorldState.KindOneofCase.BlockingEntityType => new BlockingWorldEntity(request.WorldState[i].BlockingEntityType),
 
-                        WorldState.KindOneofCase.Collectable => new CollectableWorldEntity
-                        {
-                            Type  = Enum.Parse<CollectableWorldEntityType>(request.WorldState[i].Collectable.Type),
-                            Value = request.WorldState[i].Collectable.Value
-                        },
+                        WorldState.KindOneofCase.Collectable        => new CollectableWorldEntity(request.WorldState[i].Collectable.Type,
+                                                                                                  request.WorldState[i].Collectable.Value),
 
                         WorldState.KindOneofCase.Tribe =>
                             // TODO: can I use TribeState in here?!

@@ -33,14 +33,14 @@ namespace Ev.Domain.World
             {
                 switch (item)
                 {
-                    // TODO: Collectables.Iron(rnd) or Blocking.Wall
                     case 'S': _spawnPoints.Add((x, y)); break;
                     case '_': break; // ignore
-                    case 'I': _state[x, y] = new CollectableWorldEntity(rnd, 9) { Type = CollectableWorldEntityType.Iron }; break;
-                    case 'F': _state[x, y] = new CollectableWorldEntity(rnd, 9) { Type = CollectableWorldEntityType.Food }; break;
-                    case 'W': _state[x, y] = new CollectableWorldEntity(rnd, 9) { Type = CollectableWorldEntityType.Wood }; break;
-                    case 'X': _state[x, y] = new BlockingWorldEntity { Type = BlockingWorldEntityType.Wall }; break;
-                    case '~': _state[x, y] = new BlockingWorldEntity { Type = BlockingWorldEntityType.Water }; break;
+                    case 'I': _state[x, y] = Collectables.Iron(rnd); break;
+                    case 'F': _state[x, y] = Collectables.Food(rnd); break;
+                    case 'W': _state[x, y] = Collectables.Wood(rnd); break;
+                    case 'X': _state[x, y] = Blocking.Wall();        break;
+                    case '~': _state[x, y] = Blocking.Water();       break;
+
                     default: throw new ArgumentException("Unsupported map token", nameof(map));
                 }
 
