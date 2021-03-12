@@ -1,0 +1,42 @@
+﻿using Ev.Domain.Behaviours.BehaviourTrees.Core;
+using Ev.Domain.Utils;
+using System;
+using Random = Ev.Domain.Utils.Random;
+
+namespace Ev.Domain.Behaviours.BehaviourTrees.Composite
+{
+    /// <summary>
+    /// Randomly selects a node and and executes it until it either fails or succeeds.
+    /// </summary>
+    public class RandomComposite : CompositeBehaviourTreeNode
+    {
+        private readonly IRandom _rnd;
+
+        public RandomComposite(IRandom rnd, params IBehaviourTreeNode[] children) : base(children)
+        {
+            _rnd = rnd ?? throw new ArgumentNullException(nameof(rnd));
+        }
+
+        public RandomComposite(params IBehaviourTreeNode[] children) : this(new Random(), children)
+        {
+        }
+
+        public override NodeResult Tick(IBehaviourTreeContext context)
+        {
+            switch (_state)
+            {
+                case NodeResult.Failed:
+                case NodeResult.Success:
+                    return _state;
+
+                case NodeResult.NotStarted:
+                    _i = _rnd.Next(_children.Length + 1);
+                    break;
+            }
+
+            _state = _children[_i].Tick(context);
+
+            return _state;
+        }
+    }
+}

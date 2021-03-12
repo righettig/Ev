@@ -3,7 +3,7 @@ using Moq;
 
 namespace Ev.Domain.Tests.Unit.Helpers
 {
-    public class TestHelpers 
+    public static class TestHelpers 
     {
         public static ITribe TestTribe(int population)
         {
