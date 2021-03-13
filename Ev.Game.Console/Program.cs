@@ -30,14 +30,14 @@ namespace Ev.Game.Console
             var agent1 = new TribeAgent("RandomW",  Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd));
             var agent2 = new TribeAgent("Gatherer", Color.Cyan,       new JackOfAllTradesTribeBehaviour(rnd));
             var agent3 = new TribeAgent("Aggr",     Color.Yellow,     new AggressiveTribeBehaviour(rnd));
-            var agent4 = new TribeAgent("SmrtAggr", Color.Cyan,       new SmartAggressiveTribeBehaviour(rnd));
+            var agent4 = new TribeAgent("SmrtAggr", Color.Magenta,       new SmartAggressiveTribeBehaviour(rnd));
 
             platform.RegisterAgent(game, agent1, agent2, agent3, agent4);
 
             await game.GameLoop(new EvGameOptions
             {
-                //RenderEachTurn = true,
-                //WaitAfterEachMove = true,
+                RenderEachTurn = true,
+                WaitAfterEachMove = true,
                 DumpWinnerHistory = true,
             });
         }

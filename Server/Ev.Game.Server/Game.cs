@@ -9,6 +9,8 @@ using Ev.Infrastructure.Core;
 using Ev.Serialization;
 using System.Linq;
 using System.Threading.Tasks;
+using Ev.Domain.Server.World;
+using static Ev.Helpers.Debug;
 
 namespace Ev.Game.Server
 {
@@ -51,7 +53,7 @@ namespace Ev.Game.Server
             _platform.OnGameStart();
 
             // TODO: delegate to Spectator?
-            // Dump(world, iteration); 
+            Dump(_world, iteration); 
 
             do
             {
@@ -64,14 +66,16 @@ namespace Ev.Game.Server
                     var tribe = alive[i];
                     var state = _world.GetWorldState(tribe);
 
+                    //DumpWorldState(state as WorldState);
+
                     var move = _platform.Update(state, tribe);
 
                     switch (move)
                     {
                         case PlayerControlledGameAction:
-                            //    DumpActions();
-                            //    move = ReadAction(state);
-                            //    move.Tribe = tribe;
+                            DumpActions();
+                            move = ReadAction(state);
+                            move.Tribe = tribe;
                             break;
 
                         // TODO: it would be nice if we could delegate this responsibility to Platform, so that game logic already sees the final server action
@@ -91,7 +95,7 @@ namespace Ev.Game.Server
                     if (options.RenderEachTurn)
                     {
                         var next = alive[(i + 1) % alive.Length];
-                        //Dump(world, iteration, move, next);
+                        Dump(_world, iteration, move, next);
                     }
 
                     if (options.WaitAfterEachMove)
@@ -107,13 +111,13 @@ namespace Ev.Game.Server
             _platform.OnGameEnd();
 
             // TODO: delegate to Spectator?
-            // Dump(world, iteration);
+            Dump(_world, iteration);
 
             if (options.DumpWinnerHistory)
             {
                 var winnerHistory = _history.States.Where(el => el.Item1.Tribe.Name == _world.Winner.Name);
 
-                //DumpHistory(winnerHistory.Select(el => el.Item1).ToList());
+                DumpHistory(winnerHistory.Select(el => el.Item1).ToList());
 
                 var serializer = new EvGameHistorySerializer();
                 await serializer.SaveToFile(winnerHistory, options.WinnerHistoryFilename);

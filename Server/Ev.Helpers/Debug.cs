@@ -201,6 +201,8 @@ namespace Ev.Helpers
 
                 Write(Environment.NewLine);
             }
+
+            WriteLine();
         }
 
         private static void AsWinner(ITribe tribe) 
