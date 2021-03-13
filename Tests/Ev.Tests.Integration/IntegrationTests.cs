@@ -52,10 +52,7 @@ namespace Ev.Tests.Integration
             var agent3 = new TribeAgent("Aggr",     Color.Cyan,       new AggressiveTribeBehaviour(rnd));
             var agent4 = new TribeAgent("Gatherer", Color.Cyan,       new SmartAggressiveTribeBehaviour(rnd));
 
-            platform.RegisterAgent(agent1);
-            platform.RegisterAgent(agent2);
-            platform.RegisterAgent(agent3);
-            platform.RegisterAgent(agent4);
+            platform.RegisterAgent(agent1, agent2, agent3, agent4);
         }
 
         [TestMethod]

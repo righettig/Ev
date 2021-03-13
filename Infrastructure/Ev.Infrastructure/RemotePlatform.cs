@@ -1,5 +1,4 @@
-﻿using Ev.Common;
-using Ev.Domain.Server.Core;
+﻿using Ev.Domain.Server.Core;
 using Ev.Infrastructure.Core;
 
 namespace Ev.Infrastructure
@@ -26,7 +25,7 @@ namespace Ev.Infrastructure
             throw new System.NotImplementedException();
         }
 
-        public void RegisterAgent(Ev.Domain.Client.Core.ITribeAgent agent)
+        public void RegisterAgent(params Domain.Client.Core.ITribeAgent[] agents)
         {
         }
 

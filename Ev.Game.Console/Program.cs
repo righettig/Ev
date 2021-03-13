@@ -29,9 +29,7 @@ namespace Ev.Game.Console
             var agent1 = new TribeAgent("t1", Color.Magenta, new LazyTribeBehaviour(rnd));
             var agent2 = new TribeAgent("t2", Color.Yellow,  new RandomWalkerTribeBehaviour(rnd));
 
-            // TODO: create overload params ITribeAgent[]
-            platform.RegisterAgent(agent1);
-            platform.RegisterAgent(agent2);
+            platform.RegisterAgent(agent1, agent2);
 
             var options = new EvGameOptions
             {

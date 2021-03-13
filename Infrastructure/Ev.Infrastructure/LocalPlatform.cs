@@ -35,11 +35,14 @@ namespace Ev.Infrastructure
         {
         }
 
-        public void RegisterAgent(Domain.Client.Core.ITribeAgent agent)
+        public void RegisterAgent(params ITribeAgent[] agents)
         {
-            _behaviours[agent.Name] = agent.Behaviour;
+            foreach (var tribeAgent in agents)
+            {
+                _behaviours[tribeAgent.Name] = tribeAgent.Behaviour;
 
-            _game.RegisterAgent(agent.Name, agent.Color);
+                _game.RegisterAgent(tribeAgent.Name, tribeAgent.Color);
+            }
         }
 
         public Domain.Server.Core.IGameAction Update(IWorldState worldState, ITribe tribe)
@@ -55,24 +58,6 @@ namespace Ev.Infrastructure
             Domain.Server.Core.IGameAction result = _mapper.Map(action);
 
             return result;
-        }
-    }
-
-    public class Mapper
-    {
-        public Domain.Client.Core.IWorldState Map(Domain.Server.Core.IWorldState worldState)
-        {
-            return null;
-        }
-
-        public Domain.Client.Core.ITribe Map(Domain.Server.Core.ITribe tribe)
-        {
-            return null;
-        }
-
-        public Domain.Server.Core.IGameAction Map(Domain.Client.Core.IGameAction action)
-        {
-            return null;
         }
     }
 }

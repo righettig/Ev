@@ -11,7 +11,7 @@
 
         void OnTurnEnd();
 
-        void RegisterAgent(Domain.Client.Core.ITribeAgent agent);
+        void RegisterAgent(params Domain.Client.Core.ITribeAgent[] agents);
 
         Domain.Server.Core.IGameAction Update(Domain.Server.Core.IWorldState worldState, Domain.Server.Core.ITribe tribe);
     }
