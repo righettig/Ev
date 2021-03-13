@@ -17,8 +17,6 @@ namespace Ev.Domain.Server.Core
         (int x, int y) Position { get; set; }
         (int x, int y) PrevPosition { get; set; }
 
-        //IGameAction DoMove(IWorldState state);
-
         int? LockedForNTurns { get; set; }
         float Attack { get; set; }
         float Defense { get; set; }
@@ -32,7 +30,5 @@ namespace Ev.Domain.Server.Core
         int Iron { get; set; }
 
         #endregion
-
-        //public string DebugBehaviour();
     }
 }

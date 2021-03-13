@@ -1,13 +1,14 @@
-﻿using Ev.Domain.Actions.Core.Processors;
-using Ev.Domain.Entities.Core;
-using Ev.Domain.Utils;
+﻿using Ev.Common.Utils;
+using Ev.Domain.Server.Predictors;
+using Ev.Domain.Server.Tests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using Ev.Domain.Server.Core;
 
-namespace Ev.Domain.Tests.Unit
+namespace Ev.Domain.Server.Tests
 {
-    using static Helpers.TestHelpers;
+    using static TestHelpers;
 
     [TestClass]
     public class AttackOutcomePredictorTests

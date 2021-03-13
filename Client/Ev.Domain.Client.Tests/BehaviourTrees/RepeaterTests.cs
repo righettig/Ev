@@ -1,10 +1,10 @@
-﻿using Ev.Domain.Behaviours.BehaviourTrees.Core;
-using Ev.Domain.Behaviours.BehaviourTrees.Decorators;
+﻿using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
+using Ev.Domain.Client.Behaviours.BehaviourTrees.Decorators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 
-namespace Ev.Domain.Tests.Unit.BehaviourTrees
+namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
     [TestClass]
     public class RepeaterTests

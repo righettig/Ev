@@ -1,15 +1,12 @@
-using Ev.Domain.Actions;
-using Ev.Domain.Actions.Core;
-using Ev.Domain.Behaviours.BehaviourTrees;
-using Ev.Domain.Behaviours.BehaviourTrees.Core;
-using Ev.Domain.Behaviours.Core;
-using Ev.Domain.Entities.Core;
-using Ev.Domain.World.Core;
+using Ev.Domain.Client.Actions;
+using Ev.Domain.Client.Behaviours.BehaviourTrees;
+using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
+using Ev.Domain.Client.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 
-namespace Ev.Domain.Tests.Unit.BehaviourTrees
+namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
     [TestClass]
     public class GameActionNodeTests
@@ -30,7 +27,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
         {
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                var node = new GameActionNode((Func<IWorldState, ITribeState, IGameAction>) null);
+                var node = new GameActionNode((Func<IWorldState, ITribe, IGameAction>) null);
             });
         }
 
@@ -93,7 +90,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
 
             var node = new GameActionNode((worldState, tribeState) => action);
 
-            var context = new BehaviourTreeContext(new Mock<IWorldState>().Object, new Mock<ITribeState>().Object);
+            var context = new BehaviourTreeContext(new Mock<IWorldState>().Object, new Mock<ITribe>().Object);
 
             // Act
             node.Tick(context);

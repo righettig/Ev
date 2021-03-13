@@ -1,15 +1,15 @@
-﻿using Ev.Domain.Behaviours.BehaviourTrees;
-using Ev.Domain.Behaviours.BehaviourTrees.Core;
-using Ev.Domain.Behaviours.BehaviourTrees.Decorators;
+﻿using Ev.Domain.Client.Behaviours.BehaviourTrees;
+using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
+using Ev.Domain.Client.Behaviours.BehaviourTrees.Decorators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using static Ev.Domain.Tests.Unit.BehaviourTrees.Helpers;
+using static Ev.Domain.Client.Tests.BehaviourTrees.Helpers;
 
-namespace Ev.Domain.Tests.Unit.BehaviourTrees
+namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
     [TestClass]
-    public class InverterNodeTests
+    public class RepeatUntilFails
     {
         #region Ctor
 
@@ -18,7 +18,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
         {
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                var node = new InverterNode(null);
+                var node = new RepeatUntilFail(null);
             });
         }
 
@@ -30,7 +30,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
         public void Tick_Should_Return_Success_If_Child_Fails()
         {
             // Arrange
-            var node = new InverterNode(FailingTreeNode());
+            var node = new RepeatUntilFail(FailingTreeNode());
 
             // Act
             var actual = node.Tick(new Mock<IBehaviourTreeContext>().Object);
@@ -40,23 +40,23 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
         }
 
         [TestMethod]
-        public void Tick_Should_Return_Failure_If_Child_Succeeds()
+        public void Tick_Should_Return_Running_If_Child_Running()
         {
             // Arrange
-            var node = new InverterNode(SucceedingTreeNode());
+            var node = new RepeatUntilFail(RunningTreeNode());
 
             // Act
             var actual = node.Tick(new Mock<IBehaviourTreeContext>().Object);
 
             // Assert
-            Assert.AreEqual(NodeResult.Failed, actual);
+            Assert.AreEqual(NodeResult.Running, actual);
         }
 
         [TestMethod]
-        public void Tick_Should_Return_Running_If_Child_Is_Running()
+        public void Tick_Should_Return_Running_If_Child_Succeeds()
         {
             // Arrange
-            var node = new InverterNode(RunningTreeNode());
+            var node = new RepeatUntilFail(SucceedingTreeNode());
 
             // Act
             var actual = node.Tick(new Mock<IBehaviourTreeContext>().Object);
@@ -73,7 +73,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
         public void Reset_Should_Reset_To_NotStarted_After_Success()
         {
             // Arrange
-            var node = new InverterNode(SucceedingTreeNode());
+            var node = new RepeatUntilFail(SucceedingTreeNode());
 
             node.Tick(new Mock<IBehaviourTreeContext>().Object);
 
@@ -88,7 +88,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
         public void Reset_Should_Reset_To_NotStarted_After_Failure()
         {
             // Arrange
-            var node = new InverterNode(FailingTreeNode());
+            var node = new RepeatUntilFail(FailingTreeNode());
 
             node.Tick(new Mock<IBehaviourTreeContext>().Object);
 
@@ -103,7 +103,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
         public void Reset_Should_Reset_To_NotStarted_If_Running()
         {
             // Arrange
-            var node = new InverterNode(RunningTreeNode());
+            var node = new RepeatUntilFail(RunningTreeNode());
 
             node.Tick(new Mock<IBehaviourTreeContext>().Object);
 

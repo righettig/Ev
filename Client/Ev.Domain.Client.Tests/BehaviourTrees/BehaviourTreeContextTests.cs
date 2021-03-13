@@ -1,17 +1,15 @@
-﻿using Ev.Domain.Actions.Core;
-using Ev.Domain.Behaviours.BehaviourTrees;
-using Ev.Domain.Entities.Core;
-using Ev.Domain.World.Core;
+﻿using Ev.Domain.Client.Behaviours.BehaviourTrees;
+using Ev.Domain.Client.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 
-namespace Ev.Domain.Tests.Unit.BehaviourTrees
+namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
     [TestClass]
     public class BehaviourTreeContextTests
     {
-        private readonly BehaviourTreeContext uat = new(new Mock<IWorldState>().Object, new Mock<ITribeState>().Object);
+        private readonly BehaviourTreeContext uat = new(new Mock<IWorldState>().Object, new Mock<ITribe>().Object);
 
         #region Ctor
 
@@ -20,7 +18,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
         {
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                new BehaviourTreeContext(null, new Mock<ITribeState>().Object);
+                new BehaviourTreeContext(null, new Mock<ITribe>().Object);
             });
         }
 
@@ -125,7 +123,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
             // Arrange
             var worldState = new Mock<IWorldState>().Object;
 
-            var context = new BehaviourTreeContext(worldState, new Mock<ITribeState>().Object);
+            var context = new BehaviourTreeContext(worldState, new Mock<ITribe>().Object);
 
             // Act
             var actual = context.WorldState;
@@ -138,7 +136,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
         public void TribeState_Getter_Should_Return_Correct_Value()
         {
             // Arrange
-            var tribeState = new Mock<ITribeState>().Object;
+            var tribeState = new Mock<ITribe>().Object;
 
             var context = new BehaviourTreeContext(new Mock<IWorldState>().Object, tribeState);
 

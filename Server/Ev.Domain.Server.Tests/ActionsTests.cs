@@ -1,11 +1,11 @@
-using Ev.Domain.Actions;
-using Ev.Domain.Behaviours.Core;
-using Ev.Domain.Entities;
+using Ev.Common.Utils;
+using Ev.Domain.Server.Actions;
+using Ev.Domain.Server.Entities;
+using Ev.Domain.Server.Tests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using System;
 
-namespace Ev.Domain.Tests.Unit
+namespace Ev.Domain.Server.Tests
 {
     [TestClass]
     public class ActionsTests
@@ -13,7 +13,7 @@ namespace Ev.Domain.Tests.Unit
         [TestMethod]
         public void Attack_Ctor_Should_Assign_Target()
         {
-            var tribe = new Tribe("t1", (0,0), Utils.Color.White, new Mock<ITribeBehaviour>().Object);
+            var tribe = new Tribe("t1", (0,0), Color.White);
 
             var action = new AttackAction(tribe.Name);
 
@@ -32,7 +32,7 @@ namespace Ev.Domain.Tests.Unit
         [TestMethod]
         public void Attack_ToString()
         {
-            var tribe = new Tribe("t1", (0, 0), Utils.Color.White, new Mock<ITribeBehaviour>().Object);
+            var tribe = new Tribe("t1", (0, 0), Color.White);
 
             var action = new AttackAction(tribe.Name);
 
@@ -59,7 +59,7 @@ namespace Ev.Domain.Tests.Unit
         public void UpgradeDefenses_OnComplete_Should_Update_Tribe()
         {
             // Arrange
-            var tribe = Helpers.TestHelpers.TestTribe(100);
+            var tribe = TestHelpers.TestTribe(100);
             tribe.Iron = 5;
             tribe.Wood = 10;
             tribe.Defense = 0;
@@ -79,7 +79,7 @@ namespace Ev.Domain.Tests.Unit
         public void UpgradeAttack_OnComplete_Should_Update_Tribe()
         {
             // Arrange
-            var tribe = Helpers.TestHelpers.TestTribe(100);
+            var tribe = TestHelpers.TestTribe(100);
             tribe.Iron = 5;
             tribe.Wood = 10;
             tribe.Attack = 0;

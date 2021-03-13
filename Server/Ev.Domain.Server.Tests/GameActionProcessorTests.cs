@@ -1,15 +1,16 @@
-﻿using Ev.Domain.Actions;
-using Ev.Domain.Actions.Core;
-using Ev.Domain.Actions.Processors;
-using Ev.Domain.Entities.Core;
-using Ev.Domain.World;
+﻿using Ev.Domain.Server.Actions;
+using Ev.Domain.Server.Actions.Core;
+using Ev.Domain.Server.Core;
+using Ev.Domain.Server.Processors;
+using Ev.Domain.Server.Tests.Helpers;
+using Ev.Domain.Server.World.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 
-namespace Ev.Domain.Tests.Unit
+namespace Ev.Domain.Server.Tests
 {
-    using static Helpers.TestHelpers;
+    using static TestHelpers;
 
     [TestClass]
     public class GameActionProcessorTests

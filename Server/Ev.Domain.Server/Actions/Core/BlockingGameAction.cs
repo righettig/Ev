@@ -8,6 +8,6 @@ namespace Ev.Domain.Server.Actions.Core
 
         public abstract string Result();
 
-        internal abstract void OnComplete(ITribe tribe);
+        public abstract void OnComplete(ITribe tribe);
     }
 }

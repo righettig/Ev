@@ -1,13 +1,13 @@
-﻿using Ev.Domain.Behaviours.BehaviourTrees.Composite;
-using Ev.Domain.Behaviours.BehaviourTrees.Core;
+﻿using Ev.Domain.Client.Behaviours.BehaviourTrees.Composite;
+using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 
-namespace Ev.Domain.Tests.Unit.BehaviourTrees
+namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
     [TestClass]
-    public class SequenceTests
+    public class SelectorTests
     {
         #region Ctor
 
@@ -16,7 +16,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
         {
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                var node = new Sequence(null);
+                var node = new Selector(null);
             });
         }
 
@@ -27,7 +27,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
             var child1 = new Mock<IBehaviourTreeNode>().Object;
             var child2 = new Mock<IBehaviourTreeNode>().Object;
 
-            var node = new Sequence(child1, child2);
+            var node = new Selector(child1, child2);
 
             // Assert
             Assert.AreEqual(NodeResult.NotStarted, node.State);
@@ -38,10 +38,10 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
         #region Tick
 
         [TestMethod]
-        public void Tick_Should_Return_Running_If_First_Child_Succeeds_But_Evaluation_Not_Finished()
+        public void Tick_Should_Return_Running_If_First_Child_Fails_But_Evaluation_Not_Finished()
         {
             // Arrange
-            var node = new Sequence(Helpers.SucceedingTreeNode(), Helpers.SucceedingTreeNode());
+            var node = new Selector(Helpers.FailingTreeNode(), Helpers.SucceedingTreeNode());
 
             // Act
             var actual = node.Tick(Helpers.CreateMockContext());
@@ -51,10 +51,10 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
         }
 
         [TestMethod]
-        public void Tick_Should_Return_Success_When_All_Children_Succeeds()
+        public void Tick_Should_Return_Success_When_A_Child_Succeeds()
         {
             // Arrange
-            var node = new Selector(Helpers.SucceedingTreeNode());
+            var node = new Selector(Helpers.SucceedingTreeNode(), Helpers.FailingTreeNode());
 
             // Act
             var actual = node.Tick(Helpers.CreateMockContext());
@@ -64,10 +64,10 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
         }
 
         [TestMethod]
-        public void Tick_Should_Return_Success_When_All_Children_Succeeds2()
+        public void Tick_Should_Return_Success_When_A_Child_Succeeds2()
         {
             // Arrange
-            var node = new Selector(Helpers.SucceedingTreeNode(), Helpers.SucceedingTreeNode());
+            var node = new Selector(Helpers.FailingTreeNode(), Helpers.SucceedingTreeNode());
 
             var context = Helpers.CreateMockContext();
 
@@ -130,7 +130,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
         public void Reset_Should_Set_State_To_NotStarted_After_Running()
         {
             // Arrange
-            var node = new Selector(Helpers.SucceedingTreeNode(), Helpers.SucceedingTreeNode());
+            var node = new Selector(Helpers.FailingTreeNode(), Helpers.SucceedingTreeNode());
 
             node.Tick(Helpers.CreateMockContext());
 

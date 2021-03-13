@@ -1,15 +1,13 @@
-﻿using Ev.Domain.Actions;
-using Ev.Domain.Actions.Core;
-using Ev.Domain.Behaviours.BehaviourTrees;
-using Ev.Domain.Behaviours.BehaviourTrees.Core;
-using Ev.Domain.Entities.Core;
-using Ev.Domain.Utils;
-using Ev.Domain.World.Core;
+﻿using Ev.Common.Utils;
+using Ev.Domain.Client.Actions;
+using Ev.Domain.Client.Behaviours.BehaviourTrees;
+using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
+using Ev.Domain.Client.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 
-namespace Ev.Domain.Tests.Unit.BehaviourTrees
+namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
     class TestBehaviourTreeTribeBehaviour : BehaviourTreeTribeBehaviour
     {
@@ -34,7 +32,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
         {
             Assert.ThrowsException<ArgumentNullException>(() =>
             {
-                uat.DoMove(null, new Mock<ITribeState>().Object);
+                uat.DoMove(null, new Mock<ITribe>().Object);
             });
         }
 
@@ -54,7 +52,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
             var uat = new TestBehaviourTreeTribeBehaviour(new Mock<IRandom>().Object, null);
             
             // Act
-            var actual = uat.DoMove(new Mock<IWorldState>().Object, new Mock<ITribeState>().Object);
+            var actual = uat.DoMove(new Mock<IWorldState>().Object, new Mock<ITribe>().Object);
 
             // Assert
             Assert.IsInstanceOfType(actual, typeof(HoldAction));
@@ -68,7 +66,7 @@ namespace Ev.Domain.Tests.Unit.BehaviourTrees
             var uat = new TestBehaviourTreeTribeBehaviour(new Mock<IRandom>().Object, expected);
 
             // Act
-            var actual = uat.DoMove(new Mock<IWorldState>().Object, new Mock<ITribeState>().Object);
+            var actual = uat.DoMove(new Mock<IWorldState>().Object, new Mock<ITribe>().Object);
 
             // Assert
             Assert.AreSame(expected, actual);

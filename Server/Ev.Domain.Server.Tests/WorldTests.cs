@@ -1,16 +1,17 @@
-using Ev.Domain.Actions.Core;
-using Ev.Domain.Behaviours.Core;
-using Ev.Domain.Entities.Collectables;
-using Ev.Domain.Entities.Core;
-using Ev.Domain.Utils;
-using Ev.Domain.World;
+using Ev.Common.Utils;
+using Ev.Domain.Server.Actions.Core;
+using Ev.Domain.Server.Entities.Collectables;
+using Ev.Domain.Server.Tests.Helpers;
+using Ev.Domain.Server.World;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using Ev.Domain.Server.Core;
 
-namespace Ev.Domain.Tests.Unit
+namespace Ev.Domain.Server.Tests
 {
-    using static Helpers.TestHelpers;
+    using static TestHelpers;
+    using Random = Common.Utils.Random;
 
     [TestClass]
     public class WorldTests
@@ -67,7 +68,7 @@ namespace Ev.Domain.Tests.Unit
         [TestMethod]
         public void Ctor_Should_Assign_Size()
         {
-            var world = new RandomWorld(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Utils.Random());
+            var world = new RandomWorld(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Random());
 
             Assert.AreEqual(10, world.Size);
             Assert.AreEqual(10, world.State.GetLength(0));
@@ -77,7 +78,7 @@ namespace Ev.Domain.Tests.Unit
         [TestMethod]
         public void Ctor_Should_Set_Finished_To_False()
         {
-            var world = new RandomWorld(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Utils.Random());
+            var world = new RandomWorld(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Random());
 
             Assert.IsFalse(world.Finished);
         }
@@ -85,7 +86,7 @@ namespace Ev.Domain.Tests.Unit
         [TestMethod]
         public void Ctor_Should_Set_Winner_To_Null()
         {
-            var world = new RandomWorld(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Utils.Random());
+            var world = new RandomWorld(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Random());
 
             Assert.IsNull(world.Winner);
         }
@@ -93,7 +94,7 @@ namespace Ev.Domain.Tests.Unit
         [TestMethod]
         public void Ctor_Should_Allocate_Correct_Number_Of_Resources()
         {
-            var world = new RandomWorld(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Utils.Random());
+            var world = new RandomWorld(10, new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, new Random());
 
             var foodCount = 0;
             var woodCount = 0;
@@ -260,19 +261,10 @@ namespace Ev.Domain.Tests.Unit
 
         #endregion
 
-        #region WithTribe
-
+        #region AddTribe
+        
         [TestMethod]
-        public void WithTribe_Should_Throw_ArgumentNullException_When_Behaviour_Is_Null()
-        {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                uat.WithTribe("t1", Color.DarkYellow, null);
-            });
-        }
-
-        [TestMethod]
-        public void WithTribe_Should_Assign_Tribe_State()
+        public void AddTribe_Should_Assign_Tribe_State()
         {
             // Arrange
             var rnd = new Mock<IRandom>();
@@ -281,12 +273,12 @@ namespace Ev.Domain.Tests.Unit
             var uat = new RandomWorld(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, rnd.Object);
 
             // Act
-            uat.WithTribe("t1", Color.DarkYellow, new Mock<ITribeBehaviour>().Object);
+            uat.AddTribe("t1", Color.DarkYellow);
 
             // Assert
             Assert.IsTrue(uat.State[1, 1] is ITribe);
-            Assert.AreEqual("t1", (uat.State[1, 1] as ITribe).Name);
-            Assert.AreEqual(Color.DarkYellow, (uat.State[1, 1] as ITribe).Color);
+            Assert.AreEqual("t1", ((ITribe) uat.State[1, 1]).Name);
+            Assert.AreEqual(Color.DarkYellow, ((ITribe) uat.State[1, 1]).Color);
             Assert.AreSame(uat.State[1, 1], uat.Tribes[0]);
         }
 

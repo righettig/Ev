@@ -13,6 +13,6 @@ namespace Ev.Domain.Server.Actions
 
         public AttackAction(string target) => TargetName = target ?? throw new ArgumentNullException(nameof(target));
 
-        //public override string ToString() => "Attack " + TargetName;
+        public override string ToString() => "Attack " + TargetName;
     }
 }

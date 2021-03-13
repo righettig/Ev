@@ -36,8 +36,6 @@ namespace Ev.Domain.Server.Entities
 
         private int _population;
 
-        //private readonly ITribeBehaviour _behaviour;
-
         public Tribe(string name,
                      (int x, int y) position,
                      Color color)
@@ -49,33 +47,5 @@ namespace Ev.Domain.Server.Entities
             Population     = 100;
             PrevPopulation = 100;
         }
-
-        //public IGameAction DoMove(IWorldState state)
-        //{
-        //    if (state is null)
-        //    {
-        //        throw new System.ArgumentNullException(nameof(state));
-        //    }
-
-        //    if (BusyDoing != null) return BusyDoing;
-
-        //    _behaviour.State = state;
-
-        //    var move = _behaviour.DoMove(state, ToImmutable() as ITribeState);
-
-        //    move.Tribe = this;
-
-        //    return move;
-        //}
-
-        //public IWorldEntity ToImmutable()
-        //{
-        //    return new TribeState(this);
-        //}
-
-        //public string DebugBehaviour() 
-        //{
-        //    return (_behaviour as TribeBehaviour).DebugBehaviour();
-        //}
     }
 }

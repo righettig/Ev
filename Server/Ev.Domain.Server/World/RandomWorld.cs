@@ -28,7 +28,8 @@ namespace Ev.Domain.Server.World
         }
 
         // for unit-testing purpose only
-        internal RandomWorld(int size, WorldResources resources, IRandom rnd, IEnumerable<ITribe> tribes) 
+        //internal RandomWorld(int size, WorldResources resources, IRandom rnd, IEnumerable<ITribe> tribes) 
+        public RandomWorld(int size, WorldResources resources, IRandom rnd, IEnumerable<ITribe> tribes)
             : this(size, resources, rnd)
         {
             _tribes = tribes.ToList();
@@ -38,7 +39,7 @@ namespace Ev.Domain.Server.World
         {
             var coord = NextEmptyRandomTile();
 
-            var tribe = new Tribe(tribeName, coord, color);//, behaviour);
+            var tribe = new Tribe(tribeName, coord, color);
             State[coord.x, coord.y] = tribe;
 
             _tribes.Add(tribe);

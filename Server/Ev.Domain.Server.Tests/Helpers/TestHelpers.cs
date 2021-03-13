@@ -1,7 +1,7 @@
-﻿using Ev.Domain.Entities.Core;
+﻿using Ev.Domain.Server.Core;
 using Moq;
 
-namespace Ev.Domain.Tests.Unit.Helpers
+namespace Ev.Domain.Server.Tests.Helpers
 {
     public static class TestHelpers 
     {
@@ -24,9 +24,9 @@ namespace Ev.Domain.Tests.Unit.Helpers
             return result;
         }
 
-        public static ITribeState TestTribeState(int population)
+        public static ITribe TestTribeState(int population)
         {
-            var result = new Mock<ITribeState>();
+            var result = new Mock<ITribe>();
 
             result.SetupGet(m => m.Population).Returns(population);
 
