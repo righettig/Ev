@@ -1,7 +1,13 @@
-﻿using Ev.Domain.Server.Core;
+﻿using Ev.Common.Utils;
+using Ev.Domain.Server.Actions;
+using Ev.Domain.Server.Core;
+using Ev.Domain.Server.Predictors;
+using Ev.Domain.Server.Processors;
 using Ev.Domain.Server.World.Core;
 using Ev.Infrastructure;
 using Ev.Infrastructure.Core;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ev.Domain.Server
 {
@@ -31,24 +37,85 @@ namespace Ev.Domain.Server
         {
         }
 
-        private void GameLoop()
+        //private void GameLoop()
+        public async Task GameLoop(EvGameOptions options, IWorld world, IRandom rnd)
         {
+            var finished = false;
+            var iteration = 0;
+
+            // TODO: for this to be useful I need to be able to record the game/world parameters too
+            var history = new EvGameHistory();
+            var actionProcessor = new GameActionProcessor(new AttackOutcomePredictor(rnd));
+
             _platform.OnGameStart();
 
-            // loop through tribes {
-                _platform.OnTurnStart();
+            // TODO: delegate to Spectator?
+            // Dump(world, iteration); 
 
-                IWorldState worldState = null;
-                ITribe tribe = null;
+            do
+            {
+                var alive = world.GetAliveTribes();
 
-                var action = _platform.Update(worldState, tribe);
+                for (var i = 0; i < alive.Length; i++)
+                {
+                    _platform.OnTurnStart();
 
-                // update world
+                    var tribe = alive[i];
+                    var state = world.GetWorldState(tribe);
 
-                _platform.OnTurnEnd();
-            //}
+                    var move = _platform.Update(state, tribe);
+
+                    //if (move is PlayerControlledGameAction)
+                    //{
+                    //    DumpActions();
+                    //    move = ReadAction(state);
+                    //    move.Tribe = tribe;
+                    //}
+
+                    // TODO: it would be nice if we could delegate this responsibility to Platform, so that game logic already sees the final server action
+                    // without having to perform this mapping logic. For now I'm gonna add TargetName as an additional property in the server action model.
+                    if (move is AttackAction a)
+                    { 
+                        // mapping client-side action to server-side
+                        a.Target = alive.First(el => el.Name == a.TargetName);
+                    }
+
+                    history.Add((move, state));
+
+                    finished = world.Update(tribe, move, iteration, actionProcessor);
+
+                    _platform.OnTurnEnd();
+
+                    if (options.RenderEachTurn)
+                    {
+                        //var next = alive[(i + 1) % alive.Length];
+                        //Dump(world, iteration, move, next);
+                    }
+
+                    if (options.WaitAfterEachMove)
+                    {
+                        System.Console.ReadLine();
+                    }
+                }
+
+                iteration++;
+
+            } while (!finished);
 
             _platform.OnGameEnd();
+
+            // TODO: delegate to Spectator?
+            // Dump(world, iteration);
+
+            //if (options.DumpWinnerHistory)
+            //{
+            //    var winnerHistory = history.States.Where(el => el.Item1.Tribe.Name == world.Winner.Name);
+
+            //    DumpHistory(winnerHistory.Select(el => el.Item1).ToList());
+
+            //    var serializer = new EvGameHistorySerializer();
+            //    await serializer.SaveToFile(winnerHistory, options.WinnerHistoryFilename);
+            //}
         }
     }
 }
