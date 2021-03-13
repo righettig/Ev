@@ -1,15 +1,15 @@
-﻿using System;
-using Ev.Domain.Server.Actions.Core;
+﻿using Ev.Domain.Server.Actions.Core;
 using Ev.Domain.Server.Core;
+using System;
 
 namespace Ev.Domain.Server.Actions
 {
     public class AttackAction : GameAction
     {
         // TODO: I need this until I can fully do the mapping in the platform layer
-        public string TargetName { get; init; } // client-side
+        public string TargetName { get; } // client-side
 
-        public ITribe Target { get; set; } // server-side
+        public ITribe Target { get; set; }
 
         public AttackAction(string target) => TargetName = target ?? throw new ArgumentNullException(nameof(target));
 

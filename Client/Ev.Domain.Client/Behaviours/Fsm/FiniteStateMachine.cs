@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Ev.Common.Utils;
+﻿using Ev.Common.Utils;
 using Ev.Domain.Client.Core;
+using System.Collections.Generic;
 
 namespace Ev.Domain.Client.Behaviours.Fsm
 {

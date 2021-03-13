@@ -15,6 +15,6 @@ namespace Ev.Infrastructure.Core
 
         void RegisterAgent(IGame game, params Domain.Client.Core.ITribeAgent[] agents);
 
-        Domain.Server.Core.IGameAction Update(Domain.Server.Core.IWorldState worldState, Domain.Server.Core.ITribe tribe);
+        IGameAction Update(IWorldState worldState, ITribe tribe);
     }
 }

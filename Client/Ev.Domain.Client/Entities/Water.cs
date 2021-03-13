@@ -1,9 +1,8 @@
-﻿namespace Ev.Domain.Client.Entities
+﻿using Ev.Domain.Client.Entities.Core;
+
+namespace Ev.Domain.Client.Entities
 {
-    public class Water : BaseBlockingWorldEntity
+    public class Water : BlockingWorldEntity
     {
-        public Water() : base(Common.Utils.Color.Blue)
-        {
-        }
     }
 }

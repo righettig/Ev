@@ -10,7 +10,7 @@ namespace Ev.Samples.Behaviours
         public static StateEnum SeekFood = new(2, nameof(SeekFood));
         public static StateEnum Flee     = new(3, nameof(Flee));
 
-        public StateEnum(int id, string name) : base(id, name)
+        private StateEnum(int id, string name) : base(id, name)
         {
         }
     }

@@ -6,8 +6,8 @@ namespace Ev.Serialization
 {
     class GameState 
     { 
-        public IGameActionDto Action { get; set; }
-        public List<IWorldEntityDto> State { get; set; }
+        public IGameActionDto Action { get; init; }
+        public List<IWorldEntityDto> State { get; }
 
         public GameState() => State = new List<IWorldEntityDto>();
     }

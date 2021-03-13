@@ -1,6 +1,6 @@
-﻿using System;
-using Ev.Common.Utils;
+﻿using Ev.Common.Utils;
 using Ev.Domain.Client.Core;
+using System;
 
 namespace Ev.Domain.Client.Behaviours.Fsm
 {

@@ -1,21 +1,14 @@
-﻿using System;
-using Ev.Common;
+﻿using Ev.Common;
 using Ev.Common.Utils;
 using Ev.Domain.Client.Actions;
 using Ev.Domain.Client.Core;
 using Ev.Domain.Client.Entities.Collectables;
 using Ev.Domain.Client.World;
+using System;
 using static System.Math;
 
 namespace Ev.Domain.Client.Behaviours.Core
 {
-    public class TribeNotFoundException : ArgumentException
-    {
-        public TribeNotFoundException(string message, string paramName) : base(message, paramName)
-        {
-        }
-    }
-
     /// <summary>
     /// The base class for all tribe behaviours.
     /// </summary>
@@ -173,7 +166,7 @@ namespace Ev.Domain.Client.Behaviours.Core
         /// <summary>
         /// Moves the tribe towards the specified target position.
         /// </summary>
-        /// <remarks>The position is consired to be a world state position.</remarks>
+        /// <remarks>The position is considered to be a world state position.</remarks>
         /// <example>
         /// Say that the entity position is at NW with respect to the tribe, the Move(NW) action gets generated.
         /// </example>
@@ -227,7 +220,7 @@ namespace Ev.Domain.Client.Behaviours.Core
         /// <summary>
         /// Moves the tribe away from the specified world state position.
         /// </summary>
-        /// <remarks>The position is consired to be a world state position.</remarks>
+        /// <remarks>The position is considered to be a world state position.</remarks>
         /// <param name="targetPosition">The position of the target you wish to move away from.</param>
         /// <example>
         /// Say that the entity position is at NW with respect to the tribe, the Move(SE) action gets generated.
@@ -343,7 +336,7 @@ namespace Ev.Domain.Client.Behaviours.Core
         /// Checks if the specified tribe is close and can be reached in a single turn.
         /// </summary>
         /// <param name="other">The tribe to check.</param>
-        /// <returns>True if the specified tribe is in proxitiy of the tribe.</returns>
+        /// <returns>True if the specified tribe is in proximity of the tribe.</returns>
         protected static bool Close(ITribe other) => Close(other.Position);
 
         /// <summary>
@@ -373,20 +366,20 @@ namespace Ev.Domain.Client.Behaviours.Core
         /// <summary>
         /// Retrieves the world state position of the first entity that satisfies a predicate function.
         /// </summary>
-        /// <param name="pred">The predicate function.</param>
+        /// <param name="predicate">The predicate function.</param>
         /// <returns>The world state position of the specified entity, if found, (-1, -1) otherwise.</returns>
-        protected (int x, int y) FindPosition(Predicate<IWorldEntity> pred)
+        protected (int x, int y) FindPosition(Predicate<IWorldEntity> predicate)
         {
-            if (pred is null)
+            if (predicate is null)
             {
-                throw new ArgumentNullException(nameof(pred));
+                throw new ArgumentNullException(nameof(predicate));
             }
 
             var position = (-1, -1);
 
             _state.Traverse((el, x, y) =>
             {
-                if (pred(el))
+                if (predicate(el))
                 {
                     position = (x, y);
                 }

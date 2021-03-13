@@ -2,6 +2,5 @@
 {
     public interface ICollectableWorldEntity : IWorldEntity 
     {
-        int Value { get; }
     }
 }

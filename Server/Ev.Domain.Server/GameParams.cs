@@ -9,7 +9,8 @@ namespace Ev.Domain.Server
         private GameParams()
         {
             // default values
-            
+            InitialPopulation    = 100;
+
             UpgradeActionsCost   = new WorldResources { WoodCount = 10, IronCount = 5 };
             UpgradeActionsLength = 2;
             UpgradeBonus         = .1f;
@@ -34,6 +35,8 @@ namespace Ev.Domain.Server
 
         public int IdleLoss { get; }
         public int MoveLoss { get; }
+
+        public int InitialPopulation { get; }
 
         // TODO
         //WORLD_STATE_SIZE (traverseList -> calc based on worldState size)

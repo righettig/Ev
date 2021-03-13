@@ -9,7 +9,6 @@ namespace Ev.Domain.Server.Actions
         
         public override string ToString() => "UpgradeDefenses";
 
-        //internal override void OnComplete(ITribe tribe)
         public override void OnComplete(ITribe tribe)
         {
             tribe.Wood -= GameParams.Instance.UpgradeActionsCost.WoodCount;

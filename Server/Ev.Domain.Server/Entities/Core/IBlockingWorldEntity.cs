@@ -1,19 +1,8 @@
-﻿using Ev.Common.Utils;
-using Ev.Domain.Server.Core;
+﻿using Ev.Domain.Server.Core;
 
 namespace Ev.Domain.Server.Entities.Core
 {
-    public interface IBlockingWorldEntity : IWorldEntity { }
-
-    public abstract class BaseBlockingWorldEntity : IBlockingWorldEntity
+    public interface IBlockingWorldEntity : IWorldEntity
     {
-        public Color Color { get; }
-
-        public BaseBlockingWorldEntity(Color color) => Color = color;
-
-        //public IWorldEntity ToImmutable() 
-        //{
-        //    return this;
-        //}
     }
 }

@@ -16,10 +16,8 @@ namespace Ev.Samples.Behaviours
             {
                 return RandomWalk();
             }
-            else 
-            {
-                return MoveTowards(food);
-            }            
+
+            return MoveTowards(food);
         }
     }
 }

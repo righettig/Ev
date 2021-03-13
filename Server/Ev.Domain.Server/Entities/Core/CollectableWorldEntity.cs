@@ -4,11 +4,9 @@ namespace Ev.Domain.Server.Entities.Core
 {
     public abstract class CollectableWorldEntity : ICollectableWorldEntity
     {
-        public int Value { get; protected set; }
+        public int Value { get; }
 
-        public Color Color { get; init; }
-
-        public CollectableWorldEntity(IRandom rnd, int maxValue)
+        protected CollectableWorldEntity(IRandom rnd, int maxValue)
         {
             Value = rnd.Next(1, maxValue + 1);
         }

@@ -2,10 +2,7 @@
 
 namespace Ev.Domain.Server.Entities
 {
-    public class Wall : BaseBlockingWorldEntity
+    public class Wall : BlockingWorldEntity
     {
-        public Wall() : base(Common.Utils.Color.White)
-        {
-        }
     }
 }

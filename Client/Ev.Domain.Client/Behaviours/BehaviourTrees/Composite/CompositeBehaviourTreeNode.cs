@@ -1,5 +1,5 @@
-﻿using System;
-using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
+﻿using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
+using System;
 
 namespace Ev.Domain.Client.Behaviours.BehaviourTrees.Composite
 {

@@ -38,7 +38,7 @@ namespace Ev.Serialization
                 cfg.CreateMap<AttackAction,          AttackActionDto>();
                 cfg.CreateMap<SuicideAction,         SuicideActionDto>();
                 cfg.CreateMap<UpgradeDefensesAction, UpgradeDefensesActionDto>();
-                cfg.CreateMap<UpgradeAttackAction,   UpgradeDefensesActionDto>();
+                cfg.CreateMap<UpgradeAttackAction,   UpgradeAttackActionDto>();
             });
 
             _mapper = config.CreateMapper();
@@ -50,9 +50,7 @@ namespace Ev.Serialization
 
             foreach (var (gameAction, worldState) in winnerHistory)
             {
-                IGameActionDto actionDto = null;
-
-                actionDto = gameAction switch
+                IGameActionDto actionDto = gameAction switch
                 {
                     MoveAction a            => _mapper.Map<MoveActionDto>(a),
                     HoldAction a            => _mapper.Map<HoldActionDto>(a),

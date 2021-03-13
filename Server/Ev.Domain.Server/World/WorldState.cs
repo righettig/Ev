@@ -19,7 +19,7 @@ namespace Ev.Domain.Server.World
         /// </summary>
         /// <typeparam name="T">The entity type.</typeparam>
         /// <param name="entityPos">The world state position where the entity is.</param>
-        /// <returns>The entity casted as an instance of T, or null it not found or if the wrong type is provided.</returns>
+        /// <returns>The entity as an instance of T, or null it not found or if the wrong type is provided.</returns>
         public T GetEntity<T>((int x, int y) entityPos) where T : class, IWorldEntity
         {
             return State[entityPos.x, entityPos.y] as T;

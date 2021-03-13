@@ -1,6 +1,6 @@
-﻿using System;
-using Ev.Common.Utils;
+﻿using Ev.Common.Utils;
 using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
+using System;
 using Random = Ev.Common.Utils.Random;
 
 namespace Ev.Domain.Client.Behaviours.BehaviourTrees.Composite

@@ -1,8 +1,7 @@
-﻿using Ev.Domain.Actions.Core;
-using Ev.Domain.Behaviours.Core;
-using Ev.Domain.Entities.Core;
-using Ev.Domain.Utils;
-using Ev.Domain.World.Core;
+﻿using Ev.Common.Utils;
+using Ev.Domain.Client.Actions;
+using Ev.Domain.Client.Behaviours.Core;
+using Ev.Domain.Client.Core;
 
 namespace Ev.Samples.Behaviours
 {
@@ -10,7 +9,7 @@ namespace Ev.Samples.Behaviours
     {
         public PlayerControlledTribeBehaviour(IRandom rnd) : base(rnd) { }
 
-        public override IGameAction DoMove(IWorldState state, ITribeState tribe)
+        public override IGameAction DoMove(IWorldState state, ITribe tribe)
         {
             return new PlayerControlledGameAction();
         }

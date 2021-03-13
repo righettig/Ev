@@ -53,19 +53,19 @@ namespace Ev.Infrastructure
 
         public Domain.Server.Core.IGameAction Update(IWorldState worldState, ITribe tribe)
         {
-            Domain.Client.Core.IWorldState clientWorldState = _mapper.Map(worldState);
-            Domain.Client.Core.ITribe      clientTribe      = _mapper.Map(tribe);
+            var clientWorldState = _mapper.Map(worldState);
+            var clientTribe      = _mapper.Map(tribe);
 
             var behaviour = _behaviours[tribe.Name];
             behaviour.State = clientWorldState;
 
             var action = behaviour.DoMove(clientWorldState, clientTribe);
 
-            Domain.Server.Core.IGameAction result = _mapper.Map(action);
+            var serverAction = _mapper.Map(action);
 
-            result.Tribe = tribe;
+            serverAction.Tribe = tribe;
 
-            return result;
+            return serverAction;
         }
     }
 }

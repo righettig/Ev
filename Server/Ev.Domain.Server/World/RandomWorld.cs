@@ -28,14 +28,13 @@ namespace Ev.Domain.Server.World
         }
 
         // for unit-testing purpose only
-        //internal RandomWorld(int size, WorldResources resources, IRandom rnd, IEnumerable<ITribe> tribes) 
         public RandomWorld(int size, WorldResources resources, IRandom rnd, IEnumerable<ITribe> tribes)
             : this(size, resources, rnd)
         {
             _tribes = tribes.ToList();
         }
 
-        public override IWorld AddTribe(string tribeName, Color color)
+        public override void AddTribe(string tribeName, Color color)
         {
             var coord = NextEmptyRandomTile();
 
@@ -43,8 +42,6 @@ namespace Ev.Domain.Server.World
             State[coord.x, coord.y] = tribe;
 
             _tribes.Add(tribe);
-
-            return this;
         }
 
         #region Private members

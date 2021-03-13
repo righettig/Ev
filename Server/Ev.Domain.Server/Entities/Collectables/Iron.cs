@@ -9,7 +9,6 @@ namespace Ev.Domain.Server.Entities.Collectables
 
         public Iron(IRandom rnd) : base(rnd, MAX_VALUE)
         {
-            Color = Color.DarkYellow;
         }
     }
 }

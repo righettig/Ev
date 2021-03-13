@@ -37,6 +37,7 @@ namespace Ev.Domain.Client.Behaviours.BehaviourTrees.Composite
             }
 
             _state = NodeResult.Success;
+
             return NodeResult.Success;
         }
     }

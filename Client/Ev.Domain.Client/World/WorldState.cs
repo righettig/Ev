@@ -10,7 +10,7 @@ namespace Ev.Domain.Client.World
     {
         public const int WORLD_STATE_SIZE = 2;
 
-        public IWorldEntity[,] State { get; }
+        private IWorldEntity[,] State { get; }
 
         public WorldState(IWorldEntity[,] state)
         {
@@ -22,7 +22,7 @@ namespace Ev.Domain.Client.World
         /// </summary>
         /// <typeparam name="T">The entity type.</typeparam>
         /// <param name="entityPos">The world state position where the entity is.</param>
-        /// <returns>The entity casted as an instance of T, or null it not found or if the wrong type is provided.</returns>
+        /// <returns>The entity as an instance of T, or null it not found or if the wrong type is provided.</returns>
         public T GetEntity<T>((int x, int y) entityPos) where T : class, IWorldEntity
         {
             return State[entityPos.x, entityPos.y] as T;
@@ -131,7 +131,7 @@ namespace Ev.Domain.Client.World
                 throw new ArgumentNullException(nameof(entities));
             }
 
-            return FindClosest<IWorldEntity>(el => entities.Contains(el));
+            return FindClosest<IWorldEntity>(entities.Contains);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Ev.Domain.Client.World
                 throw new ArgumentNullException(nameof(entities));
             }
 
-            return FindClosest<T>(el => entities.Contains(el));
+            return FindClosest<T>(entities.Contains);
         }
 
         /// <summary>

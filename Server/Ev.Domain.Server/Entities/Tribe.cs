@@ -6,7 +6,8 @@ namespace Ev.Domain.Server.Entities
     public class Tribe : ITribe 
     {
         public string Name { get; }
-        public Color Color { get; init; }
+
+        public Color Color { get; }
 
         public int Population
         {
@@ -18,7 +19,7 @@ namespace Ev.Domain.Server.Entities
                 _population = value;
             }
         }
-        public int PrevPopulation { get; set; }
+        public int PrevPopulation { get; private set; }
         public int DeadAtIteration { get; set; }
         
         public (int x, int y) Position { get; set; }
@@ -36,16 +37,14 @@ namespace Ev.Domain.Server.Entities
 
         private int _population;
 
-        public Tribe(string name,
-                     (int x, int y) position,
-                     Color color)
+        public Tribe(string name, (int x, int y) position, Color color)
         {
             Name           = name;
             Position       = position;
             PrevPosition   = Position;
             Color          = color;
-            Population     = 100;
-            PrevPopulation = 100;
+            Population     = GameParams.Instance.InitialPopulation;
+            PrevPopulation = Population;
         }
     }
 }

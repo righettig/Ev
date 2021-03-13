@@ -92,40 +92,10 @@ namespace Ev.Domain.Server.World.Core
         /// <summary>
         /// Checks whether it's possible to move in the given direction from the specified position.
         /// </summary>
-        /// <param name="position"></param>
-        /// <param name="direction"></param>
-        /// <returns>True if it's possible to move.</returns>
-        bool IWorld.CanMove((int x, int y) position, Direction direction)
-        {
-            return CanMove(position, direction);
-        }
-
-        /// <summary>
-        /// Updates the tribe's position by moving in the given direction.
-        /// </summary>
-        /// <param name="tribe"></param>
-        /// <param name="direction"></param>
-        void IWorld.Move(ITribe tribe, Direction direction)
-        {
-            if (tribe is null)
-            {
-                throw new ArgumentNullException(nameof(tribe));
-            }
-
-            Move(tribe, direction);
-        }
-
-        #region Internal members
-
-        // TODO: unit test
-        // TODO: check that the destination does not contain a tribe.
-        /// <summary>
-        /// Checks whether it's possible to move in the given direction from the specified position.
-        /// </summary>
         /// <param name="pos"></param>
         /// <param name="direction"></param>
         /// <returns>True if it's possible to move.</returns>
-        internal bool CanMove((int x, int y) pos, Direction direction) => direction switch
+        public bool CanMove((int x, int y) pos, Direction direction) => direction switch
         {
             Direction.N  => pos.y > 0                            && Available(pos.x,     pos.y - 1),
             Direction.S  => pos.y < Size - 1                     && Available(pos.x,     pos.y + 1),
@@ -138,18 +108,12 @@ namespace Ev.Domain.Server.World.Core
             _ => false,
         };
 
-        private bool Available(int x, int y)
-        {
-            return !(State[x, y] is IBlockingWorldEntity || State[x, y] is ITribe);
-        }
-
-        // TODO: unit test
         /// <summary>
         /// Updates the tribe's position by moving in the given direction.
         /// </summary>
         /// <param name="tribe"></param>
         /// <param name="direction"></param>
-        internal void Move(ITribe tribe, Direction direction)
+        public void Move(ITribe tribe, Direction direction)
         {
             if (tribe is null)
             {
@@ -177,16 +141,14 @@ namespace Ev.Domain.Server.World.Core
             switch (State[tribe.Position.x, tribe.Position.y])
             {
                 case Food food: tribe.Population += food.Value; break;
-                case Wood wood: tribe.Wood       += wood.Value; break;
-                case Iron iron: tribe.Iron       += iron.Value; break;
+                case Wood wood: tribe.Wood += wood.Value; break;
+                case Iron iron: tribe.Iron += iron.Value; break;
             }
 
             State[tribe.Position.x, tribe.Position.y] = tribe;
         }
 
-        #endregion
-
-        public abstract IWorld AddTribe(string tribeName, Color color);
+        public abstract void AddTribe(string tribeName, Color color);
 
         /// <summary>
         /// Updates the world state by having the specified tribe executing the given move.
@@ -255,6 +217,11 @@ namespace Ev.Domain.Server.World.Core
 
             State[tribe.Position.x, tribe.Position.y] = null;
             tribe.DeadAtIteration = iteration;
+        }
+
+        private bool Available(int x, int y)
+        {
+            return !(State[x, y] is IBlockingWorldEntity || State[x, y] is ITribe);
         }
     }
 }

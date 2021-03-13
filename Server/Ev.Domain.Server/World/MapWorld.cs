@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Ev.Domain.Server.World
 {
-    public class MapWorld : Core.BaseWorld
+    public class MapWorld : BaseWorld
     {
         private readonly List<(int x, int y)> _spawnPoints = new();
 
@@ -55,7 +55,7 @@ namespace Ev.Domain.Server.World
         }
 
         // TODO: unit test
-        public override IWorld AddTribe(string tribeName, Color color)
+        public override void AddTribe(string tribeName, Color color)
         {
             var coord = NextAvailableSpawnPoint();
 
@@ -64,8 +64,6 @@ namespace Ev.Domain.Server.World
 
             _tribes.Add(tribe);
             _spawnPoints.Remove(coord);
-
-            return this;
         }
 
         private (int x, int y) NextAvailableSpawnPoint()

@@ -2,9 +2,9 @@
 {
     public class EvGameOptions 
     {
-        public bool RenderEachTurn { get; set; }
-        public bool WaitAfterEachMove { get; set; }
-        public bool DumpWinnerHistory { get; set; }
-        public string WinnerHistoryFilename { get; set; }
+        public bool RenderEachTurn { get; init; }
+        public bool WaitAfterEachMove { get; init; }
+        public bool DumpWinnerHistory { get; init; }
+        public string WinnerHistoryFilename { get; init; }
     }
 }

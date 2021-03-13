@@ -17,7 +17,7 @@ namespace Ev.Domain.Server.World.Core
 
         ITribe Winner { get; }
 
-        IWorld AddTribe(string tribeName, Color color);
+        void AddTribe(string tribeName, Color color);
 
         ITribe[] GetAliveTribes();
 
@@ -28,6 +28,7 @@ namespace Ev.Domain.Server.World.Core
         void WipeTribe(ITribe target, int iteration);
 
         bool CanMove((int x, int y) position, Direction direction);
+
         void Move(ITribe tribe, Direction direction);
     }
 }

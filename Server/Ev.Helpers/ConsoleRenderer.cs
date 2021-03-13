@@ -1,5 +1,6 @@
 ﻿using Ev.Domain.Server.Core;
 using Ev.Domain.Server.Entities;
+using Ev.Domain.Server.Entities.Collectables;
 using Ev.Domain.Server.Entities.Core;
 using static System.Console;
 
@@ -17,17 +18,27 @@ namespace Ev.Helpers
                     break;
 
                 case Wall:
-                    //ForegroundColor = ColorMapper.MapColor(entity.Color);
+                    ForegroundColor = System.ConsoleColor.White;
                     Write("O ");
                     break;
 
                 case Water:
+                    ForegroundColor = System.ConsoleColor.Blue;
                     Write("~ ");
-                    //ForegroundColor = ColorMapper.MapColor(entity.Color);
                     break;
 
-                case ICollectableWorldEntity e:
-                    //ForegroundColor = ColorMapper.MapColor(e.Color);
+                case Food e:
+                    ForegroundColor = System.ConsoleColor.Green;
+                    Write($"{e.Value} ");
+                    break;
+
+                case Wood e:
+                    ForegroundColor = System.ConsoleColor.DarkRed;
+                    Write($"{e.Value} ");
+                    break;
+
+                case Iron e:
+                    ForegroundColor = System.ConsoleColor.DarkYellow;
                     Write($"{e.Value} ");
                     break;
             }

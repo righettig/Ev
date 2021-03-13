@@ -1,6 +1,6 @@
-﻿using System;
-using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
+﻿using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
 using Ev.Domain.Client.Core;
+using System;
 
 namespace Ev.Domain.Client.Behaviours.BehaviourTrees
 {

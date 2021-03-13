@@ -8,7 +8,5 @@ namespace Ev.Domain.Client.Actions
         public Direction Direction { get; }
 
         public MoveAction(Direction direction) => Direction = direction;
-
-        public override string ToString() => "Move " + Direction;
     }
 }

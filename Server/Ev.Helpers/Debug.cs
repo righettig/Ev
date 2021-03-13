@@ -26,7 +26,7 @@ namespace Ev.Helpers
 
         public static void DumpActions() 
         {
-            WriteLine("Choose: (H)old (A)attack (M)ove (S)uicide");
+            WriteLine("Choose: (H)old (A)ttack (M)ove (S)uicide");
         }
 
         public static IGameAction ReadAction(IWorldState state) 

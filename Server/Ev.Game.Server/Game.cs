@@ -1,5 +1,6 @@
 ﻿using Ev.Common.Utils;
 using Ev.Domain.Server.Actions;
+using Ev.Domain.Server.Actions.Core;
 using Ev.Domain.Server.Core;
 using Ev.Domain.Server.Predictors;
 using Ev.Domain.Server.Processors;
@@ -16,7 +17,7 @@ namespace Ev.Game.Server
         private readonly IWorld _world;
         private readonly IPlatform _platform;
         private readonly EvGameHistory _history;
-        private readonly GameActionProcessor _actionProcessor;
+        private readonly IGameActionProcessor _actionProcessor;
 
         public Game(IPlatform platform, IWorld world, IRandom rnd)
         {
@@ -65,19 +66,20 @@ namespace Ev.Game.Server
 
                     var move = _platform.Update(state, tribe);
 
-                    //if (move is PlayerControlledGameAction)
-                    //{
-                    //    DumpActions();
-                    //    move = ReadAction(state);
-                    //    move.Tribe = tribe;
-                    //}
+                    switch (move)
+                    {
+                        case PlayerControlledGameAction:
+                            //    DumpActions();
+                            //    move = ReadAction(state);
+                            //    move.Tribe = tribe;
+                            break;
 
-                    // TODO: it would be nice if we could delegate this responsibility to Platform, so that game logic already sees the final server action
-                    // without having to perform this mapping logic. For now I'm gonna add TargetName as an additional property in the server action model.
-                    if (move is AttackAction a)
-                    { 
-                        // mapping client-side action to server-side
-                        a.Target = alive.First(el => el.Name == a.TargetName);
+                        // TODO: it would be nice if we could delegate this responsibility to Platform, so that game logic already sees the final server action
+                        // without having to perform this mapping logic. For now I'm gonna add TargetName as an additional property in the server action model.
+                        case AttackAction a:
+                            // mapping client-side action to server-side
+                            a.Target = alive.First(el => el.Name == a.TargetName);
+                            break;
                     }
 
                     _history.Add((move, state));
@@ -88,7 +90,7 @@ namespace Ev.Game.Server
 
                     if (options.RenderEachTurn)
                     {
-                        //var next = alive[(i + 1) % alive.Length];
+                        var next = alive[(i + 1) % alive.Length];
                         //Dump(world, iteration, move, next);
                     }
 

@@ -108,6 +108,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         {
             // Arrange
             var expected = new object();
+
             uat["foo"] = expected;
 
             // Act

@@ -1,5 +1,6 @@
 ﻿using Ev.Common.Utils;
 using Ev.Domain.Client.Core;
+using System;
 
 namespace Ev.Domain.Client
 {
@@ -11,9 +12,14 @@ namespace Ev.Domain.Client
 
         public TribeAgent(string name, Color color, ITribeBehaviour behaviour)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(name));
+            }
+
             Name      = name;
             Color     = color;
-            Behaviour = behaviour;
+            Behaviour = behaviour ?? throw new ArgumentNullException(nameof(behaviour));
         }
     }
 }

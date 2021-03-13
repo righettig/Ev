@@ -1,7 +1,7 @@
-﻿using System;
-using Ev.Common.Utils;
+﻿using Ev.Common.Utils;
 using Ev.Domain.Server.Actions.Core;
 using Ev.Domain.Server.Core;
+using System;
 
 namespace Ev.Domain.Server.Predictors
 {

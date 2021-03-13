@@ -1,5 +1,5 @@
-﻿using System;
-using Ev.Domain.Client.Core;
+﻿using Ev.Domain.Client.Core;
+using System;
 
 namespace Ev.Domain.Client.Actions
 {

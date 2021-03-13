@@ -64,6 +64,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         {
             // Arrange
             var expected = new MoveAction(Direction.E);
+
             var uat = new TestBehaviourTreeTribeBehaviour(new Mock<IRandom>().Object, expected);
 
             // Act

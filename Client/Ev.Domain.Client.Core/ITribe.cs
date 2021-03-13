@@ -1,12 +1,8 @@
-﻿using Ev.Common.Utils;
-
-namespace Ev.Domain.Client.Core
+﻿namespace Ev.Domain.Client.Core
 {
     public interface ITribe : IWorldEntity
     {
         string Name { get; }
-
-        Color Color { get; }
 
         int Population { get; }
 

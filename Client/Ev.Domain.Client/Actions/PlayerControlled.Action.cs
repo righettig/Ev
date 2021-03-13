@@ -2,7 +2,7 @@
 
 namespace Ev.Domain.Client.Actions
 {
-    public class UpgradeDefensesAction : IGameAction 
-    {
+    public sealed class PlayerControlledGameAction : IGameAction
+    { 
     }
 }

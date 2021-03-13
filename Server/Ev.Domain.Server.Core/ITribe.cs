@@ -1,5 +1,4 @@
-﻿
-using Ev.Common.Utils;
+﻿using Ev.Common.Utils;
 
 namespace Ev.Domain.Server.Core
 {
@@ -9,7 +8,7 @@ namespace Ev.Domain.Server.Core
         Color Color { get;}
 
         int Population { get; set; }
-        int PrevPopulation { get; set; }
+        int PrevPopulation { get; }
         int DeadAtIteration { get; set; }
 
         bool IsAttacking { get; set; }

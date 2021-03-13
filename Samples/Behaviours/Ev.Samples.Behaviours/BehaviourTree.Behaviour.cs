@@ -1,5 +1,4 @@
-﻿
-using Ev.Common;
+﻿using Ev.Common;
 using Ev.Common.Utils;
 using Ev.Domain.Client.Behaviours.BehaviourTrees;
 using Ev.Domain.Client.Behaviours.BehaviourTrees.Composite;
@@ -17,7 +16,7 @@ namespace Ev.Samples.Behaviours
         protected override IBehaviourTreeNode CreateRoot()
         {
             IBehaviourTreeNode MoveTimes(Direction direction, int count) =>
-                new Repeater(new GameActionNode((worldState, tribeState) => Move(direction)), count);
+                new Repeater(new GameActionNode((state, tribe) => Move(direction)), count);
 
             return new Sequence(
                 MoveTimes(Direction.E, 2), MoveTimes(Direction.N, 3));

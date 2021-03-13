@@ -1,10 +1,10 @@
 ﻿using Ev.Common.Utils;
+using Ev.Domain.Server.Core;
 using Ev.Domain.Server.Predictors;
 using Ev.Domain.Server.Tests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using Ev.Domain.Server.Core;
 
 namespace Ev.Domain.Server.Tests
 {
@@ -17,7 +17,10 @@ namespace Ev.Domain.Server.Tests
 
         public AttackOutcomePredictorTests()
         {
-            uat = new AttackOutcomePredictor(new Mock<IRandom>().Object);
+            var rnd = new Mock<IRandom>();
+            rnd.Setup(m => m.NextDouble()).Returns(0.5);
+
+            uat = new AttackOutcomePredictor(rnd.Object);
         }
 
         #region Null Checks
@@ -73,39 +76,30 @@ namespace Ev.Domain.Server.Tests
         [TestMethod]
         public void CanWin1()
         {
-            var rnd = new Mock<IRandom>();
-            rnd.Setup(m => m.NextDouble()).Returns(0.5);
-
-            var uat = new AttackOutcomePredictor(rnd.Object);
-
+            // Act
             var actual = uat.CanWin(TestTribe(20), TestTribe(100));
 
+            // Assert
             Assert.AreEqual(false, actual);
         }
 
         [TestMethod]
         public void CanWin2()
         {
-            var rnd = new Mock<IRandom>();
-            rnd.Setup(m => m.NextDouble()).Returns(0.5);
-
-            var uat = new AttackOutcomePredictor(rnd.Object);
-
+            // Act
             var actual = uat.CanWin(TestTribe(80), TestTribe(100));
 
+            // Assert
             Assert.AreEqual(false, actual);
         }
 
         [TestMethod]
         public void CanWin3()
         {
-            var rnd = new Mock<IRandom>();
-            rnd.Setup(m => m.NextDouble()).Returns(0.5);
-
-            var uat = new AttackOutcomePredictor(rnd.Object);
-
+            // Act
             var actual = uat.CanWin(TestTribe(100), TestTribe(80));
 
+            // Assert
             Assert.AreEqual(true, actual);
         }
 
@@ -124,13 +118,8 @@ namespace Ev.Domain.Server.Tests
         public void CanWin1_DefenseBonus()
         {
             // Arrange
-            var rnd = new Mock<IRandom>();
-            rnd.Setup(m => m.NextDouble()).Returns(0.5);
-
-            var uat = new AttackOutcomePredictor(rnd.Object);
-
-            ITribe attacker = TestTribe(20);
-            ITribe defender = TestTribe(100);
+            var attacker = TestTribe(20);
+            var defender = TestTribe(100);
             defender.Defense = .1f;
 
             // Act
@@ -144,13 +133,8 @@ namespace Ev.Domain.Server.Tests
         public void CanWin2_DefenseBonus()
         {
             // Arrange
-            var rnd = new Mock<IRandom>();
-            rnd.Setup(m => m.NextDouble()).Returns(0.5);
-
-            var uat = new AttackOutcomePredictor(rnd.Object);
-
-            ITribe attacker = TestTribe(80);
-            ITribe defender = TestTribe(100);
+            var attacker = TestTribe(80);
+            var defender = TestTribe(100);
             defender.Defense = .1f;
 
             // Act
@@ -164,17 +148,12 @@ namespace Ev.Domain.Server.Tests
         public void CanWin3_DefenseBonus()
         {
             // Arrange
-            var rnd = new Mock<IRandom>();
-            rnd.Setup(m => m.NextDouble()).Returns(0.5);
-
-            var uat = new AttackOutcomePredictor(rnd.Object);
-
-            ITribe attacker = TestTribe(100);
-            ITribe defender = TestTribe(80);
+            var attacker = TestTribe(100);
+            var defender = TestTribe(80);
             defender.Defense = .1f;
 
             // Act
-            var actual = uat.CanWin(TestTribe(100), TestTribe(80));
+            var actual = uat.CanWin(attacker, defender);
 
             // Assert
             Assert.AreEqual(true, actual);
@@ -195,15 +174,10 @@ namespace Ev.Domain.Server.Tests
         public void CanWin1_AttackBonus()
         {
             // Arrange
-            var rnd = new Mock<IRandom>();
-            rnd.Setup(m => m.NextDouble()).Returns(0.5);
-
-            var uat = new AttackOutcomePredictor(rnd.Object);
-
-            ITribe attacker = TestTribe(20);
+            var attacker = TestTribe(20);
             attacker.Attack = .1f;
 
-            ITribe defender = TestTribe(100);
+            var defender = TestTribe(100);
 
             // Act
             var actual = uat.CanWin(attacker, defender);
@@ -216,15 +190,10 @@ namespace Ev.Domain.Server.Tests
         public void CanWin2_AttackBonus()
         {
             // Arrange
-            var rnd = new Mock<IRandom>();
-            rnd.Setup(m => m.NextDouble()).Returns(0.5);
-
-            var uat = new AttackOutcomePredictor(rnd.Object);
-
-            ITribe attacker = TestTribe(80);
+            var attacker = TestTribe(80);
             attacker.Attack = .1f;
 
-            ITribe defender = TestTribe(100);
+            var defender = TestTribe(100);
 
             // Act
             var actual = uat.CanWin(attacker, defender);
@@ -237,15 +206,10 @@ namespace Ev.Domain.Server.Tests
         public void CanWin3_AttackBonus()
         {
             // Arrange
-            var rnd = new Mock<IRandom>();
-            rnd.Setup(m => m.NextDouble()).Returns(0.5);
-
-            var uat = new AttackOutcomePredictor(rnd.Object);
-
-            ITribe attacker = TestTribe(100);
+            var attacker = TestTribe(100);
             attacker.Attack = .1f;
 
-            ITribe defender = TestTribe(80);
+            var defender = TestTribe(80);
 
             // Act
             var actual = uat.CanWin(attacker, defender);

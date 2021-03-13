@@ -20,6 +20,7 @@ namespace Ev.Domain.Client.Behaviours.BehaviourTrees.Composite
             if (result == NodeResult.Success)
             {
                 _state = NodeResult.Success;
+
                 return _state;
             }
 

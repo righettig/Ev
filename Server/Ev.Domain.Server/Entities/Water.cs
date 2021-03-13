@@ -2,10 +2,7 @@
 
 namespace Ev.Domain.Server.Entities
 {
-    public class Water : BaseBlockingWorldEntity
+    public class Water : BlockingWorldEntity
     {
-        public Water() : base(Common.Utils.Color.Blue)
-        {
-        }
     }
 }

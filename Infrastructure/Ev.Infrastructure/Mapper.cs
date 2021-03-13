@@ -10,7 +10,7 @@ namespace Ev.Infrastructure
     {
         public Domain.Client.Core.IWorldState Map(Domain.Server.Core.IWorldState worldState)
         {
-            var size = Domain.Server.World.WorldState.WORLD_STATE_SIZE * 2 + 1;
+            const int size = Domain.Server.World.WorldState.WORLD_STATE_SIZE * 2 + 1;
             
             var entities = new IWorldEntity[size, size];
 
@@ -28,6 +28,7 @@ namespace Ev.Infrastructure
 
                     _ => throw new NotSupportedException()
                 };
+
             }, ignoreSelf: false);
 
             var result = new Domain.Client.World.WorldState(entities);

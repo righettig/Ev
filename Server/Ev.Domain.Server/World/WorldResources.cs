@@ -2,8 +2,8 @@
 {
     public class WorldResources 
     {
-        public int FoodCount { get; set; }
-        public int WoodCount { get; set; }
-        public int IronCount { get; set; }
+        public int FoodCount { get; init; }
+        public int WoodCount { get; init; }
+        public int IronCount { get; init; }
     }
 }
