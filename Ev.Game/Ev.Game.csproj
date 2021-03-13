@@ -9,10 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ev.Domain\Ev.Domain.csproj" />
     <ProjectReference Include="..\Ev.Helpers\Ev.Helpers.csproj" />
     <ProjectReference Include="..\Ev.Serialization\Ev.Serialization.csproj" />
-    <ProjectReference Include="..\Samples\Ev.Behaviours\Ev.Samples.Behaviours.csproj" />
   </ItemGroup>
 
 </Project>
