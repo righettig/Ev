@@ -1,6 +1,7 @@
 ﻿using Ev.Common.Utils;
 using Ev.Domain.Server.Entities;
 using Ev.Domain.Server.Entities.Collectables;
+using Ev.Domain.Server.World.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -54,16 +55,11 @@ namespace Ev.Domain.Server.World
         }
 
         // TODO: unit test
-        public override Core.IWorld WithTribe(string tribeName, Color color)//, ITribeBehaviour behaviour)
+        public override IWorld AddTribe(string tribeName, Color color)
         {
-            //if (behaviour is null)
-            //{
-            //    throw new ArgumentNullException(nameof(behaviour));
-            //}
-
             var coord = NextAvailableSpawnPoint();
 
-            var tribe = new Tribe(tribeName, coord, color);//, behaviour);
+            var tribe = new Tribe(tribeName, coord, color);
             State[coord.x, coord.y] = tribe;
 
             _tribes.Add(tribe);

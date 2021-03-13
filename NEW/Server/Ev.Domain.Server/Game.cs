@@ -13,12 +13,21 @@ namespace Ev.Domain.Server
 {
     public class Game : IGame
     {
+        private readonly IWorld _world;
         private readonly IPlatform _platform;
+        private readonly EvGameHistory _history;
+        private readonly GameActionProcessor _actionProcessor;
 
-        public Game(string type, IWorld world)
+        public Game(string type, IWorld world, IRandom rnd)
         {
-            // return LocalPlatform or RemotePlatform depending on type
+            _world = world;
+
+            // create LocalPlatform or RemotePlatform depending on type
             _platform = new LocalPlatform(this); // use a factory?
+
+            // TODO: for this to be useful I need to be able to record the game/world parameters too
+            _history = new EvGameHistory();
+            _actionProcessor = new GameActionProcessor(new AttackOutcomePredictor(rnd));
         }
 
         public IPlatform GetPlatform()
@@ -27,10 +36,11 @@ namespace Ev.Domain.Server
         }
 
         // onRegisterAgent
-        public void RegisterAgent(string agentName, string agentColor)
+        public void RegisterAgent(string agentName, Color agentColor)
         {
-            // adds server-side tribe to the world
-            // if #agents is OK -> start game loop
+            _world.AddTribe(agentName, agentColor);
+            
+            // TODO: if #agents is OK -> start game loop
         }
 
         public void Start()
@@ -38,14 +48,10 @@ namespace Ev.Domain.Server
         }
 
         //private void GameLoop()
-        public async Task GameLoop(EvGameOptions options, IWorld world, IRandom rnd)
+        public async Task GameLoop(EvGameOptions options)
         {
             var finished = false;
             var iteration = 0;
-
-            // TODO: for this to be useful I need to be able to record the game/world parameters too
-            var history = new EvGameHistory();
-            var actionProcessor = new GameActionProcessor(new AttackOutcomePredictor(rnd));
 
             _platform.OnGameStart();
 
@@ -54,14 +60,14 @@ namespace Ev.Domain.Server
 
             do
             {
-                var alive = world.GetAliveTribes();
+                var alive = _world.GetAliveTribes();
 
                 for (var i = 0; i < alive.Length; i++)
                 {
                     _platform.OnTurnStart();
 
                     var tribe = alive[i];
-                    var state = world.GetWorldState(tribe);
+                    var state = _world.GetWorldState(tribe);
 
                     var move = _platform.Update(state, tribe);
 
@@ -80,9 +86,9 @@ namespace Ev.Domain.Server
                         a.Target = alive.First(el => el.Name == a.TargetName);
                     }
 
-                    history.Add((move, state));
+                    _history.Add((move, state));
 
-                    finished = world.Update(tribe, move, iteration, actionProcessor);
+                    finished = _world.Update(tribe, move, iteration, _actionProcessor);
 
                     _platform.OnTurnEnd();
 

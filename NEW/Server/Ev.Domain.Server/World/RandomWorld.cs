@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Ev.Common.Utils;
+﻿using Ev.Common.Utils;
 using Ev.Domain.Server.Core;
 using Ev.Domain.Server.Entities;
 using Ev.Domain.Server.Entities.Collectables;
 using Ev.Domain.Server.Entities.Core;
+using Ev.Domain.Server.World.Core;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ev.Domain.Server.World
 {
-    public class RandomWorld : Core.BaseWorld
+    public class RandomWorld : BaseWorld
     {
         public RandomWorld(int size, WorldResources resources, IRandom rnd) : base(size, rnd)
         {
@@ -33,13 +34,8 @@ namespace Ev.Domain.Server.World
             _tribes = tribes.ToList();
         }
 
-        public override Core.IWorld WithTribe(string tribeName, Color color)//, ITribeBehaviour behaviour)
+        public override IWorld AddTribe(string tribeName, Color color)
         {
-            //if (behaviour is null)
-            //{
-            //    throw new ArgumentNullException(nameof(behaviour));
-            //}
-
             var coord = NextEmptyRandomTile();
 
             var tribe = new Tribe(tribeName, coord, color);//, behaviour);

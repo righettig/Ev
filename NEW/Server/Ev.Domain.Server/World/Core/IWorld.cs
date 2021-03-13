@@ -17,7 +17,7 @@ namespace Ev.Domain.Server.World.Core
 
         ITribe Winner { get; }
 
-        IWorld WithTribe(string tribeName, Color color);//, ITribeBehaviour behaviour);
+        IWorld AddTribe(string tribeName, Color color);
 
         ITribe[] GetAliveTribes();
 

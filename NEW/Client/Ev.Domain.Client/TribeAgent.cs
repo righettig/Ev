@@ -1,14 +1,15 @@
-﻿using Ev.Domain.Client.Core;
+﻿using Ev.Common.Utils;
+using Ev.Domain.Client.Core;
 
 namespace Ev.Domain.Client
 {
     public class TribeAgent : ITribeAgent
     {
         public string Name { get; }
-        public string Color { get; }
+        public Color Color { get; }
         public ITribeBehaviour Behaviour { get; }
 
-        public TribeAgent(string name, string color, ITribeBehaviour behaviour)
+        public TribeAgent(string name, Color color, ITribeBehaviour behaviour)
         {
             Name      = name;
             Color     = color;

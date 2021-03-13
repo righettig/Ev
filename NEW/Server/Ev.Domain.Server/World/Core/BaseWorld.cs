@@ -186,7 +186,7 @@ namespace Ev.Domain.Server.World.Core
 
         #endregion
 
-        public abstract IWorld WithTribe(string tribeName, Color color);// , ITribeBehaviour behaviour);
+        public abstract IWorld AddTribe(string tribeName, Color color);
 
         /// <summary>
         /// Updates the world state by having the specified tribe executing the given move.

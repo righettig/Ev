@@ -21,22 +21,18 @@ namespace Ev.Infrastructure
 
         public void OnGameStart()
         {
-            throw new System.NotImplementedException();
         }
 
         public void OnGameEnd()
         {
-            throw new System.NotImplementedException();
         }
 
         public void OnTurnStart()
         {
-            throw new System.NotImplementedException();
         }
 
         public void OnTurnEnd()
         {
-            throw new System.NotImplementedException();
         }
 
         public void RegisterAgent(Domain.Client.Core.ITribeAgent agent)
@@ -56,7 +52,9 @@ namespace Ev.Infrastructure
 
             var action = behaviour.DoMove(clientWorldState, clientTribe);
 
-            return null;
+            Domain.Server.Core.IGameAction result = _mapper.Map(action);
+
+            return result;
         }
     }
 
@@ -68,6 +66,11 @@ namespace Ev.Infrastructure
         }
 
         public Domain.Client.Core.ITribe Map(Domain.Server.Core.ITribe tribe)
+        {
+            return null;
+        }
+
+        public Domain.Server.Core.IGameAction Map(Domain.Client.Core.IGameAction action)
         {
             return null;
         }
