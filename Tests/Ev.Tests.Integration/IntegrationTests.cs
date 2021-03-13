@@ -1,8 +1,11 @@
 using Ev.Common.Utils;
 using Ev.Domain.Client;
-using Ev.Domain.Server;
+using Ev.Domain.Server.Core;
 using Ev.Domain.Server.World;
 using Ev.Domain.Server.World.Core;
+using Ev.Game.Server;
+using Ev.Infrastructure;
+using Ev.Infrastructure.Core;
 using Ev.Samples.Behaviours;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
@@ -13,6 +16,15 @@ namespace Ev.Tests.Integration
     [TestClass]
     public class IntegrationTests
     {
+        private readonly IPlatform _platform;
+        private readonly IRandom _random;
+
+        public IntegrationTests()
+        {
+            _platform = new LocalPlatform();
+            _random = new Random(1);
+        }
+
         static IWorld CreateWorldFromMap(IRandom rnd)
         {
             var map = // 4 tribes
@@ -43,27 +55,25 @@ namespace Ev.Tests.Integration
             new WorldResources { FoodCount = 100, WoodCount = 40, IronCount = 10 },
             rnd);
 
-        static void CreateTribes(Game game, IRandom rnd)
+        void CreateTribes(IGame game, IRandom rnd)
         {
-            var platform = game.GetPlatform();
-
             var agent1 = new TribeAgent("RandomW",  Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd));
             var agent2 = new TribeAgent("Gatherer", Color.Cyan,       new JackOfAllTradesTribeBehaviour(rnd));
-            var agent3 = new TribeAgent("Aggr",     Color.Cyan,       new AggressiveTribeBehaviour(rnd));
-            var agent4 = new TribeAgent("Gatherer", Color.Cyan,       new SmartAggressiveTribeBehaviour(rnd));
+            var agent3 = new TribeAgent("Aggr",     Color.Yellow,     new AggressiveTribeBehaviour(rnd));
+            var agent4 = new TribeAgent("SmrtAggr", Color.Magenta,    new SmartAggressiveTribeBehaviour(rnd));
 
-            platform.RegisterAgent(agent1, agent2, agent3, agent4);
+            _platform.RegisterAgent(game, agent1, agent2, agent3, agent4);
         }
 
         [TestMethod]
         public async Task FourTribesOnRandomMap()
         {
             // Arrange
-            var world = CreateWorld(new Random(1));
+            var world = CreateWorld(_random);
+            
+            var game = new Game.Server.Game(_platform, world, _random);
 
-            var game = new Game("local", world, new Random(1));
-
-            CreateTribes(game, new Random(1));
+            CreateTribes(game, _random);
 
             // Act
             await game.GameLoop(new EvGameOptions
@@ -80,11 +90,11 @@ namespace Ev.Tests.Integration
         public async Task FourTribesOnStaticMap()
         {
             // Arrange
-            var world = CreateWorldFromMap(new Random(1));
+            var world = CreateWorldFromMap(_random);
 
-            var game = new Game("local", world, new Random(1));
+            var game = new Game.Server.Game(_platform, world, _random);
 
-            CreateTribes(game, new Random(1));
+            CreateTribes(game, _random);
 
             // Act
             await game.GameLoop(new EvGameOptions

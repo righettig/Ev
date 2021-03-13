@@ -1,19 +1,8 @@
-﻿using Ev.Domain.Server.Actions.Core;
+﻿using Ev.Common;
+using Ev.Domain.Server.Actions.Core;
 
 namespace Ev.Domain.Server.Actions
 {
-    public enum Direction // TODO: move to Ev.Domain.Core? Ev.Domain.Core? Ev.Common?
-    {
-        N,
-        S,
-        E,
-        W,
-        NE,
-        NW,
-        SE,
-        SW
-    }
-
     public class MoveAction : GameAction
     {
         public Direction Direction { get; }

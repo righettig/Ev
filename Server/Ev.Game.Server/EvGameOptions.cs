@@ -1,4 +1,4 @@
-﻿namespace Ev.Domain.Server
+﻿namespace Ev.Game.Server
 {
     public class EvGameOptions 
     {

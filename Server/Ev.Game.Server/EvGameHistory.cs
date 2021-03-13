@@ -2,7 +2,7 @@
 using Force.DeepCloner;
 using System.Collections.Generic;
 
-namespace Ev.Domain.Server
+namespace Ev.Game.Server
 {
     public class EvGameHistory 
     {

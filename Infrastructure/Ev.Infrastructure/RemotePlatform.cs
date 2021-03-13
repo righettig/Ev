@@ -25,7 +25,7 @@ namespace Ev.Infrastructure
             throw new System.NotImplementedException();
         }
 
-        public void RegisterAgent(params Domain.Client.Core.ITribeAgent[] agents)
+        public void RegisterAgent(IGame game, params Domain.Client.Core.ITribeAgent[] agents)
         {
         }
 

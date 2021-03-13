@@ -1,8 +1,8 @@
-﻿using System;
-using Ev.Domain.Server.Actions;
+﻿using Ev.Domain.Server.Actions;
 using Ev.Domain.Server.Actions.Core;
 using Ev.Domain.Server.Core;
 using Ev.Domain.Server.World.Core;
+using System;
 
 namespace Ev.Domain.Server.Processors
 {
@@ -41,9 +41,9 @@ namespace Ev.Domain.Server.Processors
             {
                 case HoldAction h:          Update(h,  tribe, world, iteration); break;
                 case MoveAction m:          Update(m,  tribe, world, iteration); break;
-                case AttackAction a:        Update((IGameAction) a,  tribe, world, iteration); break;
+                case AttackAction a:        Update(a,  tribe, world, iteration); break;
                 case SuicideAction s:       Update(s,  tribe, world, iteration); break;
-                case BlockingGameAction ba: Update((IGameAction) ba, tribe, world, iteration); break;
+                case BlockingGameAction ba: Update(ba, tribe, world, iteration); break;
             }
         }
     }

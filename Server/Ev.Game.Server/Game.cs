@@ -4,12 +4,12 @@ using Ev.Domain.Server.Core;
 using Ev.Domain.Server.Predictors;
 using Ev.Domain.Server.Processors;
 using Ev.Domain.Server.World.Core;
-using Ev.Infrastructure;
 using Ev.Infrastructure.Core;
+using Ev.Serialization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ev.Domain.Server
+namespace Ev.Game.Server
 {
     public class Game : IGame
     {
@@ -18,21 +18,15 @@ namespace Ev.Domain.Server
         private readonly EvGameHistory _history;
         private readonly GameActionProcessor _actionProcessor;
 
-        public Game(string type, IWorld world, IRandom rnd)
+        public Game(IPlatform platform, IWorld world, IRandom rnd)
         {
             _world = world;
 
-            // create LocalPlatform or RemotePlatform depending on type
-            _platform = new LocalPlatform(this); // use a factory?
+            _platform = platform; // how to pass a reference to this?? -> new LocalPlatform(this);
 
             // TODO: for this to be useful I need to be able to record the game/world parameters too
             _history = new EvGameHistory();
             _actionProcessor = new GameActionProcessor(new AttackOutcomePredictor(rnd));
-        }
-
-        public IPlatform GetPlatform()
-        {
-            return _platform;
         }
 
         // onRegisterAgent
@@ -113,15 +107,15 @@ namespace Ev.Domain.Server
             // TODO: delegate to Spectator?
             // Dump(world, iteration);
 
-            //if (options.DumpWinnerHistory)
-            //{
-            //    var winnerHistory = history.States.Where(el => el.Item1.Tribe.Name == world.Winner.Name);
+            if (options.DumpWinnerHistory)
+            {
+                var winnerHistory = _history.States.Where(el => el.Item1.Tribe.Name == _world.Winner.Name);
 
-            //    DumpHistory(winnerHistory.Select(el => el.Item1).ToList());
+                //DumpHistory(winnerHistory.Select(el => el.Item1).ToList());
 
-            //    var serializer = new EvGameHistorySerializer();
-            //    await serializer.SaveToFile(winnerHistory, options.WinnerHistoryFilename);
-            //}
+                var serializer = new EvGameHistorySerializer();
+                await serializer.SaveToFile(winnerHistory, options.WinnerHistoryFilename);
+            }
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using Ev.Common.Utils;
 using Ev.Domain.Client;
-using Ev.Domain.Server;
 using Ev.Domain.Server.World;
 using Ev.Domain.Server.World.Core;
+using Ev.Game.Server;
+using Ev.Infrastructure;
 using Ev.Samples.Behaviours;
 using System.Threading.Tasks;
 
@@ -15,30 +16,30 @@ namespace Ev.Game.Console
             new WorldResources { FoodCount = 100, WoodCount = 40, IronCount = 10 },
             rnd);
 
-        static async Task Main(string[] args)
+        static async Task Main()
         {
             var world = CreateWorld(new Random(1));
 
-            var game = new Domain.Server.Game("local", world, new Random(1));
-            game.Start(); // server starts waiting for join requests
+            var platform = new LocalPlatform();
 
-            var platform = game.GetPlatform();
+            var game = new Server.Game(platform, world, new Random(1));
+            //game.Start(); // server starts waiting for join requests
 
             var rnd = new Random(1);
 
-            var agent1 = new TribeAgent("t1", Color.Magenta, new LazyTribeBehaviour(rnd));
-            var agent2 = new TribeAgent("t2", Color.Yellow,  new RandomWalkerTribeBehaviour(rnd));
+            var agent1 = new TribeAgent("RandomW",  Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd));
+            var agent2 = new TribeAgent("Gatherer", Color.Cyan,       new JackOfAllTradesTribeBehaviour(rnd));
+            var agent3 = new TribeAgent("Aggr",     Color.Yellow,     new AggressiveTribeBehaviour(rnd));
+            var agent4 = new TribeAgent("SmrtAggr", Color.Cyan,       new SmartAggressiveTribeBehaviour(rnd));
 
-            platform.RegisterAgent(agent1, agent2);
+            platform.RegisterAgent(game, agent1, agent2, agent3, agent4);
 
-            var options = new EvGameOptions
+            await game.GameLoop(new EvGameOptions
             {
                 //RenderEachTurn = true,
                 //WaitAfterEachMove = true,
                 DumpWinnerHistory = true,
-            };
-
-            await game.GameLoop(options);
+            });
         }
     }
 }

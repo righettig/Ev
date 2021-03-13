@@ -1,5 +1,5 @@
-﻿using Ev.Common.Utils;
-using Ev.Domain.Client.Actions;
+﻿using Ev.Common;
+using Ev.Common.Utils;
 using Ev.Domain.Client.Behaviours.Core;
 using Ev.Domain.Client.Core;
 
@@ -17,9 +17,9 @@ namespace Ev.Samples.Behaviours
             {
                 return Hold();
             }
-            else 
+            else
             {
-                return Move((Direction)move);
+                return Move((Direction) move);
             }
         }
     }

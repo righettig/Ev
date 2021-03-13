@@ -1,5 +1,5 @@
-﻿using Ev.Common.Utils;
-using Ev.Domain.Server.Actions;
+﻿using Ev.Common;
+using Ev.Common.Utils;
 using Ev.Domain.Server.Actions.Core;
 using Ev.Domain.Server.Core;
 using Ev.Domain.Server.Entities.Collectables;
@@ -67,7 +67,7 @@ namespace Ev.Domain.Server.World.Core
                 {
                     if (x >= 0 && y >= 0 && x < Size && y < Size && State[x, y] != null)
                     {
-                        result[ws_x, ws_y] = State[x, y]; //.ToImmutable();
+                        result[ws_x, ws_y] = State[x, y];
                     }
 
                     ws_x++;

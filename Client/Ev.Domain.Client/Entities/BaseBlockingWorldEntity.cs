@@ -8,10 +8,5 @@ namespace Ev.Domain.Client.Entities
         public Color Color { get; }
 
         public BaseBlockingWorldEntity(Color color) => Color = color;
-
-        //public IWorldEntity ToImmutable() 
-        //{
-        //    return this;
-        //}
     }
 }

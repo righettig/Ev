@@ -1,6 +1,7 @@
 ﻿using Ev.Domain.Client.Core;
 using Ev.Domain.Server.Core;
 using Ev.Infrastructure.Core;
+using System;
 using System.Collections.Generic;
 using ITribe = Ev.Domain.Server.Core.ITribe;
 using IWorldState = Ev.Domain.Server.Core.IWorldState;
@@ -9,13 +10,11 @@ namespace Ev.Infrastructure
 {
     public class LocalPlatform : IPlatform
     {
-        private readonly IGame _game;
         private readonly Mapper _mapper;
         private readonly Dictionary<string, ITribeBehaviour> _behaviours = new ();
 
-        public LocalPlatform(IGame game)
+        public LocalPlatform()
         {
-            _game = game;
             _mapper = new Mapper();
         }
 
@@ -35,13 +34,20 @@ namespace Ev.Infrastructure
         {
         }
 
-        public void RegisterAgent(params ITribeAgent[] agents)
+        public void RegisterAgent(IGame game, params ITribeAgent[] agents)
         {
             foreach (var tribeAgent in agents)
             {
-                _behaviours[tribeAgent.Name] = tribeAgent.Behaviour;
+                // TODO: server should return a unique Id for each tribe agent
+                game.RegisterAgent(tribeAgent.Name, tribeAgent.Color);
 
-                _game.RegisterAgent(tribeAgent.Name, tribeAgent.Color);
+                // TODO: should use the unique tribe agent Id
+                if (_behaviours.ContainsKey(tribeAgent.Name))
+                {
+                    throw new ArgumentException("Cannot register two or more agents with the same name.", nameof(agents));
+                }
+
+                _behaviours[tribeAgent.Name] = tribeAgent.Behaviour;
             }
         }
 
@@ -56,6 +62,8 @@ namespace Ev.Infrastructure
             var action = behaviour.DoMove(clientWorldState, clientTribe);
 
             Domain.Server.Core.IGameAction result = _mapper.Map(action);
+
+            result.Tribe = tribe;
 
             return result;
         }

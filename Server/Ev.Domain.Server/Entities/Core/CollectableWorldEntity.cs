@@ -12,10 +12,5 @@ namespace Ev.Domain.Server.Entities.Core
         {
             Value = rnd.Next(1, maxValue + 1);
         }
-
-        //public IWorldEntity ToImmutable()
-        //{
-        //    return this; // CollectableWorldEntity are inherently immutable
-        //}
     }
 }

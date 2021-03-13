@@ -7,8 +7,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Client\Ev.Domain.Client\Ev.Domain.Client.csproj" />
+    <ProjectReference Include="..\Infrastructure\Ev.Infrastructure\Ev.Infrastructure.csproj" />
     <ProjectReference Include="..\Samples\Behaviours\Ev.Samples.Behaviours\Ev.Samples.Behaviours.csproj" />
     <ProjectReference Include="..\Server\Ev.Domain.Server\Ev.Domain.Server.csproj" />
+    <ProjectReference Include="..\Server\Ev.Game.Server\Ev.Game.Server.csproj" />
   </ItemGroup>
 
 </Project>

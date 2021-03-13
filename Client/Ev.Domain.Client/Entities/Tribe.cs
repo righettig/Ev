@@ -5,30 +5,19 @@ namespace Ev.Domain.Client.Entities
 {
     public class Tribe : ITribe
     {
-        public string Name { get; }
-        public Color Color { get; }
+        public string Name { get; init; }
 
-        public int Population { get; }
+        public Color Color { get; init; }
 
-        public (int x, int y) Position { get; }
+        public int Population { get; init; }
 
-        public (int x, int y) PrevPosition { get; }
+        public (int x, int y) Position { get; init; }
 
-        public int Wood { get; }
+        public (int x, int y) PrevPosition { get; init; }
 
-        public int Iron { get; }
+        public int Wood { get; init; }
 
-
-        public Tribe(ITribe other)
-        {
-            Name         = other.Name;
-            Color        = other.Color;
-            Population   = other.Population;
-            Position     = other.Position;
-            PrevPosition = other.PrevPosition;
-            Wood         = other.Wood;
-            Iron         = other.Iron;
-        }
+        public int Iron { get; init; }
 
         public bool StrongerThan(ITribe other) => Population > other.Population;
 

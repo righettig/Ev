@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DeepCloner" Version="0.10.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ev.Domain.Server.Core\Ev.Domain.Server.Core.csproj" />
+    <ProjectReference Include="..\Ev.Domain.Server\Ev.Domain.Server.csproj" />
+    <ProjectReference Include="..\Ev.Serialization\Ev.Serialization.csproj" />
+  </ItemGroup>
+
+</Project>
