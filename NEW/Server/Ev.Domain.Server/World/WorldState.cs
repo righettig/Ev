@@ -15,6 +15,17 @@ namespace Ev.Domain.Server.World
         }
 
         /// <summary>
+        /// Gets the entity at the given position.
+        /// </summary>
+        /// <typeparam name="T">The entity type.</typeparam>
+        /// <param name="entityPos">The world state position where the entity is.</param>
+        /// <returns>The entity casted as an instance of T, or null it not found or if the wrong type is provided.</returns>
+        public T GetEntity<T>((int x, int y) entityPos) where T : class, IWorldEntity
+        {
+            return State[entityPos.x, entityPos.y] as T;
+        }
+
+        /// <summary>
         /// Iterates through the world state applying the provided action to each cell.
         /// </summary>
         /// <param name="fn">The action to apply.</param>

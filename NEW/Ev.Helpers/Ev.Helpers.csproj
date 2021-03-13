@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Ev.Common\Ev.Common.csproj" />
+    <ProjectReference Include="..\Common\Ev.Common\Ev.Common.csproj" />
+    <ProjectReference Include="..\Server\Ev.Domain.Server\Ev.Domain.Server.csproj" />
   </ItemGroup>
 
 </Project>

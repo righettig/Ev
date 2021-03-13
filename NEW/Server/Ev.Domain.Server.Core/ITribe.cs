@@ -1,8 +1,13 @@
-﻿namespace Ev.Domain.Server.Core
+﻿
+using Ev.Common.Utils;
+
+namespace Ev.Domain.Server.Core
 {
     public interface ITribe : IWorldEntity
     {
         string Name { get; }
+        Color Color { get;}
+
         int Population { get; set; }
         int PrevPopulation { get; set; }
         int DeadAtIteration { get; set; }
