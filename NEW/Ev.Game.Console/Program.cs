@@ -1,5 +1,5 @@
-﻿using Ev.Domain.Client;
-using Ev.Domain.Server;
+﻿//using Ev.Domain.Client;
+//using Ev.Domain.Client.Behaviours.Core;
 
 namespace Ev.Game.Console
 {
@@ -7,14 +7,14 @@ namespace Ev.Game.Console
     {
         static void Main(string[] args)
         {
-            var game = new Domain.Server.Game("local", new World());
-            game.Start(); // server starts waiting for join requests
+            //var game = new Domain.Server.Game("local", new World());
+            //game.Start(); // server starts waiting for join requests
 
-            var platform = game.GetPlatform();
+            //var platform = game.GetPlatform();
 
-            var agent1 = new TribeAgent("t1", "red", new TribeBehaviour());
+            //var agent1 = new TribeAgent("t1", "red", new TribeBehaviour());
 
-            platform.RegisterAgent(agent1);
+            //platform.RegisterAgent(agent1);
         }
     }
 }

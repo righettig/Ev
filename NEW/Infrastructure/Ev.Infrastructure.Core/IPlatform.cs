@@ -1,6 +1,4 @@
-﻿using Ev.Common;
-
-namespace Ev.Infrastructure.Core
+﻿namespace Ev.Infrastructure.Core
 {
     // IGameBus / IChannel
     public interface IPlatform
@@ -15,6 +13,6 @@ namespace Ev.Infrastructure.Core
 
         void RegisterAgent(Domain.Client.Core.ITribeAgent agent);
 
-        IGameAction Update(Domain.Server.Core.IWorldState worldState, Domain.Server.Core.ITribe tribe);
+        Domain.Server.Core.IGameAction Update(Domain.Server.Core.IWorldState worldState, Domain.Server.Core.ITribe tribe);
     }
 }

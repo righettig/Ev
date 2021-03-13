@@ -1,9 +1,9 @@
-﻿using Ev.Common;
-
-namespace Ev.Domain.Client.Core
+﻿namespace Ev.Domain.Client.Core
 {
-    public interface ITribeBehaviour
+    public interface ITribeBehaviour 
     {
-        IGameAction DoMove(IWorldState worldState, ITribe tribe);
+        IWorldState State { get; set; }
+
+        IGameAction DoMove(IWorldState state, ITribe tribe);
     }
 }

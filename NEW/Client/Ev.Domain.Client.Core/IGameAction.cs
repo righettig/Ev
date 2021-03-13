@@ -1,4 +1,4 @@
-﻿namespace Ev.Common
+﻿namespace Ev.Domain.Client.Core
 {
     public interface IGameAction
     {

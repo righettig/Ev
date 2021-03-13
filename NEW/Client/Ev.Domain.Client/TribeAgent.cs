@@ -10,8 +10,8 @@ namespace Ev.Domain.Client
 
         public TribeAgent(string name, string color, ITribeBehaviour behaviour)
         {
-            Name = name;
-            Color = color;
+            Name      = name;
+            Color     = color;
             Behaviour = behaviour;
         }
     }

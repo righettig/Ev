@@ -1,5 +1,4 @@
-﻿using Ev.Common;
-using Ev.Domain.Client.Core;
+﻿using Ev.Domain.Client.Core;
 using Ev.Domain.Server.Core;
 using Ev.Infrastructure.Core;
 using System.Collections.Generic;
@@ -47,12 +46,13 @@ namespace Ev.Infrastructure
             _game.RegisterAgent(agent.Name, agent.Color);
         }
 
-        public IGameAction Update(IWorldState worldState, ITribe tribe)
+        public Domain.Server.Core.IGameAction Update(IWorldState worldState, ITribe tribe)
         {
             Domain.Client.Core.IWorldState clientWorldState = _mapper.Map(worldState);
             Domain.Client.Core.ITribe      clientTribe      = _mapper.Map(tribe);
 
             var behaviour = _behaviours[tribe.Name];
+            behaviour.State = clientWorldState;
 
             var action = behaviour.DoMove(clientWorldState, clientTribe);
 
