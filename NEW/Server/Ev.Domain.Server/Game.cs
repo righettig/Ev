@@ -2,7 +2,6 @@
 using Ev.Domain.Server.World.Core;
 using Ev.Infrastructure;
 using Ev.Infrastructure.Core;
-using IWorldState = Ev.Domain.Server.Core.IWorldState;
 
 namespace Ev.Domain.Server
 {

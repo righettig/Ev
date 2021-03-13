@@ -3,7 +3,7 @@ using System;
 
 namespace Ev.Domain.Server.World
 {
-    public sealed class WorldState : Core.IWorldState
+    public sealed class WorldState : IWorldState
     {
         public const int WORLD_STATE_SIZE = 2;
 
