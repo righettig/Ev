@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="PlayerControlled.Behaviour.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="PlayerControlled.Behaviour.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Client\Ev.Domain.Client\Ev.Domain.Client.csproj" />
+    <ProjectReference Include="..\..\..\Common\Ev.Common\Ev.Common.csproj" />
+  </ItemGroup>
+
+</Project>

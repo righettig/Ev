@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace Ev.Domain.Client.World
 {
+    // TODO: maybe I can keep the same WorldState and implement the new "client" stuff as extension methods
+
     public sealed class WorldState : IWorldState
     {
         public const int WORLD_STATE_SIZE = 2;
