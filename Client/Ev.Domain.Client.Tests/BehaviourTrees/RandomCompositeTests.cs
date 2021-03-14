@@ -1,17 +1,18 @@
-﻿using Ev.Common.Utils;
+﻿using Ev.Common.Core;
 using Ev.Domain.Client.Behaviours.BehaviourTrees;
 using Ev.Domain.Client.Behaviours.BehaviourTrees.Composite;
 using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using Random = Ev.Common.Core.Random;
 
 namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
     [TestClass]
     public class RandomCompositeTests
     {
-        private readonly RandomComposite uat = new(new Common.Utils.Random(), new Mock<IBehaviourTreeNode>().Object);
+        private readonly RandomComposite uat = new(new Random(), new Mock<IBehaviourTreeNode>().Object);
 
         #region Ctor
 

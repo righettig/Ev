@@ -1,4 +1,4 @@
-﻿namespace Ev.Common
+﻿namespace Ev.Common.Core
 {
     public enum Direction
     {

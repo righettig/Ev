@@ -1,4 +1,4 @@
-﻿using Ev.Common.Utils;
+﻿using Ev.Common.Core;
 using Ev.Domain.Client.Behaviours.Fsm;
 using Ev.Domain.Client.Core;
 

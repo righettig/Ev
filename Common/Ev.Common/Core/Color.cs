@@ -1,4 +1,4 @@
-﻿namespace Ev.Common.Utils
+﻿namespace Ev.Common.Core
 {
     //
     // Summary:

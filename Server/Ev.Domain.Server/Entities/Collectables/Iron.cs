@@ -1,4 +1,4 @@
-﻿using Ev.Common.Utils;
+﻿using Ev.Common.Core;
 using Ev.Domain.Server.Entities.Core;
 
 namespace Ev.Domain.Server.Entities.Collectables

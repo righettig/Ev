@@ -1,4 +1,4 @@
-﻿using Ev.Common;
+﻿using Ev.Common.Core;
 using Ev.Serialization.Dto.Actions.Core;
 using Newtonsoft.Json;
 using System;

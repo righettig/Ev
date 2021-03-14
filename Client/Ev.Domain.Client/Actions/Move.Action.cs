@@ -1,4 +1,4 @@
-﻿using Ev.Common;
+﻿using Ev.Common.Core;
 using Ev.Domain.Client.Core;
 
 namespace Ev.Domain.Client.Actions

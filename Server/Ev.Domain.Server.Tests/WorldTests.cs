@@ -1,4 +1,4 @@
-using Ev.Common.Utils;
+using Ev.Common.Core;
 using Ev.Domain.Server.Actions.Core;
 using Ev.Domain.Server.Core;
 using Ev.Domain.Server.Entities.Collectables;
@@ -7,11 +7,12 @@ using Ev.Domain.Server.World;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using Random = Ev.Common.Core.Random;
 
 namespace Ev.Domain.Server.Tests
 {
     using static TestHelpers;
-    using Random = Common.Utils.Random;
+    using Random = Random;
 
     [TestClass]
     public class WorldTests

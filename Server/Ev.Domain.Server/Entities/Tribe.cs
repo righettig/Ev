@@ -1,4 +1,4 @@
-﻿using Ev.Common.Utils;
+﻿using Ev.Common.Core;
 using Ev.Domain.Server.Core;
 
 namespace Ev.Domain.Server.Entities
