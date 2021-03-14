@@ -1,4 +1,5 @@
 ﻿using Ev.Common.Core;
+using Ev.Common.Core.Interfaces;
 using Ev.Domain.Client.Actions;
 using Ev.Domain.Server.Entities;
 using Ev.Domain.Server.Entities.Collectables;

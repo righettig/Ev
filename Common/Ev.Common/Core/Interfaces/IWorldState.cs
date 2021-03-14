@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ev.Common.Core
+namespace Ev.Common.Core.Interfaces
 {
     public interface IWorldState
     {

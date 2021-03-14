@@ -1,4 +1,5 @@
 ﻿using Ev.Common.Core;
+using Ev.Common.Core.Interfaces;
 using Ev.Domain.Client;
 using Ev.Domain.Server.World;
 using Ev.Domain.Server.World.Core;

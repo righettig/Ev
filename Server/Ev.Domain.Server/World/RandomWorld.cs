@@ -1,8 +1,8 @@
 ﻿using Ev.Common.Core;
+using Ev.Common.Core.Interfaces;
 using Ev.Domain.Server.Core;
 using Ev.Domain.Server.Entities;
 using Ev.Domain.Server.Entities.Collectables;
-using Ev.Domain.Server.Entities.Core;
 using Ev.Domain.Server.World.Core;
 using System;
 using System.Collections.Generic;

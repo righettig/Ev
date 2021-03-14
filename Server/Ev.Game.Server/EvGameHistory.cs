@@ -1,4 +1,4 @@
-﻿using Ev.Common.Core;
+﻿using Ev.Common.Core.Interfaces;
 using Ev.Domain.Server.Core;
 using Force.DeepCloner;
 using System.Collections.Generic;

@@ -1,4 +1,5 @@
 ﻿using Ev.Common.Core;
+using Ev.Common.Core.Interfaces;
 using Ev.Domain.Client.Behaviours.Core;
 using Ev.Domain.Client.Core;
 

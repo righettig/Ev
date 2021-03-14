@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Ev.Common.Core.Interfaces;
 using Ev.Domain.Server.Actions;
 using Ev.Domain.Server.Core;
 using Ev.Domain.Server.Entities;
@@ -12,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Ev.Common.Core;
 
 namespace Ev.Serialization
 {

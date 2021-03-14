@@ -1,4 +1,4 @@
-﻿using Ev.Domain.Client.Core;
+﻿using Ev.Common.Core.Interfaces;
 
 namespace Ev.Domain.Client.Entities.Core
 {

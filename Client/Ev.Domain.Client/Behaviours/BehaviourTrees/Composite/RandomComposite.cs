@@ -1,4 +1,4 @@
-﻿using Ev.Common.Core;
+﻿using Ev.Common.Core.Interfaces;
 using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
 using System;
 using Random = Ev.Common.Core.Random;

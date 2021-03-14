@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ev.Common.Core.Interfaces;
+using System;
 
 namespace Ev.Common.Core
 {

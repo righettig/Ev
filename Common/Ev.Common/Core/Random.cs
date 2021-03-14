@@ -1,4 +1,6 @@
-﻿namespace Ev.Common.Core
+﻿using Ev.Common.Core.Interfaces;
+
+namespace Ev.Common.Core
 {
     public class Random : IRandom
     {

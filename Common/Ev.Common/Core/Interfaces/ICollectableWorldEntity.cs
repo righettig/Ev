@@ -1,6 +1,4 @@
-﻿using Ev.Common.Core;
-
-namespace Ev.Domain.Client.Core
+﻿namespace Ev.Common.Core.Interfaces
 {
     public interface ICollectableWorldEntity : IWorldEntity 
     {
