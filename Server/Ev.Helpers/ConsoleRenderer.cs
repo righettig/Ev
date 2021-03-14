@@ -1,7 +1,6 @@
-﻿using Ev.Common.Core.Interfaces;
+﻿using Ev.Common.Core;
+using Ev.Common.Core.Interfaces;
 using Ev.Domain.Server.Core;
-using Ev.Domain.Server.Entities;
-using Ev.Domain.Server.Entities.Collectables;
 using static System.Console;
 
 namespace Ev.Helpers
@@ -17,27 +16,32 @@ namespace Ev.Helpers
                     Write("X ");
                     break;
 
-                case Wall:
+                case IBlockingWorldEntity { Type: BlockingWorldEntityType.Wall }:
                     ForegroundColor = System.ConsoleColor.White;
                     Write("O ");
                     break;
 
-                case Water:
+                case IBlockingWorldEntity { Type: BlockingWorldEntityType.Water }:
                     ForegroundColor = System.ConsoleColor.Blue;
                     Write("~ ");
                     break;
 
-                case Food e:
+                case IBlockingWorldEntity { Type: BlockingWorldEntityType.NotReachable }:
+                    ForegroundColor = System.ConsoleColor.White;
+                    Write("* ");
+                    break;
+
+                case ICollectableWorldEntity { Type: CollectableWorldEntityType.Food } e:
                     ForegroundColor = System.ConsoleColor.Green;
                     Write($"{e.Value} ");
                     break;
 
-                case Wood e:
+                case ICollectableWorldEntity { Type: CollectableWorldEntityType.Wood } e:
                     ForegroundColor = System.ConsoleColor.DarkRed;
                     Write($"{e.Value} ");
                     break;
 
-                case Iron e:
+                case ICollectableWorldEntity { Type: CollectableWorldEntityType.Iron } e:
                     ForegroundColor = System.ConsoleColor.DarkYellow;
                     Write($"{e.Value} ");
                     break;

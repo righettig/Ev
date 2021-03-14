@@ -2,7 +2,6 @@
 using Ev.Common.Core.Interfaces;
 using Ev.Domain.Server.Actions.Core;
 using Ev.Domain.Server.Core;
-using Ev.Domain.Server.Entities.Collectables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +54,15 @@ namespace Ev.Domain.Server.World.Core
             var pos = tribe.Position;
 
             var result = new IWorldEntity[1 + 2 * WORLD_STATE_SIZE, 1 + 2 * WORLD_STATE_SIZE];
+            var notReachable = EntityFactory.NotReachable();
+
+            for (var x = 0; x < result.GetLength(0); x++)
+            {
+                for (var y = 0; y < result.GetLength(1); y++)
+                {
+                    result[x, y] = notReachable;
+                }
+            }
 
             var ws_y = 0;
 
@@ -137,11 +145,17 @@ namespace Ev.Domain.Server.World.Core
 
             State[x, y] = null;
 
-            switch (State[tribe.Position.x, tribe.Position.y])
+            if (State[tribe.Position.x, tribe.Position.y] is CollectableWorldEntity c)
             {
-                case Food food: tribe.Population += food.Value; break;
-                case Wood wood: tribe.Wood += wood.Value; break;
-                case Iron iron: tribe.Iron += iron.Value; break;
+                switch (c.Type)
+                {
+                    case CollectableWorldEntityType.Food: tribe.Population += c.Value; break;
+                    case CollectableWorldEntityType.Wood: tribe.Wood       += c.Value; break;
+                    case CollectableWorldEntityType.Iron: tribe.Iron       += c.Value; break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
             }
 
             State[tribe.Position.x, tribe.Position.y] = tribe;

@@ -2,7 +2,6 @@
 using Ev.Common.Core.Interfaces;
 using Ev.Domain.Client.Actions;
 using Ev.Domain.Client.Core;
-using Ev.Domain.Client.Entities.Collectables;
 using System;
 using static System.Math;
 
@@ -48,7 +47,7 @@ namespace Ev.Domain.Client.Behaviours.Core
 
         public virtual string DebugBehaviour() => "";
 
-        // TODO: create a separate class for the factory methods for action so thay can be unit-testable.
+        // TODO: create a separate class for the factory methods for action so they can be unit-testable.
         // This will force those who define a concrete class to pass an instance of the TribeActionFactory
         // Do I really want this? I could create two ctor overloads, one that accepts an ITribeActionFactory
         // and another that uses a singleton instance of it.
@@ -86,10 +85,8 @@ namespace Ev.Domain.Client.Behaviours.Core
             {
                 throw new TribeNotFoundException("tribe not found.", nameof(targetPosition));
             }
-            else
-            {
-                return new AttackAction(enemy.Name);
-            }
+
+            return new AttackAction(enemy.Name);
         }
 
         /// <summary>
@@ -278,7 +275,7 @@ namespace Ev.Domain.Client.Behaviours.Core
 
             _state.Traverse((el, x, y) =>
             {
-                if (el is Food c)
+                if (el is ICollectableWorldEntity { Type: CollectableWorldEntityType.Food } c && c.Value > highest)
                 {
                     if (c.Value > highest)
                     {

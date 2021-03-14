@@ -2,7 +2,6 @@ using Ev.Common.Core;
 using Ev.Common.Core.Interfaces;
 using Ev.Domain.Server.Actions.Core;
 using Ev.Domain.Server.Core;
-using Ev.Domain.Server.Entities.Collectables;
 using Ev.Domain.Server.Tests.Helpers;
 using Ev.Domain.Server.World;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -127,9 +126,9 @@ namespace Ev.Domain.Server.Tests
             {
                 for (var j = 0; j < world.Size; j++)
                 {
-                    if (world.State[i, j] is Food) foodCount++;
-                    if (world.State[i, j] is Wood) woodCount++;
-                    if (world.State[i, j] is Iron) ironCount++;
+                    if (world.State[i, j] is ICollectableWorldEntity { Type: CollectableWorldEntityType.Food }) foodCount++;
+                    if (world.State[i, j] is ICollectableWorldEntity { Type: CollectableWorldEntityType.Wood }) woodCount++;
+                    if (world.State[i, j] is ICollectableWorldEntity { Type: CollectableWorldEntityType.Iron }) ironCount++;
                 }
             }
 

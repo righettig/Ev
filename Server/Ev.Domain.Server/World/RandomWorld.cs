@@ -2,7 +2,6 @@
 using Ev.Common.Core.Interfaces;
 using Ev.Domain.Server.Core;
 using Ev.Domain.Server.Entities;
-using Ev.Domain.Server.Entities.Collectables;
 using Ev.Domain.Server.World.Core;
 using System;
 using System.Collections.Generic;
@@ -22,9 +21,9 @@ namespace Ev.Domain.Server.World
             if ((resources.FoodCount + resources.WoodCount + resources.IronCount) > size * size)
                 throw new ArgumentOutOfRangeException(nameof(resources), "Too many collectables requested.");
 
-            InitCollectable(resources.FoodCount, rnd => new Food(rnd));
-            InitCollectable(resources.WoodCount, rnd => new Wood(rnd));
-            InitCollectable(resources.IronCount, rnd => new Iron(rnd));
+            InitCollectable(resources.FoodCount, EntityFactory.Food);
+            InitCollectable(resources.WoodCount, EntityFactory.Wood);
+            InitCollectable(resources.IronCount, EntityFactory.Iron);
         }
 
         // for unit-testing purpose only

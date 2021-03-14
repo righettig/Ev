@@ -2,5 +2,6 @@
 {
     public interface IBlockingWorldEntity : IWorldEntity
     {
+        BlockingWorldEntityType Type { get; }
     }
 }

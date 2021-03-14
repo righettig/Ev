@@ -1,8 +1,6 @@
 ﻿using Ev.Common.Core;
 using Ev.Common.Core.Interfaces;
 using Ev.Domain.Client.Actions;
-using Ev.Domain.Server.Entities;
-using Ev.Domain.Server.Entities.Collectables;
 using System;
 
 namespace Ev.Infrastructure
@@ -20,12 +18,9 @@ namespace Ev.Infrastructure
                 entities[x, y] = entity switch
                 {
                     Domain.Server.Core.ITribe tribe => Map(tribe),
-                    Food food   => new Domain.Client.Entities.Collectables.Food { Value = food.Value },
-                    Iron iron   => new Domain.Client.Entities.Collectables.Iron { Value = iron.Value },
-                    Wood wood   => new Domain.Client.Entities.Collectables.Wood { Value = wood.Value },
-                    Wall        => new Domain.Client.Entities.Wall(),
-                    Water       => new Domain.Client.Entities.Water(),
-                    null        => null,
+                    ICollectableWorldEntity e       => e,
+                    IBlockingWorldEntity e          => e,
+                    null                            => null,
 
                     _ => throw new NotSupportedException()
                 };

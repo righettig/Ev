@@ -8,25 +8,24 @@ namespace Ev.Domain.Client.World
 {
     public static class WorldStateExtensions
     {
-        //public static ICollectable[] GetCollectables(this WorldState state, CollectableType? type = null)
-        //{
-        //    if (type is null)
-        //    {
-        //        return State.OfType<ICollectable>().ToArray();
-        //    }
-
-        //    return State.OfType<ICollectable>().Where(el => el.Type == type).ToArray();
-        //}
-
         /// <summary>
-        /// Returns all the available collectable entities.
+        /// Returns all available collectable entities of a given type, if specified, all of them otherwise.
         /// </summary>
         /// <returns>An array of collectables.</returns>
-        public static ICollectableWorldEntity[] GetCollectables(this IWorldState state)
+        public static ICollectableWorldEntity[] GetCollectables(this IWorldState state, CollectableWorldEntityType? type = null)
         {
-            return state.State.OfType<ICollectableWorldEntity>().ToArray();
+            if (type is null)
+            {
+                return state.State.OfType<ICollectableWorldEntity>().ToArray();
+            }
+
+            return state.State.OfType<ICollectableWorldEntity>().Where(el => el.Type == type).ToArray();
         }
 
+        /// <summary>
+        /// Returns all the available tribes with the exception of the one at position (WORLD_STATE_SIZE, WORLD_STATE_SIZE).
+        /// </summary>
+        /// <returns>An array of tribes.</returns>
         public static ITribe[] GetTribes(this IWorldState state)
         {
             return state.State.OfType<ITribe>().Where(

@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
+using Ev.Common.Core;
 using Ev.Common.Core.Interfaces;
 using Ev.Domain.Server.Actions;
 using Ev.Domain.Server.Core;
-using Ev.Domain.Server.Entities;
-using Ev.Domain.Server.Entities.Collectables;
-using Ev.Domain.Server.Entities.Core;
 using Ev.Serialization.Dto.Actions;
 using Ev.Serialization.Dto.Actions.Core;
 using Ev.Serialization.Dto.Entities;
@@ -24,22 +22,18 @@ namespace Ev.Serialization
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<ITribe,                TribeDto>();
-                cfg.CreateMap<ITribe,                EnemyTribeDto>();
+                cfg.CreateMap<ITribe,                  TribeDto>();
+                cfg.CreateMap<ITribe,                  EnemyTribeDto>();
 
-                cfg.CreateMap<Food,                  CollectableWorldEntityDto>().AfterMap((_, result) => result.EntityType = "Food");
-                cfg.CreateMap<Iron,                  CollectableWorldEntityDto>().AfterMap((_, result) => result.EntityType = "Iron");
-                cfg.CreateMap<Wood,                  CollectableWorldEntityDto>().AfterMap((_, result) => result.EntityType = "Wood");
+                cfg.CreateMap<IBlockingWorldEntity,    BlockingWorldEntityDto>()   .AfterMap((e, result) => result.EntityType = e.Type.ToString());
+                cfg.CreateMap<ICollectableWorldEntity, CollectableWorldEntityDto>().AfterMap((e, result) => result.EntityType = e.Type.ToString());
 
-                cfg.CreateMap<Wall,                  BlockingWorldEntityDto>().AfterMap((_, result) => result.EntityType = "Wall");
-                cfg.CreateMap<Water,                 BlockingWorldEntityDto>().AfterMap((_, result) => result.EntityType = "Water");
-
-                cfg.CreateMap<MoveAction,            MoveActionDto>();
-                cfg.CreateMap<HoldAction,            HoldActionDto>();
-                cfg.CreateMap<AttackAction,          AttackActionDto>();
-                cfg.CreateMap<SuicideAction,         SuicideActionDto>();
-                cfg.CreateMap<UpgradeDefensesAction, UpgradeDefensesActionDto>();
-                cfg.CreateMap<UpgradeAttackAction,   UpgradeAttackActionDto>();
+                cfg.CreateMap<MoveAction,              MoveActionDto>();
+                cfg.CreateMap<HoldAction,              HoldActionDto>();
+                cfg.CreateMap<AttackAction,            AttackActionDto>();
+                cfg.CreateMap<SuicideAction,           SuicideActionDto>();
+                cfg.CreateMap<UpgradeAttackAction,     UpgradeAttackActionDto>();
+                cfg.CreateMap<UpgradeDefensesAction,   UpgradeDefensesActionDto>();
             });
 
             _mapper = config.CreateMapper();
@@ -68,9 +62,12 @@ namespace Ev.Serialization
                 {
                     var worldEntityDto = entity switch
                     {
-                        CollectableWorldEntity                             => _mapper.Map<CollectableWorldEntityDto>(entity).WithPosition(x, y),
-                        IBlockingWorldEntity                               => _mapper.Map<BlockingWorldEntityDto>(entity).WithPosition(x, y),
-                        ITribe e when e.Name != gameAction.Tribe.Name      => _mapper.Map<EnemyTribeDto>(entity).WithPosition(x, y),
+                        ICollectableWorldEntity                            => _mapper.Map<CollectableWorldEntityDto>(entity).WithPosition(x, y),
+
+                        IBlockingWorldEntity e when e.Type != BlockingWorldEntityType.NotReachable 
+                                                                           => _mapper.Map<BlockingWorldEntityDto>   (entity).WithPosition(x, y),
+
+                        ITribe e when e.Name != gameAction.Tribe.Name      => _mapper.Map<EnemyTribeDto>            (entity).WithPosition(x, y),
 
                         _ => null
                     };

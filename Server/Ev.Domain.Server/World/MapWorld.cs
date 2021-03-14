@@ -1,7 +1,6 @@
 ﻿using Ev.Common.Core;
 using Ev.Common.Core.Interfaces;
 using Ev.Domain.Server.Entities;
-using Ev.Domain.Server.Entities.Collectables;
 using Ev.Domain.Server.World.Core;
 using System;
 using System.Collections.Generic;
@@ -35,11 +34,12 @@ namespace Ev.Domain.Server.World
                 {
                     case 'S': _spawnPoints.Add((x, y)); break;
                     case '_': break; // ignore
-                    case 'I': _state[x, y] = new Iron(rnd); break;
-                    case 'F': _state[x, y] = new Food(rnd); break;
-                    case 'W': _state[x, y] = new Wood(rnd); break;
-                    case 'X': _state[x, y] = new Wall(); break;
-                    case '~': _state[x, y] = new Water(); break;
+                    case 'I': _state[x, y] = EntityFactory.Iron(rnd); break;
+                    case 'F': _state[x, y] = EntityFactory.Food(rnd); break;
+                    case 'W': _state[x, y] = EntityFactory.Wood(rnd); break;
+                    case 'X': _state[x, y] = EntityFactory.Wall();    break;
+                    case '~': _state[x, y] = EntityFactory.Water();   break;
+
                     default: throw new ArgumentException("Unsupported map token", nameof(map));
                 }
 
