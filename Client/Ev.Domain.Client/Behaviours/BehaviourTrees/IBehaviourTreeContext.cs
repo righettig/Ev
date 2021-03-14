@@ -1,4 +1,5 @@
-﻿using Ev.Domain.Client.Core;
+﻿using Ev.Common.Core;
+using Ev.Domain.Client.Core;
 
 namespace Ev.Domain.Client.Behaviours.BehaviourTrees
 {

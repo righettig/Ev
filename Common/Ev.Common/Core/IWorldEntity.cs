@@ -1,4 +1,4 @@
-﻿namespace Ev.Domain.Server.Core
+﻿namespace Ev.Common.Core
 {
     public interface IWorldEntity
     {

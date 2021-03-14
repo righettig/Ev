@@ -1,5 +1,5 @@
-﻿using Ev.Domain.Client.Actions;
-using Ev.Domain.Client.Core;
+﻿using Ev.Common.Core;
+using Ev.Domain.Client.Actions;
 using Ev.Domain.Server.Entities;
 using Ev.Domain.Server.Entities.Collectables;
 using System;
@@ -8,9 +8,9 @@ namespace Ev.Infrastructure
 {
     public class Mapper
     {
-        public Domain.Client.Core.IWorldState Map(Domain.Server.Core.IWorldState worldState)
+        public IWorldState Map(IWorldState worldState)
         {
-            const int size = Domain.Server.World.WorldState.WORLD_STATE_SIZE * 2 + 1;
+            const int size = WorldState.WORLD_STATE_SIZE * 2 + 1;
             
             var entities = new IWorldEntity[size, size];
 
@@ -31,7 +31,7 @@ namespace Ev.Infrastructure
 
             }, ignoreSelf: false);
 
-            var result = new Domain.Client.World.WorldState(entities);
+            var result = new WorldState(entities);
 
             return result;
         }

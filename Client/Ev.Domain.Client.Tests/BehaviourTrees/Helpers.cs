@@ -1,4 +1,5 @@
-﻿using Ev.Domain.Client.Behaviours.BehaviourTrees;
+﻿using Ev.Common.Core;
+using Ev.Domain.Client.Behaviours.BehaviourTrees;
 using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
 using Ev.Domain.Client.Core;
 using Moq;

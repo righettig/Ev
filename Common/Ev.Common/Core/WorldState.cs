@@ -1,7 +1,6 @@
-﻿using Ev.Domain.Server.Core;
-using System;
+﻿using System;
 
-namespace Ev.Domain.Server.World
+namespace Ev.Common.Core
 {
     public sealed class WorldState : IWorldState
     {
@@ -41,7 +40,7 @@ namespace Ev.Domain.Server.World
             {
                 for (var y = 0; y < State.GetLength(1); y++)
                 {
-                    if ((x, y) != (WORLD_STATE_SIZE, WORLD_STATE_SIZE) || !ignoreSelf) // ignore self
+                    if ((x, y) != (WORLD_STATE_SIZE, WORLD_STATE_SIZE) || !ignoreSelf)
                     {
                         fn(State[x, y], x, y);
                     }
