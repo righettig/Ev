@@ -32,7 +32,7 @@ namespace Ev.Samples.Behaviours
                     {
                         if (tribe.Population < 40) return StateEnum.SeekFood;
 
-                        if (state.Closest<ITribe>() != null)
+                        if (IsEnemyClose(state))
                         {
                             return StateEnum.Flee;
                         }
@@ -48,7 +48,7 @@ namespace Ev.Samples.Behaviours
                     {
                         if (tribe.Population > 70) return StateEnum.Idle;
 
-                        if (state.Closest<ITribe>() != null)
+                        if (IsEnemyClose(state))
                         {
                             return StateEnum.Flee;
                         }
@@ -62,13 +62,13 @@ namespace Ev.Samples.Behaviours
                     ActionFn = (state, tribe) => {
                         var enemy = state.Closest<ITribe>();
 
-                        return MoveAwayFrom(enemy);
+                        return MoveAwayFrom(state, enemy);
                     },
                     TransitionFn = (state, tribe) =>
                     {
                         if (tribe.Population < 40) return StateEnum.SeekFood;
 
-                        if (state.Closest<ITribe>() is null)
+                        if (IsEnemyClose(state))
                         {
                             return StateEnum.Idle;
                         }

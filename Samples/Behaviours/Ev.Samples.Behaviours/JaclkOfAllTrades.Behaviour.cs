@@ -10,7 +10,7 @@ namespace Ev.Samples.Behaviours
 
         public override IGameAction DoMove(IWorldState state, ITribe tribe)
         {
-            var collectable = FindACollectable();
+            var collectable = FindACollectable(state);
 
             if (NotFound(collectable))
             {

@@ -9,11 +9,11 @@ namespace Ev.Samples.Behaviours
 
         public override IGameAction DoMove(IWorldState state, ITribe tribe)
         {
-            var enemy = FindAnEnemy();
+            var enemy = FindAnEnemy(state);
 
             if (NotFound(enemy))
             {
-                var food = FindHighestValueFood();
+                var food = FindHighestValueFood(state);
 
                 if (NotFound(food))
                 {

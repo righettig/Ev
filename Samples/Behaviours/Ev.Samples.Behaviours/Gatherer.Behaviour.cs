@@ -10,7 +10,7 @@ namespace Ev.Samples.Behaviours
         
         public override IGameAction DoMove(IWorldState state, ITribe tribe)
         {
-            var food = FindHighestValueFood();
+            var food = FindHighestValueFood(state);
 
             if (NotFound(food))
             {

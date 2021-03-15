@@ -2,6 +2,7 @@
 using Ev.Common.Core.Interfaces;
 using Ev.Domain.Client.Actions;
 using Ev.Domain.Client.Core;
+using Ev.Domain.Client.World;
 using System;
 using static System.Math;
 
@@ -9,26 +10,11 @@ namespace Ev.Domain.Client.Behaviours.Core
 {
     /// <summary>
     /// The base class for all tribe behaviours.
+    /// It provides utility methods to help perform basic tasks like navigation, attack etc.
     /// </summary>
     public abstract class TribeBehaviour : ITribeBehaviour
     {
-        /// <summary>
-        /// Users of TribeBehaviour MUST set the most up-to-date IWorldState before invoking DoMove.
-        /// With this assumption concrete behaviours can pass entity references have those
-        /// being translated into positions, for instance <code>FindAnEnemy</code>.
-        /// </summary>
-        /// <remarks>
-        /// If we end up deprecating methods like FindAnEnemy then this is no longer needed.
-        /// </remarks>
-        IWorldState ITribeBehaviour.State 
-        {
-            get => _state;
-            set => _state = value;
-        }
-
         protected readonly IRandom _rnd;
-
-        private IWorldState _state;
 
         private const int WORLD_STATE_SIZE = WorldState.WORLD_STATE_SIZE;
 
@@ -58,34 +44,23 @@ namespace Ev.Domain.Client.Behaviours.Core
         /// <summary>
         /// Factory method that creates the Attack move.
         /// </summary>
+        /// <param name="state">The current world state.</param>
         /// <param name="targetPosition">The world state position of the attack target.</param>
         /// <remarks>
         /// Action is validated by the game master. 
         /// If invalid - for instance trying to attack a tribe which is too far away - the tribe gets disqualified.
         /// </remarks>
         /// <returns>The attack action.</returns>
-        protected IGameAction Attack((int x, int y) targetPosition)
+        protected static IGameAction Attack(IWorldState state, (int x, int y) targetPosition)
         {
-            ITribe enemy = null;
-
-            _state.Traverse((el, x, y) =>
-            {
-                if (x == targetPosition.x && y == targetPosition.y)
-                {
-                    enemy = _state.GetEntity<ITribe>((x, y));
-
-                    if (enemy is null)
-                    {
-                        throw new ArgumentException("target is not an instance of ITribeState.", nameof(targetPosition));
-                    }
-                }
-            });
+            var enemy = state.GetEntity<ITribe>(targetPosition);
 
             if (enemy is null)
             {
                 throw new TribeNotFoundException("tribe not found.", nameof(targetPosition));
             }
 
+            // TODO: server MUST check this action is valid
             return new AttackAction(enemy.Name);
         }
 
@@ -105,6 +80,7 @@ namespace Ev.Domain.Client.Behaviours.Core
                 throw new ArgumentNullException(nameof(target));
             }
 
+            // TODO: server MUST check this action is valid
             return new AttackAction(target.Name);
         }
 
@@ -140,19 +116,20 @@ namespace Ev.Domain.Client.Behaviours.Core
         /// <summary>
         /// Moves the tribe towards the specified world entity. 
         /// </summary>
+        /// <param name="state">The current world state.</param>
         /// <param name="entity">The entity you wish to move towards.</param>
         /// <example>
         /// Say that the entity is positioned at NW with respect to the tribe, the Move(NW) action gets generated.
         /// </example>
         /// <returns>The resulting move action, if the entity is found, Move(-1, -1) otherwise.</returns>
-        protected IGameAction MoveTowards(IWorldEntity entity)
+        protected static IGameAction MoveTowards(IWorldState state, IWorldEntity entity)
         {
             if (entity is null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            var position = FindPosition(el => el == entity);
+            var position = FindPosition(state, el => el == entity);
 
             return MoveTowards(position);
         }
@@ -195,19 +172,20 @@ namespace Ev.Domain.Client.Behaviours.Core
         /// <summary>
         /// Moves the tribe in the opposite direction of the specified world entity.
         /// </summary>
+        /// <param name="state">The current world state.</param>
         /// <param name="entity">The entity you wish to move away from.</param>
         /// <example>
         /// Say that the entity is positioned at NW with respect to the tribe, the Move(SE) action gets generated.
         /// </example>
         /// <returns>The resulting move action, if the entity is found, Move(-1, -1) otherwise.</returns>
-        protected IGameAction MoveAwayFrom(IWorldEntity entity)
+        protected static IGameAction MoveAwayFrom(IWorldState state, IWorldEntity entity)
         {
             if (entity is null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            var position = FindPosition(el => el == entity);
+            var position = FindPosition(state, el => el == entity);
 
             return MoveAwayFrom(position);
         }
@@ -250,30 +228,30 @@ namespace Ev.Domain.Client.Behaviours.Core
         /// Generates a move towards a random direction.
         /// </summary>
         /// <returns>The move action.</returns>
-        protected IGameAction RandomWalk() => new MoveAction((Direction)_rnd.Next(8));
+        protected IGameAction RandomWalk() => new MoveAction((Direction) _rnd.Next(8));
 
         /// <summary>
         /// Returns the world state position of the tribe found first.
         /// </summary>
         /// <returns>The world state position as a (x,y) tuple if a tribe if found, (-1, -1) otherwise.</returns>
-        protected (int x, int y) FindAnEnemy() => FindPosition(el => el is ITribe);
+        protected static (int x, int y) FindAnEnemy(IWorldState state) => FindPosition(state, el => el is ITribe);
 
         /// <summary>
         /// Returns the position of the collectable found first.
         /// </summary>
         /// <returns>The world state position as a (x,y) tuple if a collectable is found, (-1, -1) otherwise.</returns>
-        protected (int x, int y) FindACollectable() => FindPosition(el => el is ICollectableWorldEntity);
+        protected static (int x, int y) FindACollectable(IWorldState state) => FindPosition(state, el => el is ICollectableWorldEntity);
 
         /// <summary>
         /// Returns the world state position of the highest found food cell.
         /// </summary>
         /// <returns>The world state position expressed as a (x,y) tuple or (-1, -1) if no collectable is found.</returns>
-        protected (int x, int y) FindHighestValueFood()
+        protected static (int x, int y) FindHighestValueFood(IWorldState state)
         {
             var highestPos = (-1, -1);
             var highest = 0;
 
-            _state.Traverse((el, x, y) =>
+            state.Traverse((el, x, y) =>
             {
                 if (el is ICollectableWorldEntity { Type: CollectableWorldEntityType.Food } c && c.Value > highest)
                 {
@@ -309,6 +287,11 @@ namespace Ev.Domain.Client.Behaviours.Core
             return target.x == -1 && target.y == -1;
         }
 
+        protected static bool IsEnemyClose(IWorldState state)
+        {
+            return state.Closest<ITribe>() != null;
+        }
+
         // TODO: unit test this
         /// <summary>
         /// Checks if the given world state position can be reached in a single turn.
@@ -329,25 +312,19 @@ namespace Ev.Domain.Client.Behaviours.Core
         }
 
         /// <summary>
-        /// Checks if the specified tribe is close and can be reached in a single turn.
-        /// </summary>
-        /// <param name="other">The tribe to check.</param>
-        /// <returns>True if the specified tribe is in proximity of the tribe.</returns>
-        protected static bool Close(ITribe other) => Close(other.Position);
-
-        /// <summary>
         /// Checks if a generic world entity is close enough to be reached in a single turn.
         /// </summary>
+        /// <param name="state">The current world state.</param>
         /// <param name="other">The world entity to check.</param>
         /// <returns>True if the specified world entity is in proximity of the tribe.</returns>
-        protected bool Close(IWorldEntity other)
+        protected static bool Close(IWorldState state, IWorldEntity other)
         {
             if (other is null)
             {
                 throw new ArgumentNullException(nameof(other));
             }
 
-            var otherPosition = FindPosition(other);
+            var otherPosition = FindPosition(state, other);
 
             return Close(otherPosition);
         }
@@ -355,16 +332,18 @@ namespace Ev.Domain.Client.Behaviours.Core
         /// <summary>
         /// Retrieves the world state position of the given entity.
         /// </summary>
+        /// <param name="state">The current world state.</param>
         /// <param name="entity">The entity to find.</param>
         /// <returns>The world state position of the specified entity, if found, (-1, -1) otherwise.</returns>
-        protected (int x, int y) FindPosition(IWorldEntity entity) => FindPosition(el => el == entity);
+        protected static (int x, int y) FindPosition(IWorldState state, IWorldEntity entity) => FindPosition(state, el => el == entity);
 
         /// <summary>
         /// Retrieves the world state position of the first entity that satisfies a predicate function.
         /// </summary>
+        /// <param name="state">The current world state.</param>
         /// <param name="predicate">The predicate function.</param>
         /// <returns>The world state position of the specified entity, if found, (-1, -1) otherwise.</returns>
-        protected (int x, int y) FindPosition(Predicate<IWorldEntity> predicate)
+        protected static (int x, int y) FindPosition(IWorldState state, Predicate<IWorldEntity> predicate)
         {
             if (predicate is null)
             {
@@ -373,7 +352,7 @@ namespace Ev.Domain.Client.Behaviours.Core
 
             var position = (-1, -1);
 
-            _state.Traverse((el, x, y) =>
+            state.Traverse((el, x, y) =>
             {
                 if (predicate(el))
                 {
