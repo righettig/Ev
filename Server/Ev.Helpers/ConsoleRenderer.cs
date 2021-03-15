@@ -11,6 +11,13 @@ namespace Ev.Helpers
         {
             switch (entity) 
             {
+                // TODO: all rendering should be done against client-side entities
+
+                case Domain.Client.Core.ITribe t:
+                    ForegroundColor = ColorMapper.MapColor(t.Color);
+                    Write("X ");
+                    break;
+
                 case ITribe t:
                     ForegroundColor = ColorMapper.MapColor(t.Color);
                     Write("X ");

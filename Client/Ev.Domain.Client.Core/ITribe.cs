@@ -1,10 +1,13 @@
-﻿using Ev.Common.Core.Interfaces;
+﻿using Ev.Common.Core;
+using Ev.Common.Core.Interfaces;
 
 namespace Ev.Domain.Client.Core
 {
     public interface ITribe : IWorldEntity
     {
         string Name { get; }
+
+        Color Color { get; }
 
         int Population { get; }
 

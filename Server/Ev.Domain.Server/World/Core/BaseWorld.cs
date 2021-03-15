@@ -72,7 +72,7 @@ namespace Ev.Domain.Server.World.Core
 
                 for (var x = pos.x - WORLD_STATE_SIZE; x <= pos.x + WORLD_STATE_SIZE; x++)
                 {
-                    if (x >= 0 && y >= 0 && x < Size && y < Size && State[x, y] != null)
+                    if (x >= 0 && y >= 0 && x < Size && y < Size)
                     {
                         result[ws_x, ws_y] = State[x, y];
                     }
