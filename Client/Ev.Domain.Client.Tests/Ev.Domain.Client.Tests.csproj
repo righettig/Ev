@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Ev.Common\Ev.Common.csproj" />
+    <ProjectReference Include="..\..\Tests\Ev.Tests.Common\Ev.Tests.Common.csproj" />
     <ProjectReference Include="..\Ev.Domain.Client.Core\Ev.Domain.Client.Core.csproj" />
     <ProjectReference Include="..\Ev.Domain.Client\Ev.Domain.Client.csproj" />
   </ItemGroup>

@@ -1,35 +1,27 @@
-﻿using Ev.Common.Core.Interfaces;
-using Ev.Domain.Client.Behaviours.BehaviourTrees;
-using Ev.Domain.Client.Core;
+﻿using Ev.Domain.Client.Behaviours.BehaviourTrees;
+using Ev.Tests.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
+using static Ev.Tests.Common.TestHelpers;
 
 namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
     [TestClass]
     public class BehaviourTreeContextTests
     {
-        private readonly BehaviourTreeContext uat = new(new Mock<IWorldState>().Object, new Mock<ITribe>().Object);
+        private readonly BehaviourTreeContext uat = new(Stubs.IIWorldState, Stubs.Client.ITribe);
 
         #region Ctor
 
         [TestMethod]
         public void Ctor_Should_Raise_ArgumentNullException_When_WorldState_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                new BehaviourTreeContext(null, new Mock<ITribe>().Object);
-            });
+            ShouldThrowArgumentNullException(() => new BehaviourTreeContext(null, Stubs.Client.ITribe));
         }
 
         [TestMethod]
         public void Ctor_Should_Raise_ArgumentNullException_When_TribeState_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                new BehaviourTreeContext(new Mock<IWorldState>().Object, null);
-            });
+            ShouldThrowArgumentNullException(() => new BehaviourTreeContext(Stubs.IIWorldState, null));
         }
 
         #endregion
@@ -39,19 +31,13 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         [TestMethod]
         public void Set_Cannot_Use_Reserved_Entry_WorldState()
         {
-            Assert.ThrowsException<ArgumentException>(() =>
-            {
-                uat.Set("worldState", new object());
-            });
+            ShouldThrowArgumentException(() => uat.Set("worldState", new object()));
         }
 
         [TestMethod]
         public void Set_Cannot_Use_Reserved_Entry_TribeState()
         {
-            Assert.ThrowsException<ArgumentException>(() =>
-            {
-                uat.Set("tribeState", new object());
-            });
+            ShouldThrowArgumentException(() => uat.Set("tribeState", new object()));
         }
 
         [TestMethod]
@@ -74,19 +60,13 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         [TestMethod]
         public void Indexer_Cannot_Use_Reserved_Entry_WorldState()
         {
-            Assert.ThrowsException<ArgumentException>(() =>
-            {
-                uat["worldState"] = new object();
-            });
+            ShouldThrowArgumentException(() => uat["worldState"] = new object());
         }
 
         [TestMethod]
         public void Indexer_Cannot_Use_Reserved_Entry_TribeState()
         {
-            Assert.ThrowsException<ArgumentException>(() =>
-            {
-                uat["tribeState"] = new object();
-            });
+            ShouldThrowArgumentException(() => uat["tribeState"] = new object());
         }
 
         [TestMethod]
@@ -123,9 +103,9 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         public void WorldState_Getter_Should_Return_Correct_Value()
         {
             // Arrange
-            var worldState = new Mock<IWorldState>().Object;
+            var worldState = Stubs.IIWorldState;
 
-            var context = new BehaviourTreeContext(worldState, new Mock<ITribe>().Object);
+            var context = new BehaviourTreeContext(worldState, Stubs.Client.ITribe);
 
             // Act
             var actual = context.WorldState;
@@ -138,9 +118,9 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         public void TribeState_Getter_Should_Return_Correct_Value()
         {
             // Arrange
-            var tribeState = new Mock<ITribe>().Object;
+            var tribeState = Stubs.Client.ITribe;
 
-            var context = new BehaviourTreeContext(new Mock<IWorldState>().Object, tribeState);
+            var context = new BehaviourTreeContext(Stubs.IIWorldState, tribeState);
 
             // Act
             var actual = context.TribeState;
@@ -153,7 +133,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         public void Move_Setter_Should_Set_Correct_Value()
         {
             // Arrange
-            var expected = new Mock<IGameAction>().Object;
+            var expected = Stubs.Client.IGameAction;
 
             // Act
             uat.Move = expected;

@@ -1,8 +1,8 @@
 ﻿using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
 using Ev.Domain.Client.Behaviours.BehaviourTrees.Decorators;
+using Ev.Tests.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
+using static Ev.Tests.Common.TestHelpers;
 
 namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
@@ -14,30 +14,20 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentNullException_If_Child_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                var node = new Repeater(null, 10);
-            });
+            ShouldThrowArgumentNullException(() => new Repeater(null, 10));
         }
 
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentException_If_Count_Is_Negative()
         {
-            var child = new Mock<IBehaviourTreeNode>().Object;
-
-            Assert.ThrowsException<ArgumentException>(() =>
-            {
-                var node = new Repeater(child, -1);
-            });
+            ShouldThrowArgumentException(() => new Repeater(Stubs.IBehaviourTreeNode, -1));
         }
 
         [TestMethod]
         public void Ctor_Initial_State_Should_Be_Not_Started()
         {
             // Arrange & Act
-            var child = new Mock<IBehaviourTreeNode>().Object;
-
-            var node = new Repeater(child, 3);
+            var node = new Repeater(Stubs.IBehaviourTreeNode, 3);
 
             // Assert
             Assert.AreEqual(NodeResult.NotStarted, node.State);
@@ -54,7 +44,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             var node = new Repeater(Helpers.FailingTreeNode(), 3);
 
             // Act
-            var actual = node.Tick(Helpers.CreateMockContext());
+            var actual = node.Tick(Stubs.IBehaviourTreeContext);
 
             // Assert
             Assert.AreEqual(NodeResult.Failed, actual);
@@ -67,7 +57,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             var node = new Repeater(Helpers.SucceedingTreeNode(), 2);
 
             // Act
-            var actual = node.Tick(Helpers.CreateMockContext());
+            var actual = node.Tick(Stubs.IBehaviourTreeContext);
 
             // Assert
             Assert.AreEqual(NodeResult.Running, actual);
@@ -79,7 +69,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             // Arrange
             var node = new Repeater(Helpers.SucceedingTreeNode(), 3);
 
-            var context = Helpers.CreateMockContext();
+            var context = Stubs.IBehaviourTreeContext;
 
             // Act
             node.Tick(context);
@@ -99,11 +89,9 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         public void Reset()
         {
             // Arrange
-            var child = new Mock<IBehaviourTreeNode>().Object;
+            var node = new Repeater(Stubs.IBehaviourTreeNode, 3);
 
-            var node = new Repeater(child, 3);
-
-            node.Tick(Helpers.CreateMockContext());
+            node.Tick(Stubs.IBehaviourTreeContext);
 
             // Act
             node.Reset();

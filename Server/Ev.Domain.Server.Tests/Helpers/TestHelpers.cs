@@ -23,14 +23,5 @@ namespace Ev.Domain.Server.Tests.Helpers
 
             return result;
         }
-
-        public static ITribe TestTribeState(int population)
-        {
-            var result = new Mock<ITribe>();
-
-            result.SetupGet(m => m.Population).Returns(population);
-
-            return result.Object;
-        }
     }
 }

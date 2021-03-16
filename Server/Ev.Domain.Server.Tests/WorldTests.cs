@@ -1,13 +1,14 @@
 using Ev.Common.Core;
 using Ev.Common.Core.Interfaces;
-using Ev.Domain.Server.Actions.Core;
 using Ev.Domain.Server.Core;
-using Ev.Domain.Server.Tests.Helpers;
 using Ev.Domain.Server.World;
+using Ev.Tests.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using static Ev.Tests.Common.TestHelpers;
 using Random = Ev.Common.Core.Random;
+using TestHelpers = Ev.Domain.Server.Tests.Helpers.TestHelpers;
 
 namespace Ev.Domain.Server.Tests
 {
@@ -17,15 +18,11 @@ namespace Ev.Domain.Server.Tests
     [TestClass]
     public class WorldTests
     {
-        private readonly RandomWorld uat;
+        private readonly RandomWorld _uat;
 
         public WorldTests()
         {
-            uat = new RandomWorld(
-                8, 
-                new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, 
-                new Mock<IRandom>().Object
-            );
+            _uat = new RandomWorld(8, new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, Stubs.IRandom);
         }
 
         #region Ctor
@@ -33,46 +30,34 @@ namespace Ev.Domain.Server.Tests
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentNullException_When_Rnd_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                var world = new RandomWorld(
-                    10, 
-                    new WorldResources { FoodCount = 1, WoodCount = 1, IronCount = 1 }, 
-                    null);
-            });
+            ShouldThrowArgumentNullException(() =>
+                new RandomWorld(10, new WorldResources {FoodCount = 1, WoodCount = 1, IronCount = 1}, null));
         }
 
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentNullException_When_WorldResources_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                var world = new RandomWorld(10, null, new Mock<IRandom>().Object);
-            });
+            ShouldThrowArgumentNullException(() => new RandomWorld(10, null, Stubs.IRandom));
         }
 
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentOutOfRangeException_When_Size_Is_Not_Positive()
         {
             Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
-            {
-                var world = new RandomWorld(
-                    0, 
-                    new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 },
-                    new Mock<IRandom>().Object);
-            });
+                new RandomWorld(
+                    0,
+                    new WorldResources {FoodCount = 0, WoodCount = 0, IronCount = 0},
+                    Stubs.IRandom));
         }
 
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentOutOfRangeException_When_Too_Many_Collectables()
         {
             Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
-            {
-                var world = new RandomWorld(
-                    2, 
-                    new WorldResources { FoodCount = 10, WoodCount = 10, IronCount = 10 },
-                    new Mock<IRandom>().Object);
-            });
+                new RandomWorld(
+                    2,
+                    new WorldResources {FoodCount = 10, WoodCount = 10, IronCount = 10},
+                    Stubs.IRandom));
         }
 
         [TestMethod]
@@ -144,28 +129,19 @@ namespace Ev.Domain.Server.Tests
         [TestMethod]
         public void Update_Should_Throw_ArgumentNullException_When_Tribe_Is_Null() 
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                uat.Update(null, new Mock<IGameAction>().Object, 0, new Mock<IGameActionProcessor>().Object);
-            });
+            ShouldThrowArgumentNullException(() => _uat.Update(null, Stubs.Server.IGameAction, 0, Stubs.IGameActionProcessor));
         }
 
         [TestMethod]
         public void Update_Should_Throw_ArgumentNullException_When_Move_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                uat.Update(new Mock<ITribe>().Object, null, 0, new Mock<IGameActionProcessor>().Object);
-            });
+            ShouldThrowArgumentNullException(() => _uat.Update(Stubs.Server.ITribe, null, 0, Stubs.IGameActionProcessor));
         }
 
         [TestMethod]
         public void Update_Should_Throw_ArgumentNullException_When_ActionProcessor_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                uat.Update(new Mock<ITribe>().Object, new Mock<IGameAction>().Object, 0, null);
-            });
+            ShouldThrowArgumentNullException(() => _uat.Update(Stubs.Server.ITribe, Stubs.Server.IGameAction, 0, null));
         }
 
         [TestMethod]
@@ -177,10 +153,11 @@ namespace Ev.Domain.Server.Tests
             var world = new RandomWorld(
                 8, 
                 new WorldResources {FoodCount = 0, WoodCount = 0, IronCount = 0},
-                new Mock<IRandom>().Object, new[] {tribe});
+                Stubs.IRandom,
+                new[] {tribe});
 
             // Act
-            world.Update(tribe, new Mock<IGameAction>().Object, 1, new Mock<IGameActionProcessor>().Object);
+            world.Update(tribe, Stubs.Server.IGameAction, 1, Stubs.IGameActionProcessor);
 
             // Assert
             Assert.AreEqual(1, tribe.DeadAtIteration);
@@ -195,11 +172,11 @@ namespace Ev.Domain.Server.Tests
             var world = new RandomWorld(
                 8, 
                 new WorldResources {FoodCount = 0, WoodCount = 0, IronCount = 0},
-                new Mock<IRandom>().Object, 
+                Stubs.IRandom, 
                 new[] {tribe});
 
             // Act
-            world.Update(tribe, new Mock<IGameAction>().Object, 1, new Mock<IGameActionProcessor>().Object);
+            world.Update(tribe, Stubs.Server.IGameAction, 1, Stubs.IGameActionProcessor);
 
             // Assert
             Assert.IsTrue(world.Finished);
@@ -213,12 +190,12 @@ namespace Ev.Domain.Server.Tests
 
             var world = new RandomWorld(
                 8, 
-                new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, 
-                new Mock<IRandom>().Object, 
+                new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 },
+                Stubs.IRandom,
                 new[] { tribe });
 
             // Act
-            world.Update(tribe, new Mock<IGameAction>().Object, 1, new Mock<IGameActionProcessor>().Object);
+            world.Update(tribe, Stubs.Server.IGameAction, 1, Stubs.IGameActionProcessor);
 
             // Assert
             Assert.AreSame(tribe, world.Winner);
@@ -233,12 +210,12 @@ namespace Ev.Domain.Server.Tests
 
             var world = new RandomWorld(
                 8, 
-                new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, 
-                new Mock<IRandom>().Object, 
+                new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 },
+                Stubs.IRandom,
                 new[] { tribe1, tribe2 });
 
             // Act
-            world.Update(tribe1, new Mock<IGameAction>().Object, 1, new Mock<IGameActionProcessor>().Object);
+            world.Update(tribe1, Stubs.Server.IGameAction, 1, Stubs.IGameActionProcessor);
 
             // Assert
             Assert.IsTrue(world.Finished);
@@ -253,12 +230,12 @@ namespace Ev.Domain.Server.Tests
 
             var world = new RandomWorld(
                 8, 
-                new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, 
-                new Mock<IRandom>().Object, 
+                new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 },
+                Stubs.IRandom,
                 new[] { tribe1, tribe2 });
 
             // Act
-            world.Update(tribe1, new Mock<IGameAction>().Object, 1, new Mock<IGameActionProcessor>().Object);
+            world.Update(tribe1, Stubs.Server.IGameAction, 1, Stubs.IGameActionProcessor);
 
             // Assert
             Assert.AreSame(tribe2, world.Winner);
@@ -271,10 +248,7 @@ namespace Ev.Domain.Server.Tests
         [TestMethod]
         public void WipeTribe_Should_Throw_ArgumentNullException_If_Tribe_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                uat.WipeTribe(null, 1);
-            });
+            ShouldThrowArgumentNullException(() => _uat.WipeTribe(null, 1));
         }
 
         [TestMethod]
@@ -284,7 +258,7 @@ namespace Ev.Domain.Server.Tests
             var tribe = TestTribe(0);
 
             // Act
-            uat.WipeTribe(tribe, 1);
+            _uat.WipeTribe(tribe, 1);
 
             // Assert
             Assert.AreEqual(1, tribe.DeadAtIteration);
@@ -296,13 +270,13 @@ namespace Ev.Domain.Server.Tests
             // Arrange
             var tribe = TestTribe(0);
             tribe.Position = (1, 1);
-            uat.State[1, 1] = tribe;
+            _uat.State[1, 1] = tribe;
 
             // Act
-            uat.WipeTribe(tribe, 1);
+            _uat.WipeTribe(tribe, 1);
 
             // Assert
-            Assert.IsNull(uat.State[1, 1]);
+            Assert.IsNull(_uat.State[1, 1]);
         }
 
         #endregion
@@ -335,10 +309,7 @@ namespace Ev.Domain.Server.Tests
         [TestMethod]
         public void GetWorldState_Should_Throw_ArgumentNullException_When_Tribe_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                var state = uat.GetWorldState(null);
-            });
+            ShouldThrowArgumentNullException(() => _uat.GetWorldState(null));
         }
 
         // TODO: check size should be 1 + 2 * WORLD_STATE_SIZE
@@ -397,7 +368,7 @@ namespace Ev.Domain.Server.Tests
             var world = new RandomWorld(
                 8, 
                 new WorldResources { FoodCount = 0, WoodCount = 0, IronCount = 0 }, 
-                new Mock<IRandom>().Object, 
+                Stubs.IRandom,
                 new[] { tribe1, tribe2 });
 
             // Act

@@ -3,11 +3,13 @@ using Ev.Domain.Server.Actions;
 using Ev.Domain.Server.Actions.Core;
 using Ev.Domain.Server.Core;
 using Ev.Domain.Server.Processors;
-using Ev.Domain.Server.Tests.Helpers;
 using Ev.Domain.Server.World.Core;
+using Ev.Tests.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
+using static Ev.Tests.Common.TestHelpers;
+using Mocks = Ev.Tests.Common.Mocks;
+using TestHelpers = Ev.Domain.Server.Tests.Helpers.TestHelpers;
 
 namespace Ev.Domain.Server.Tests
 {
@@ -16,11 +18,11 @@ namespace Ev.Domain.Server.Tests
     [TestClass]
     public class GameActionProcessorTests
     {
-        private readonly GameActionProcessor uat;
+        private readonly GameActionProcessor _uat;
 
         public GameActionProcessorTests()
         {
-            uat = new GameActionProcessor(new Mock<IAttackOutcomePredictor>().Object);
+            _uat = new GameActionProcessor(Stubs.IAttackOutcomePredictor);
         }
 
         #region Null Checks
@@ -28,39 +30,30 @@ namespace Ev.Domain.Server.Tests
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentNullException_If_AttackOutcomePredictor_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                var gap = new GameActionProcessor(null);
-            });
+            ShouldThrowArgumentNullException(() => new GameActionProcessor(null));
         }
 
         [TestMethod]
         public void Update_Should_Throw_ArgumentNullException_If_Action_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
+            ShouldThrowArgumentNullException(() =>
             {
                 IGameAction nullAction = null;
 
-                uat.Update(nullAction, new Mock<ITribe>().Object, new Mock<IWorld>().Object, 0);
+                _uat.Update(nullAction, new Mock<ITribe>().Object, Stubs.IWorld, 0);
             });
         }
 
         [TestMethod]
         public void Update_Should_Throw_ArgumentNullException_If_Tribe_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                uat.Update(new Mock<IGameAction>().Object, null, new Mock<IWorld>().Object, 0);
-            });
+            ShouldThrowArgumentNullException(() => _uat.Update(Stubs.Server.IGameAction, null, Stubs.IWorld, 0));
         }
 
         [TestMethod]
         public void Update_Should_Throw_ArgumentNullException_If_World_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                uat.Update(new Mock<IGameAction>().Object, new Mock<ITribe>().Object, null, 0);
-            });
+            ShouldThrowArgumentNullException(() => _uat.Update(Stubs.Server.IGameAction, Stubs.Server.ITribe, null, 0));
         }
 
         #endregion
@@ -71,12 +64,10 @@ namespace Ev.Domain.Server.Tests
         public void Hold_Update()
         {
             // Arrange
-            var tribe = new Mock<ITribe>().SetupProperty(m => m.Population).Object;
-            
-            tribe.Population = 10;
+            var tribe = Mocks.ITribe().WithPopulation(10).Build();
 
             // Act
-            uat.Update(new HoldAction(), tribe, new Mock<IWorld>().Object, 0);
+            _uat.Update(new HoldAction(), tribe, Stubs.IWorld, 0);
 
 
             // Assert
@@ -97,7 +88,7 @@ namespace Ev.Domain.Server.Tests
             var action = new AttackAction("defender") { Target = defender };
 
             // Act
-            uat.Update(action, attacker, new Mock<IWorld>().Object, 0);
+            _uat.Update(action, attacker, Stubs.IWorld, 0);
 
             // Assert
             Assert.IsTrue(attacker.IsAttacking);
@@ -110,16 +101,13 @@ namespace Ev.Domain.Server.Tests
             // Arrange
             var uat = new GameActionProcessor(Predictor(outcome: true));
 
-            var attacker = new Mock<ITribe>().SetupProperty(m => m.Population).Object;
-            var defender = new Mock<ITribe>().SetupProperty(m => m.Population).Object;
-
-            attacker.Population = 100;
-            defender.Population = 100;
+            var attacker = Mocks.ITribe().WithPopulation(100).Build();
+            var defender = Mocks.ITribe().WithPopulation(100).Build();
 
             var action = new AttackAction("defender") { Target = defender };
 
             // Act
-            uat.Update(action, attacker, new Mock<IWorld>().Object, 0);
+            uat.Update(action, attacker, Stubs.IWorld, 0);
 
             // Assert
             Assert.AreEqual(100 + GameActionProcessor.WIN_GAIN, attacker.Population);
@@ -132,16 +120,13 @@ namespace Ev.Domain.Server.Tests
             // Arrange
             var uat = new GameActionProcessor(Predictor(outcome: false));
 
-            var attacker = new Mock<ITribe>().SetupProperty(m => m.Population).Object;
-            var defender = new Mock<ITribe>().SetupProperty(m => m.Population).Object;
-
-            attacker.Population = 100;
-            defender.Population = 100;
+            var attacker = Mocks.ITribe().WithPopulation(100).Build();
+            var defender = Mocks.ITribe().WithPopulation(100).Build();
 
             var action = new AttackAction("defender") { Target = defender };
 
             // Act
-            uat.Update(action, attacker, new Mock<IWorld>().Object, 0);
+            uat.Update(action, attacker, Stubs.IWorld, 0);
 
             // Assert
             Assert.AreEqual(100 - GameActionProcessor.DEFEAT_LOSS, attacker.Population);
@@ -154,14 +139,11 @@ namespace Ev.Domain.Server.Tests
             // Arrange
             var uat = new GameActionProcessor(Predictor(outcome: true));
 
-            var attacker = new Mock<ITribe>().SetupProperty(m => m.Population).Object;
-            var defender = new Mock<ITribe>().SetupProperty(m => m.Population).Object;
-                
+            var attacker = Mocks.ITribe().WithPopulation(100).Build();
+            var defender = Mocks.ITribe().WithPopulation(20).Build();
+
             var world = new Mock<IWorld>();
             world.Setup(m => m.WipeTribe(It.Is<ITribe>(t => t == defender), It.IsAny<int>())).Verifiable();
-
-            attacker.Population = 100;
-            defender.Population = 20;
 
             var action = new AttackAction("defender") { Target = defender };
 
@@ -179,11 +161,8 @@ namespace Ev.Domain.Server.Tests
             // Arrange
             var uat = new GameActionProcessor(Predictor(outcome: false));
 
-            var attacker = new Mock<ITribe>().SetupProperty(m => m.Population).Object;
-            var defender = new Mock<ITribe>().SetupProperty(m => m.Population).Object;
-
-            attacker.Population = 20;
-            defender.Population = 100;
+            var attacker = Mocks.ITribe().WithPopulation(20).Build();
+            var defender = Mocks.ITribe().WithPopulation(100).Build();
 
             var action = new AttackAction("defender") { Target = defender };
 
@@ -219,13 +198,14 @@ namespace Ev.Domain.Server.Tests
             var tribe = TestTribe(100);
 
             // Act
-            uat.Update(new MoveAction(Direction.E), tribe, world.Object, 0);
+            _uat.Update(new MoveAction(Direction.E), tribe, world.Object, 0);
 
             // Assert
             Assert.AreEqual(97, tribe.Population);
             world.Verify(m => m.Move(tribe, Direction.E));
         }
 
+        [TestMethod]
         public void Move_When_CannotMove_Should_Hold()
         {
             // Arrange
@@ -235,7 +215,7 @@ namespace Ev.Domain.Server.Tests
             var tribe = TestTribe(100);
 
             // Act
-            uat.Update(new MoveAction(Direction.E), TestTribe(100), world.Object, 0);
+            _uat.Update(new MoveAction(Direction.E), tribe, world.Object, 0);
 
             // Assert
             Assert.AreEqual(99, tribe.Population);
@@ -254,7 +234,7 @@ namespace Ev.Domain.Server.Tests
 
             // Act
             var action = new UpgradeDefensesAction();
-            uat.Update(action, tribe, new Mock<IWorld>().Object, 0);
+            _uat.Update(action, tribe, Stubs.IWorld, 0);
 
             // Assert
             Assert.AreSame(action, tribe.BusyDoing);
@@ -270,7 +250,7 @@ namespace Ev.Domain.Server.Tests
 
             // Act
             var action = new UpgradeDefensesAction();
-            uat.Update(action, tribe, new Mock<IWorld>().Object, 0);
+            _uat.Update(action, tribe, new Mock<IWorld>().Object, 0);
 
             // Assert
             Assert.IsNull(tribe.LockedForNTurns);
@@ -291,7 +271,7 @@ namespace Ev.Domain.Server.Tests
 
             // Act
             var action = new UpgradeAttackAction();
-            uat.Update(action, tribe, new Mock<IWorld>().Object, 0);
+            _uat.Update(action, tribe, Stubs.IWorld, 0);
 
             // Assert
             Assert.AreSame(action, tribe.BusyDoing);
@@ -307,7 +287,7 @@ namespace Ev.Domain.Server.Tests
 
             // Act
             var action = new UpgradeAttackAction();
-            uat.Update(action, tribe, new Mock<IWorld>().Object, 0);
+            _uat.Update(action, tribe, new Mock<IWorld>().Object, 0);
 
             // Assert
             Assert.IsNull(tribe.LockedForNTurns);
@@ -328,7 +308,7 @@ namespace Ev.Domain.Server.Tests
             tribe.Population = 10;
 
             // Act
-            uat.Update(new SuicideAction(), tribe, new Mock<IWorld>().Object, 0);
+            _uat.Update(new SuicideAction(), tribe, Stubs.IWorld, 0);
 
 
             // Assert

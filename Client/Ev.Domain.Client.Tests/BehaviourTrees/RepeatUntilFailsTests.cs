@@ -1,10 +1,9 @@
-﻿using Ev.Domain.Client.Behaviours.BehaviourTrees;
-using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
+﻿using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
 using Ev.Domain.Client.Behaviours.BehaviourTrees.Decorators;
+using Ev.Tests.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
 using static Ev.Domain.Client.Tests.BehaviourTrees.Helpers;
+using static Ev.Tests.Common.TestHelpers;
 
 namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
@@ -16,10 +15,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentNull_Exception_If_Child_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                var node = new RepeatUntilFail(null);
-            });
+            ShouldThrowArgumentNullException(() => new RepeatUntilFail(null));
         }
 
         #endregion
@@ -33,7 +29,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             var node = new RepeatUntilFail(FailingTreeNode());
 
             // Act
-            var actual = node.Tick(new Mock<IBehaviourTreeContext>().Object);
+            var actual = node.Tick(Stubs.IBehaviourTreeContext);
 
             // Assert
             Assert.AreEqual(NodeResult.Success, actual);
@@ -46,7 +42,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             var node = new RepeatUntilFail(RunningTreeNode());
 
             // Act
-            var actual = node.Tick(new Mock<IBehaviourTreeContext>().Object);
+            var actual = node.Tick(Stubs.IBehaviourTreeContext);
 
             // Assert
             Assert.AreEqual(NodeResult.Running, actual);
@@ -59,7 +55,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             var node = new RepeatUntilFail(SucceedingTreeNode());
 
             // Act
-            var actual = node.Tick(new Mock<IBehaviourTreeContext>().Object);
+            var actual = node.Tick(Stubs.IBehaviourTreeContext);
 
             // Assert
             Assert.AreEqual(NodeResult.Running, actual);
@@ -75,7 +71,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             // Arrange
             var node = new RepeatUntilFail(SucceedingTreeNode());
 
-            node.Tick(new Mock<IBehaviourTreeContext>().Object);
+            node.Tick(Stubs.IBehaviourTreeContext);
 
             // Act
             node.Reset();
@@ -90,7 +86,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             // Arrange
             var node = new RepeatUntilFail(FailingTreeNode());
 
-            node.Tick(new Mock<IBehaviourTreeContext>().Object);
+            node.Tick(Stubs.IBehaviourTreeContext);
 
             // Act
             node.Reset();
@@ -105,7 +101,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             // Arrange
             var node = new RepeatUntilFail(RunningTreeNode());
 
-            node.Tick(new Mock<IBehaviourTreeContext>().Object);
+            node.Tick(Stubs.IBehaviourTreeContext);
 
             // Act
             node.Reset();

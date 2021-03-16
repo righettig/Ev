@@ -1,21 +1,10 @@
 ﻿using Ev.Common.Core;
-using Ev.Common.Core.Interfaces;
-using Ev.Domain.Client.Core;
+using Ev.Tests.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
+using static Ev.Tests.Common.TestHelpers;
 
 namespace Ev.Domain.Client.Tests
 {
-    public static class Stubs
-    {
-        public static readonly ITribeBehaviour ITribeBehaviour = new Mock<ITribeBehaviour>().Object;
-
-        public static readonly IWorldState IIWorldState = new Mock<IWorldState>().Object;
-
-        public static readonly ITribe ITribe = new Mock<ITribe>().Object;
-    }
-
     [TestClass]
     public class TribeAgentTests
     {
@@ -24,10 +13,7 @@ namespace Ev.Domain.Client.Tests
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentNullException_If_TribeBehaviour_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                new TribeAgent("t1", Color.Black, null);
-            });
+            ShouldThrowArgumentNullException(() => new TribeAgent("t1", Color.Black, null));
         }
 
         [DataTestMethod]
@@ -36,10 +22,7 @@ namespace Ev.Domain.Client.Tests
         [DataRow(" ")]
         public void Ctor_Should_Throw_ArgumentException_If_Name_Is_NullEmptyOrWhiteSpace(string name)
         {
-            Assert.ThrowsException<ArgumentException>(() =>
-            {
-                new TribeAgent(name, Color.Black, Stubs.ITribeBehaviour);
-            });
+            ShouldThrowArgumentException(() => new TribeAgent(name, Color.Black, Stubs.ITribeBehaviour));
         }
 
         [TestMethod]
@@ -56,18 +39,13 @@ namespace Ev.Domain.Client.Tests
         [TestMethod]
         public void OnBeforeMove_Should_Throw_ArgumentNullException_If_WorldState_Is_Null()
         {
-            ShouldThrowArgumentNullException(() => uat.OnBeforeMove(null, Stubs.ITribe));
+            ShouldThrowArgumentNullException(() => uat.OnBeforeMove(null, Stubs.Client.ITribe));
         }
 
         [TestMethod]
         public void OnBeforeMove_Should_Throw_ArgumentNullException_If_Tribe_Is_Null()
         {
             ShouldThrowArgumentNullException(() => uat.OnBeforeMove(Stubs.IIWorldState, null));
-        }
-
-        private static void ShouldThrowArgumentNullException(Action action)
-        {
-            Assert.ThrowsException<ArgumentNullException>(action);
         }
     }
 }

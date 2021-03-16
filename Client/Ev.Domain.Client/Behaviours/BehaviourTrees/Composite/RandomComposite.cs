@@ -30,7 +30,7 @@ namespace Ev.Domain.Client.Behaviours.BehaviourTrees.Composite
                     return _state;
 
                 case NodeResult.NotStarted:
-                    _i = _rnd.Next(_children.Length + 1);
+                    _i = _rnd.Next(_children.Length);
                     break;
             }
 

@@ -1,8 +1,8 @@
 ﻿using Ev.Domain.Client.Behaviours.BehaviourTrees.Composite;
 using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
+using Ev.Tests.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
+using static Ev.Tests.Common.TestHelpers;
 
 namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
@@ -14,18 +14,15 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentNullException_If_Children_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                var node = new Sequence(null);
-            });
+            ShouldThrowArgumentNullException(() => new Sequence(null));
         }
 
         [TestMethod]
         public void Ctor_Initial_State_Should_Be_Not_Started()
         {
             // Arrange & Act
-            var child1 = new Mock<IBehaviourTreeNode>().Object;
-            var child2 = new Mock<IBehaviourTreeNode>().Object;
+            var child1 = Stubs.IBehaviourTreeNode;
+            var child2 = Stubs.IBehaviourTreeNode;
 
             var node = new Sequence(child1, child2);
 
@@ -44,7 +41,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             var node = new Sequence(Helpers.SucceedingTreeNode(), Helpers.SucceedingTreeNode());
 
             // Act
-            var actual = node.Tick(Helpers.CreateMockContext());
+            var actual = node.Tick(Stubs.IBehaviourTreeContext);
 
             // Assert
             Assert.AreEqual(NodeResult.Running, actual);
@@ -54,10 +51,10 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         public void Tick_Should_Return_Success_When_All_Children_Succeeds()
         {
             // Arrange
-            var node = new Selector(Helpers.SucceedingTreeNode());
+            var node = new Sequence(Helpers.SucceedingTreeNode());
 
             // Act
-            var actual = node.Tick(Helpers.CreateMockContext());
+            var actual = node.Tick(Stubs.IBehaviourTreeContext);
 
             // Assert
             Assert.AreEqual(NodeResult.Success, actual);
@@ -67,9 +64,9 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         public void Tick_Should_Return_Success_When_All_Children_Succeeds2()
         {
             // Arrange
-            var node = new Selector(Helpers.SucceedingTreeNode(), Helpers.SucceedingTreeNode());
+            var node = new Sequence(Helpers.SucceedingTreeNode(), Helpers.SucceedingTreeNode());
 
-            var context = Helpers.CreateMockContext();
+            var context = Stubs.IBehaviourTreeContext;
 
             // Act
             node.Tick(context);
@@ -83,10 +80,10 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         public void Tick_Should_Return_Failed_If_No_Child_Succeeded()
         {
             // Arrange
-            var node = new Selector(Helpers.FailingTreeNode());
+            var node = new Sequence(Helpers.FailingTreeNode());
 
             // Act
-            var actual = node.Tick(Helpers.CreateMockContext());
+            var actual = node.Tick(Stubs.IBehaviourTreeContext);
 
             // Assert
             Assert.AreEqual(NodeResult.Failed, actual);
@@ -100,9 +97,9 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         public void Reset_Should_Set_State_To_NotStarted_After_Failure()
         {
             // Arrange
-            var node = new Selector(Helpers.FailingTreeNode());
+            var node = new Sequence(Helpers.FailingTreeNode());
 
-            node.Tick(Helpers.CreateMockContext());
+            node.Tick(Stubs.IBehaviourTreeContext);
 
             // Act
             node.Reset();
@@ -115,9 +112,9 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         public void Reset_Should_Set_State_To_NotStarted_After_Success()
         {
             // Arrange
-            var node = new Selector(Helpers.SucceedingTreeNode());
+            var node = new Sequence(Helpers.SucceedingTreeNode());
 
-            node.Tick(Helpers.CreateMockContext());
+            node.Tick(Stubs.IBehaviourTreeContext);
 
             // Act
             node.Reset();
@@ -130,9 +127,9 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         public void Reset_Should_Set_State_To_NotStarted_After_Running()
         {
             // Arrange
-            var node = new Selector(Helpers.SucceedingTreeNode(), Helpers.SucceedingTreeNode());
+            var node = new Sequence(Helpers.SucceedingTreeNode(), Helpers.SucceedingTreeNode());
 
-            node.Tick(Helpers.CreateMockContext());
+            node.Tick(Stubs.IBehaviourTreeContext);
 
             // Act
             node.Reset();

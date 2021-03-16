@@ -4,7 +4,7 @@ using Ev.Domain.Server.Predictors;
 using Ev.Domain.Server.Tests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
+using static Ev.Tests.Common.TestHelpers;
 
 namespace Ev.Domain.Server.Tests
 {
@@ -13,14 +13,14 @@ namespace Ev.Domain.Server.Tests
     [TestClass]
     public class AttackOutcomePredictorTests
     {
-        private readonly AttackOutcomePredictor uat;
+        private readonly AttackOutcomePredictor _uat;
 
         public AttackOutcomePredictorTests()
         {
             var rnd = new Mock<IRandom>();
             rnd.Setup(m => m.NextDouble()).Returns(0.5);
 
-            uat = new AttackOutcomePredictor(rnd.Object);
+            _uat = new AttackOutcomePredictor(rnd.Object);
         }
 
         #region Null Checks
@@ -28,28 +28,19 @@ namespace Ev.Domain.Server.Tests
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentNullException_If_Rnd_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                var uat = new AttackOutcomePredictor(null);
-            });
+            ShouldThrowArgumentNullException(() => new AttackOutcomePredictor(null));
         }
 
         [TestMethod]
         public void Update_Should_Throw_ArgumentNullException_If_Attacker_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                uat.CanWin(null, new Mock<ITribe>().Object);
-            });
+            ShouldThrowArgumentNullException(() => _uat.CanWin(null, new Mock<ITribe>().Object));
         }
 
         [TestMethod]
         public void Update_Should_Throw_ArgumentNullException_If_Defender_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                uat.CanWin(new Mock<ITribe>().Object, null);
-            });
+            ShouldThrowArgumentNullException(() => _uat.CanWin(new Mock<ITribe>().Object, null));
         }
 
         #endregion
@@ -77,7 +68,7 @@ namespace Ev.Domain.Server.Tests
         public void CanWin1()
         {
             // Act
-            var actual = uat.CanWin(TestTribe(20), TestTribe(100));
+            var actual = _uat.CanWin(TestTribe(20), TestTribe(100));
 
             // Assert
             Assert.AreEqual(false, actual);
@@ -87,7 +78,7 @@ namespace Ev.Domain.Server.Tests
         public void CanWin2()
         {
             // Act
-            var actual = uat.CanWin(TestTribe(80), TestTribe(100));
+            var actual = _uat.CanWin(TestTribe(80), TestTribe(100));
 
             // Assert
             Assert.AreEqual(false, actual);
@@ -97,7 +88,7 @@ namespace Ev.Domain.Server.Tests
         public void CanWin3()
         {
             // Act
-            var actual = uat.CanWin(TestTribe(100), TestTribe(80));
+            var actual = _uat.CanWin(TestTribe(100), TestTribe(80));
 
             // Assert
             Assert.AreEqual(true, actual);
@@ -123,7 +114,7 @@ namespace Ev.Domain.Server.Tests
             defender.Defense = .1f;
 
             // Act
-            var actual = uat.CanWin(attacker, defender);
+            var actual = _uat.CanWin(attacker, defender);
 
             // Assert
             Assert.AreEqual(false, actual);
@@ -138,7 +129,7 @@ namespace Ev.Domain.Server.Tests
             defender.Defense = .1f;
 
             // Act
-            var actual = uat.CanWin(attacker, defender);
+            var actual = _uat.CanWin(attacker, defender);
 
             // Assert
             Assert.AreEqual(false, actual);
@@ -153,7 +144,7 @@ namespace Ev.Domain.Server.Tests
             defender.Defense = .1f;
 
             // Act
-            var actual = uat.CanWin(attacker, defender);
+            var actual = _uat.CanWin(attacker, defender);
 
             // Assert
             Assert.AreEqual(true, actual);
@@ -180,7 +171,7 @@ namespace Ev.Domain.Server.Tests
             var defender = TestTribe(100);
 
             // Act
-            var actual = uat.CanWin(attacker, defender);
+            var actual = _uat.CanWin(attacker, defender);
 
             // Assert
             Assert.AreEqual(false, actual);
@@ -196,7 +187,7 @@ namespace Ev.Domain.Server.Tests
             var defender = TestTribe(100);
 
             // Act
-            var actual = uat.CanWin(attacker, defender);
+            var actual = _uat.CanWin(attacker, defender);
 
             // Assert
             Assert.AreEqual(false, actual);
@@ -212,7 +203,7 @@ namespace Ev.Domain.Server.Tests
             var defender = TestTribe(80);
 
             // Act
-            var actual = uat.CanWin(attacker, defender);
+            var actual = _uat.CanWin(attacker, defender);
 
             // Assert
             Assert.AreEqual(true, actual);

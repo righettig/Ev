@@ -1,8 +1,8 @@
 ﻿using Ev.Domain.Client.Behaviours.BehaviourTrees.Composite;
 using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
+using Ev.Tests.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
+using static Ev.Tests.Common.TestHelpers;
 
 namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
@@ -14,18 +14,15 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentNullException_If_Children_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                var node = new Selector(null);
-            });
+            ShouldThrowArgumentNullException(() => new Selector(null));
         }
 
         [TestMethod]
         public void Ctor_Initial_State_Should_Be_Not_Started()
         {
             // Arrange & Act
-            var child1 = new Mock<IBehaviourTreeNode>().Object;
-            var child2 = new Mock<IBehaviourTreeNode>().Object;
+            var child1 = Stubs.IBehaviourTreeNode;
+            var child2 = Stubs.IBehaviourTreeNode;
 
             var node = new Selector(child1, child2);
 
@@ -44,7 +41,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             var node = new Selector(Helpers.FailingTreeNode(), Helpers.SucceedingTreeNode());
 
             // Act
-            var actual = node.Tick(Helpers.CreateMockContext());
+            var actual = node.Tick(Stubs.IBehaviourTreeContext);
 
             // Assert
             Assert.AreEqual(NodeResult.Running, actual);
@@ -57,7 +54,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             var node = new Selector(Helpers.SucceedingTreeNode(), Helpers.FailingTreeNode());
 
             // Act
-            var actual = node.Tick(Helpers.CreateMockContext());
+            var actual = node.Tick(Stubs.IBehaviourTreeContext);
 
             // Assert
             Assert.AreEqual(NodeResult.Success, actual);
@@ -69,7 +66,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             // Arrange
             var node = new Selector(Helpers.FailingTreeNode(), Helpers.SucceedingTreeNode());
 
-            var context = Helpers.CreateMockContext();
+            var context = Stubs.IBehaviourTreeContext;
 
             // Act
             node.Tick(context);
@@ -86,7 +83,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             var node = new Selector(Helpers.FailingTreeNode());
 
             // Act
-            var actual = node.Tick(Helpers.CreateMockContext());
+            var actual = node.Tick(Stubs.IBehaviourTreeContext);
 
             // Assert
             Assert.AreEqual(NodeResult.Failed, actual);
@@ -102,7 +99,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             // Arrange
             var node = new Selector(Helpers.FailingTreeNode());
 
-            node.Tick(Helpers.CreateMockContext());
+            node.Tick(Stubs.IBehaviourTreeContext);
 
             // Act
             node.Reset();
@@ -117,7 +114,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             // Arrange
             var node = new Selector(Helpers.SucceedingTreeNode());
 
-            node.Tick(Helpers.CreateMockContext());
+            node.Tick(Stubs.IBehaviourTreeContext);
 
             // Act
             node.Reset();
@@ -132,7 +129,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             // Arrange
             var node = new Selector(Helpers.FailingTreeNode(), Helpers.SucceedingTreeNode());
 
-            node.Tick(Helpers.CreateMockContext());
+            node.Tick(Stubs.IBehaviourTreeContext);
 
             // Act
             node.Reset();

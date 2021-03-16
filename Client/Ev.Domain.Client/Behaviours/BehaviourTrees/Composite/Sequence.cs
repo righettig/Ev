@@ -12,7 +12,7 @@ namespace Ev.Domain.Client.Behaviours.BehaviourTrees.Composite
         {
             if (_state == NodeResult.Failed) return NodeResult.Failed;
 
-            var result = _children[_i].Tick(context);
+            var result = _children[_i++].Tick(context);
 
             if (result == NodeResult.Failed)
             {
@@ -23,7 +23,6 @@ namespace Ev.Domain.Client.Behaviours.BehaviourTrees.Composite
 
             if (result == NodeResult.Success && _i < _children.Length)
             {
-                _i++;
                 _state = NodeResult.Running;
 
                 return NodeResult.Running;

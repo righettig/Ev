@@ -3,7 +3,7 @@ using Ev.Domain.Server.Actions;
 using Ev.Domain.Server.Entities;
 using Ev.Domain.Server.Tests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using static Ev.Tests.Common.TestHelpers;
 
 namespace Ev.Domain.Server.Tests
 {
@@ -23,10 +23,7 @@ namespace Ev.Domain.Server.Tests
         [TestMethod]
         public void Attack_Ctor_Should_Throw_ArgumentNullException_If_Target_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                var action = new AttackAction(null);
-            });
+            ShouldThrowArgumentNullException(() => new AttackAction(null));
         }
 
         [TestMethod]

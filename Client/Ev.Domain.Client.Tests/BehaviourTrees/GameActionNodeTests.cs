@@ -3,43 +3,36 @@ using Ev.Domain.Client.Actions;
 using Ev.Domain.Client.Behaviours.BehaviourTrees;
 using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
 using Ev.Domain.Client.Core;
+using Ev.Tests.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using System;
+using static Ev.Tests.Common.TestHelpers;
 
 namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
     [TestClass]
     public class GameActionNodeTests
     {
+        private readonly GameActionNode uat = new((worldState, tribeState) => new HoldAction());
+
         #region Ctor
 
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentNullException_If_Behaviour_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                var node = new GameActionNode((ITribeBehaviour) null);
-            });
+            ShouldThrowArgumentNullException(() => new GameActionNode((ITribeBehaviour) null));
         }
 
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentNullException_If_BehaviourFn_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                var node = new GameActionNode((Func<IWorldState, ITribe, IGameAction>) null);
-            });
+            ShouldThrowArgumentNullException(() => new GameActionNode((Func<IWorldState, ITribe, IGameAction>) null));
         }
 
         [TestMethod]
         public void Ctor_Initial_State_Should_Be_Not_Started()
         {
-            // Arrange & Act
-            var node = new GameActionNode((worldState, tribeState) => new HoldAction());
-
-            // Assert
-            Assert.AreEqual(NodeResult.NotStarted, node.State);
+            Assert.AreEqual(NodeResult.NotStarted, uat.State);
         }
 
         #endregion
@@ -49,35 +42,24 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         [TestMethod]
         public void Tick_Should_Throw_ArgumentNullException_If_Null_Context()
         {
-            var node = new GameActionNode((worldState, tribeState) => new HoldAction());
-
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                node.Tick(null);
-            });
+            ShouldThrowArgumentNullException(() => uat.Tick(null));
         }
 
         [TestMethod]
         public void Tick_Should_Set_State_To_Success()
         {
-            // Arrange
-            var node = new GameActionNode((worldState, tribeState) => new HoldAction());
-
             // Act
-            node.Tick(Helpers.CreateContext());
+            uat.Tick(Stubs.IBehaviourTreeContext);
 
             // Assert
-            Assert.AreEqual(NodeResult.Success, node.State);
+            Assert.AreEqual(NodeResult.Success, uat.State);
         }
 
         [TestMethod]
         public void Tick_Should_Return_Success()
         {
-            // Arrange
-            var node = new GameActionNode((worldState, tribeState) => new HoldAction());
-
             // Act
-            var actual = node.Tick(Helpers.CreateContext());
+            var actual = uat.Tick(Stubs.IBehaviourTreeContext);
 
             // Assert
             Assert.AreEqual(NodeResult.Success, actual);
@@ -91,7 +73,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
 
             var node = new GameActionNode((worldState, tribeState) => action);
 
-            var context = new BehaviourTreeContext(new Mock<IWorldState>().Object, new Mock<ITribe>().Object);
+            var context = new BehaviourTreeContext(Stubs.IIWorldState, Stubs.Client.ITribe);
 
             // Act
             node.Tick(context);
@@ -108,17 +90,13 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         public void Reset()
         {
             // Arrange
-            var action = new HoldAction();
-
-            var node = new GameActionNode((worldState, tribeState) => action);
-
-            node.Tick(Helpers.CreateContext());
+            uat.Tick(Stubs.IBehaviourTreeContext);
             
             // Act
-            node.Reset();
+            uat.Reset();
 
             // Assert
-            Assert.AreEqual(NodeResult.NotStarted, node.State);
+            Assert.AreEqual(NodeResult.NotStarted, uat.State);
         }
 
         #endregion

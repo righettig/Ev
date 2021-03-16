@@ -1,23 +1,11 @@
-﻿using Ev.Common.Core.Interfaces;
-using Ev.Domain.Client.Behaviours.BehaviourTrees;
+﻿using Ev.Domain.Client.Behaviours.BehaviourTrees;
 using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
-using Ev.Domain.Client.Core;
 using Moq;
 
 namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
     static class Helpers
     {
-        public static IBehaviourTreeContext CreateMockContext()
-        {
-            return new Mock<IBehaviourTreeContext>().Object;
-        }
-
-        public static IBehaviourTreeContext CreateContext()
-        {
-            return new BehaviourTreeContext(new Mock<IWorldState>().Object, new Mock<ITribe>().Object);
-        }
-
         public static IBehaviourTreeNode SucceedingTreeNode() => CreateBehaviourTreeNode(NodeResult.Success);
 
         public static IBehaviourTreeNode FailingTreeNode() => CreateBehaviourTreeNode(NodeResult.Failed);

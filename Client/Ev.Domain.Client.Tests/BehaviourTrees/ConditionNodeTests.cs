@@ -1,8 +1,8 @@
 ﻿using Ev.Domain.Client.Behaviours.BehaviourTrees;
 using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
+using Ev.Tests.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
+using static Ev.Tests.Common.TestHelpers;
 
 namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
@@ -14,10 +14,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentNull_Exception_If_Predicate_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                var node = new ConditionNode(null);
-            });
+            ShouldThrowArgumentNullException(() => new ConditionNode(null));
         }
 
         #endregion
@@ -31,7 +28,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             var node = new ConditionNode((w, t) => true);
 
             // Act
-            var actual = node.Tick(new Mock<IBehaviourTreeContext>().Object);
+            var actual = node.Tick(Stubs.IBehaviourTreeContext);
             
             // Assert
             Assert.AreEqual(NodeResult.Success, actual);
@@ -44,7 +41,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             var node = new ConditionNode((w, t) => false);
 
             // Act
-            var actual = node.Tick(new Mock<IBehaviourTreeContext>().Object);
+            var actual = node.Tick(Stubs.IBehaviourTreeContext);
 
             // Assert
             Assert.AreEqual(NodeResult.Failed, actual);
@@ -60,7 +57,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             // Arrange
             var node = new ConditionNode((w, t) => true);
 
-            node.Tick(new Mock<IBehaviourTreeContext>().Object);
+            node.Tick(Stubs.IBehaviourTreeContext);
 
             // Act
             node.Reset();
@@ -75,7 +72,7 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             // Arrange
             var node = new ConditionNode((w, t) => false);
 
-            node.Tick(new Mock<IBehaviourTreeContext>().Object);
+            node.Tick(Stubs.IBehaviourTreeContext);
 
             // Act
             node.Reset();

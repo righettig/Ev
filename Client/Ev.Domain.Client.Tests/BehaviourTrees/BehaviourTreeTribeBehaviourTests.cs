@@ -4,9 +4,9 @@ using Ev.Domain.Client.Actions;
 using Ev.Domain.Client.Behaviours.BehaviourTrees;
 using Ev.Domain.Client.Behaviours.BehaviourTrees.Core;
 using Ev.Domain.Client.Core;
+using Ev.Tests.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
+using static Ev.Tests.Common.TestHelpers;
 
 namespace Ev.Domain.Client.Tests.BehaviourTrees
 {
@@ -25,35 +25,28 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
     [TestClass]
     public class BehaviourTreeTribeBehaviourTests
     {
-        private readonly BehaviourTreeTribeBehaviour uat = 
-            new TestBehaviourTreeTribeBehaviour(new Mock<IRandom>().Object, new HoldAction());
+        private readonly BehaviourTreeTribeBehaviour uat = new TestBehaviourTreeTribeBehaviour(Stubs.IRandom, new HoldAction());
 
         [TestMethod]
         public void DoMove_Should_Throw_ArgumentNullException_If_WorldState_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                uat.DoMove(null, new Mock<ITribe>().Object);
-            });
+            ShouldThrowArgumentNullException(() => uat.DoMove(null, Stubs.Client.ITribe));
         }
 
         [TestMethod]
         public void DoMove_Should_Throw_ArgumentNullException_If_TribeState_Is_Null()
         {
-            Assert.ThrowsException<ArgumentNullException>(() =>
-            {
-                uat.DoMove(new Mock<IWorldState>().Object, null);
-            });
+            ShouldThrowArgumentNullException(() => uat.DoMove(Stubs.IIWorldState, null));
         }
 
         [TestMethod]
         public void DoMove_Should_Return_Hold_If_No_Move()
         {
             // Arrange
-            var uat = new TestBehaviourTreeTribeBehaviour(new Mock<IRandom>().Object, null);
+            var uat = new TestBehaviourTreeTribeBehaviour(Stubs.IRandom, null);
             
             // Act
-            var actual = uat.DoMove(new Mock<IWorldState>().Object, new Mock<ITribe>().Object);
+            var actual = uat.DoMove(Stubs.IIWorldState, Stubs.Client.ITribe);
 
             // Assert
             Assert.IsInstanceOfType(actual, typeof(HoldAction));
@@ -65,10 +58,10 @@ namespace Ev.Domain.Client.Tests.BehaviourTrees
             // Arrange
             var expected = new MoveAction(Direction.E);
 
-            var uat = new TestBehaviourTreeTribeBehaviour(new Mock<IRandom>().Object, expected);
+            var uat = new TestBehaviourTreeTribeBehaviour(Stubs.IRandom, expected);
 
             // Act
-            var actual = uat.DoMove(new Mock<IWorldState>().Object, new Mock<ITribe>().Object);
+            var actual = uat.DoMove(Stubs.IIWorldState, Stubs.Client.ITribe);
 
             // Assert
             Assert.AreSame(expected, actual);

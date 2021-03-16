@@ -2,10 +2,11 @@ using Ev.Common.Core;
 using Ev.Common.Core.Interfaces;
 using Ev.Domain.Server.World.Core;
 using Ev.Infrastructure.Core;
+using Ev.Tests.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using System;
 using System.Threading.Tasks;
+using static Ev.Tests.Common.TestHelpers;
 
 namespace Ev.Game.Server.Tests
 {
@@ -18,9 +19,9 @@ namespace Ev.Game.Server.Tests
 
         public GameTests()
         {
-            _platform = new Mock<IPlatform>().Object;
-            _world    = new Mock<IWorld>().Object;
-            _random   = new Mock<IRandom>().Object;
+            _platform = Stubs.IPlatform;
+            _world    = Stubs.IWorld;
+            _random   = Stubs.IRandom;
         }
 
         #region Ctor
@@ -63,10 +64,7 @@ namespace Ev.Game.Server.Tests
         [DataRow(" ")]
         public void RegisterAgent_Should_Throw_ArgumentException_If_AgentName_Is_NullEmptyOrWhiteSpace(string agentName)
         {
-            Assert.ThrowsException<ArgumentException>(() =>
-            {
-                CreateUat().RegisterAgent(agentName, Color.Black);
-            });
+            ShouldThrowArgumentException(() => CreateUat().RegisterAgent(agentName, Color.Black));
         }
 
         private static void ShouldThrowArgumentNullException(Func<Game> func)
