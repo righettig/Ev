@@ -8,6 +8,7 @@ using Ev.Domain.Server.Processors;
 using Ev.Domain.Server.World.Core;
 using Ev.Infrastructure.Core;
 using Ev.Serialization;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using static Ev.Helpers.Debug;
@@ -23,9 +24,10 @@ namespace Ev.Game.Server
 
         public Game(IPlatform platform, IWorld world, IRandom rnd)
         {
-            _world = world;
+            if (rnd == null) throw new ArgumentNullException(nameof(rnd));
 
-            _platform = platform; // how to pass a reference to this?? -> new LocalPlatform(this);
+            _world = world ?? throw new ArgumentNullException(nameof(world));
+            _platform = platform ?? throw new ArgumentNullException(nameof(platform));
 
             // TODO: for this to be useful I need to be able to record the game/world parameters too
             _history = new EvGameHistory();
@@ -35,6 +37,9 @@ namespace Ev.Game.Server
         // onRegisterAgent
         public void RegisterAgent(string agentName, Color agentColor)
         {
+            if (string.IsNullOrWhiteSpace(agentName))
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(agentName));
+
             _world.AddTribe(agentName, agentColor);
             
             // TODO: if #agents is OK -> start game loop
@@ -44,9 +49,10 @@ namespace Ev.Game.Server
         {
         }
 
-        //private void GameLoop()
         public async Task GameLoop(EvGameOptions options)
         {
+            if (options == null) throw new ArgumentNullException(nameof(options));
+
             var finished = false;
             var iteration = 0;
 
@@ -72,7 +78,7 @@ namespace Ev.Game.Server
 
                     switch (move)
                     {
-                        case PlayerControlledGameAction:
+                        case PlayerControlledGameAction: // TODO: this should be done by the TribeAgent / LocalPlatform
                             DumpActions();
                             move = ReadAction(state);
                             move.Tribe = tribe;
@@ -100,7 +106,7 @@ namespace Ev.Game.Server
 
                     if (options.WaitAfterEachMove)
                     {
-                        System.Console.ReadLine();
+                        Console.ReadLine();
                     }
                 }
 

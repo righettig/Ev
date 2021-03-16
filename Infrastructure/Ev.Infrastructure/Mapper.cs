@@ -5,7 +5,7 @@ using System;
 
 namespace Ev.Infrastructure
 {
-    public class Mapper
+    public class Mapper : IMapper
     {
         public IWorldState Map(IWorldState worldState)
         {

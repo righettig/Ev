@@ -22,7 +22,7 @@ namespace Ev.Tests.Integration
 
         public IntegrationTests()
         {
-            _platform = new LocalPlatform();
+            _platform = new LocalPlatform(new Mapper());
             _random = new Random(1);
         }
 

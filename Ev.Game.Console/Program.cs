@@ -21,7 +21,7 @@ namespace Ev.Game.Console
         {
             var world = CreateWorld(new Random(1));
 
-            var platform = new LocalPlatform();
+            var platform = PlatformFactory.Local;
 
             var game = new Server.Game(platform, world, new Random(1));
             //game.Start(); // server starts waiting for join requests

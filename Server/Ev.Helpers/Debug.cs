@@ -178,7 +178,7 @@ namespace Ev.Helpers
             WriteLine();
         }
 
-        public static void DumpWorldState(WorldState worldState)
+        public static void DumpWorldState(IWorldState worldState)
         {
             var rowLength = worldState.State.GetLength(0);
             var colLength = worldState.State.GetLength(1);
@@ -218,7 +218,7 @@ namespace Ev.Helpers
             ResetColor();
         }
 
-        private static void AsAlive(ITribe tribe, bool current)
+        public static void AsAlive(ITribe tribe, bool current)
         {
             Write("Tribe ");
 
