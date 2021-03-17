@@ -38,7 +38,7 @@ namespace Ev.Domain.Client
             if (worldState == null) throw new ArgumentNullException(nameof(worldState));
             if (tribe == null) throw new ArgumentNullException(nameof(tribe));
 
-            Console.WriteLine("CLIENT - It's your turn!");
+            //Console.WriteLine("CLIENT - It's your turn!");
             
             // TODO: create helper for client
             //Helpers.Debug.AsAlive(tribe);

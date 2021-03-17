@@ -13,6 +13,8 @@ namespace Ev.Tests.Common
 {
     public static class Stubs
     {
+        public static readonly IEnumeration IEnumeration = new Mock<IEnumeration>().Object;
+
         public static readonly IWorldState IIWorldState = new Mock<IWorldState>().Object;
 
         public static readonly ITribeAgent ITribeAgent = new Mock<ITribeAgent>().Object;

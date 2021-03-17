@@ -1,6 +1,7 @@
 ﻿using Ev.Common.Core;
 using Ev.Common.Core.Interfaces;
 using Ev.Domain.Client.Core;
+using System;
 using System.Collections.Generic;
 
 namespace Ev.Domain.Client.Behaviours.Fsm
@@ -9,12 +10,16 @@ namespace Ev.Domain.Client.Behaviours.Fsm
     {
         private readonly Dictionary<string, FsmState> _states = new();
 
-        private FsmState _current;
+        public FsmState Current { get; private set; }
 
         private string _debug;
 
         public FiniteStateMachine WithState(FsmState state) 
         {
+            if (state == null)              throw new ArgumentNullException(nameof(state));
+            if (state.ActionFn == null)     throw new InvalidFsmStateNotFoundException("Missing ActionFn.", nameof(state));
+            if (state.TransitionFn == null) throw new InvalidFsmStateNotFoundException("Mission TransitionFn", nameof(state));
+
             _states.Add(state.Id.Name, state);
 
             return this;
@@ -22,6 +27,8 @@ namespace Ev.Domain.Client.Behaviours.Fsm
 
         public FiniteStateMachine WithInitialState(Enumeration stateId)
         {
+            if (stateId == null) throw new ArgumentNullException(nameof(stateId));
+
             SetState(stateId);
 
             return this;
@@ -29,22 +36,43 @@ namespace Ev.Domain.Client.Behaviours.Fsm
 
         public IGameAction DoMove(IWorldState state, ITribe tribe) 
         {
-            var action = _current.ActionFn(state, tribe);
+            if (state == null) throw new ArgumentNullException(nameof(state));
+            if (tribe == null) throw new ArgumentNullException(nameof(tribe));
 
-            _debug = _current.ToString();
+            var action = Current.ActionFn(state, tribe);
+
+            _debug = Current.ToString();
             
-            SetState(_current.TransitionFn(state, tribe));
+            SetState(Current.TransitionFn(state, tribe));
 
-            _debug += $" -> {_current}";
+            _debug += $" -> {Current}";
 
             return action;
         }
 
-        private void SetState(Enumeration stateId)
+        private void SetState(IEnumeration stateId)
         {
-            _current = _states[stateId.Name];
+            try
+            {
+                Current = _states[stateId.Name];
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new FsmStateNotFoundException();
+            }
         }
 
         public override string ToString() => _debug;
+    }
+
+    public class FsmStateNotFoundException : Exception
+    {
+    }
+    
+    public class InvalidFsmStateNotFoundException : ArgumentException
+    {
+        public InvalidFsmStateNotFoundException(string message, string paramName) : base(message, paramName)
+        {
+        }
     }
 }
