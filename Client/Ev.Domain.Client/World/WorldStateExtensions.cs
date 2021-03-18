@@ -2,6 +2,8 @@
 using Ev.Common.Core.Interfaces;
 using Ev.Domain.Client.Core;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Ev.Domain.Client.World
@@ -14,6 +16,11 @@ namespace Ev.Domain.Client.World
         /// <returns>An array of collectables.</returns>
         public static ICollectableWorldEntity[] GetCollectables(this IWorldState state, CollectableWorldEntityType? type = null)
         {
+            if (state == null)
+            {
+                throw new ArgumentNullException(nameof(state));
+            }
+
             if (type is null)
             {
                 return state.State.OfType<ICollectableWorldEntity>().ToArray();
@@ -25,20 +32,49 @@ namespace Ev.Domain.Client.World
         /// <summary>
         /// Returns all the available tribes with the exception of the one at position (WORLD_STATE_SIZE, WORLD_STATE_SIZE).
         /// </summary>
+        /// <param name="ignoreSelf">True to ignore the tribe at position (WORLD_STATE_SIZE, WORLD_STATE_SIZE).</param>
         /// <returns>An array of tribes.</returns>
-        public static ITribe[] GetTribes(this IWorldState state)
+        public static ITribe[] GetTribes(this IWorldState state, bool ignoreSelf = true)
         {
-            return state.State.OfType<ITribe>().Where(
-                el => el.Position != (WorldState.WORLD_STATE_SIZE, WorldState.WORLD_STATE_SIZE)).ToArray();
+            if (state == null)
+            {
+                throw new ArgumentNullException(nameof(state));
+            }
+
+            if (!ignoreSelf)
+            {
+                return state.State.OfType<ITribe>().ToArray();
+            }
+
+            var result = new List<ITribe>();
+
+            state.Traverse((entity, _, _) =>
+            {
+                if (entity is ITribe tribe) result.Add(tribe);
+            });
+            
+            return result.ToArray();
         }
 
         /// <summary>
-        /// Returns all the available blocking entities.
+        /// Returns all the available blocking entities of a given type, if specified, all of them otherwise.
         /// </summary>
         /// <returns>An array of blocking entities.</returns>
-        public static IBlockingWorldEntity[] GetBlockings(this IWorldState state)
+        public static IBlockingWorldEntity[] GetBlockings(this IWorldState state, BlockingWorldEntityType? type = null)
         {
-            return state.State.OfType<IBlockingWorldEntity>().ToArray();
+            if (state == null)
+            {
+                throw new ArgumentNullException(nameof(state));
+            }
+
+            if (type is null)
+            {
+                return state.State
+                    .OfType<IBlockingWorldEntity>()
+                    .Where(el => el.Type != BlockingWorldEntityType.NotReachable).ToArray();
+            }
+
+            return state.State.OfType<IBlockingWorldEntity>().Where(el => el.Type == type).ToArray();
         }
 
         /// <summary>
@@ -47,7 +83,7 @@ namespace Ev.Domain.Client.World
         /// <returns>The closest world entity to the center of the world state, i.e. the (2,2) position.</returns>
         public static IWorldEntity Closest(this IWorldState state)
         {
-            return FindClosest<IWorldEntity>(state, el => el != null); // TODO: also check if el != Blocking.NotReachable
+            return FindClosest<IWorldEntity>(state, el => el != null);
         }
 
         /// <summary>
@@ -99,10 +135,12 @@ namespace Ev.Domain.Client.World
         /// <returns>The closest entity or null if none of the entities satisfy the predicate.</returns>
         private static T FindClosest<T>(this IWorldState state, Predicate<T> fn) where T : class, IWorldEntity
         {
-            if (fn is null)
+            if (state == null)
             {
-                throw new ArgumentNullException(nameof(fn));
+                throw new ArgumentNullException(nameof(state));
             }
+
+            Debug.Assert(fn != null, nameof(fn) + " != null");
 
             for (var i = 0; i < traverseList.Length; i++)
             {
@@ -113,7 +151,7 @@ namespace Ev.Domain.Client.World
 
                     var el = state.State[x, y];
 
-                    if (fn(el as T))
+                    if (fn(el as T) && !(el is BlockingWorldEntity { Type: BlockingWorldEntityType.NotReachable}))
                     {
                         return el as T;
                     }
