@@ -52,12 +52,12 @@ namespace Ev.Infrastructure
         {
             Domain.Server.Core.IGameAction result = action switch
             {
-                AttackAction a          => new Domain.Server.Actions.AttackAction(a.TargetName),
-                HoldAction              => new Domain.Server.Actions.HoldAction(),
-                MoveAction a            => new Domain.Server.Actions.MoveAction(a.Direction),
-                SuicideAction           => new Domain.Server.Actions.SuicideAction(),
-                UpgradeAttackAction     => new Domain.Server.Actions.UpgradeAttackAction(),
-                UpgradeDefensesAction   => new Domain.Server.Actions.UpgradeDefensesAction(),
+                AttackAction a        => new Domain.Server.Actions.AttackAction(a.TargetName),
+                HoldAction            => new Domain.Server.Actions.HoldAction(),
+                MoveAction a          => new Domain.Server.Actions.MoveAction(a.Direction),
+                SuicideAction         => new Domain.Server.Actions.SuicideAction(),
+                UpgradeAttackAction   => new Domain.Server.Actions.UpgradeAttackAction(),
+                UpgradeDefensesAction => new Domain.Server.Actions.UpgradeDefensesAction(),
 
                 _ => throw new NotSupportedException()
             };

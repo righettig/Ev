@@ -1,6 +1,5 @@
 ﻿using Ev.Common.Core;
 using Ev.Common.Core.Interfaces;
-using Ev.Domain.Server.Actions;
 using Ev.Domain.Server.Actions.Core;
 using Ev.Domain.Server.Core;
 using Ev.Domain.Server.World.Core;
@@ -26,25 +25,29 @@ namespace Ev.Helpers
 
         public static void DumpActions() 
         {
-            WriteLine("Choose: (H)old (A)ttack (M)ove (S)uicide");
+            WriteLine("Choose: (H)old (A)ttack (M)ove (S)uicide (U)pgrade Attack Upgrade (D)efenses");
         }
 
-        public static IGameAction ReadAction(IWorldState state) 
+        public static Domain.Client.Core.IGameAction ReadAction(IWorldState state) 
         {
             var key = ReadKey(true);
 
-            IGameAction action;
+            Domain.Client.Core.IGameAction action;
             do
             {
                 switch (key.Key)
                 {
-                    case ConsoleKey.S: action = new SuicideAction(); break;
+                    case ConsoleKey.S: action = new Domain.Client.Actions.SuicideAction(); break;
 
-                    case ConsoleKey.H: action = new HoldAction(); break;
+                    case ConsoleKey.H: action = new Domain.Client.Actions.HoldAction(); break;
+
+                    case ConsoleKey.U: action = new Domain.Client.Actions.UpgradeAttackAction(); break;
+
+                    case ConsoleKey.D: action = new Domain.Client.Actions.UpgradeDefensesAction(); break;
 
                     case ConsoleKey.M:
                         DumpDirections();
-                        action = new MoveAction(ReadDirection()); break;
+                        action = new Domain.Client.Actions.MoveAction(ReadDirection()); break;
 
                     case ConsoleKey.A:
                         DumpDirections();
@@ -66,7 +69,7 @@ namespace Ev.Helpers
                             DumpActions();
                             return ReadAction(state);
                         }
-                        return new AttackAction(target.Name);
+                        return new Domain.Client.Actions.AttackAction(target.Name);
 
                     default: action = null; break;
                 }

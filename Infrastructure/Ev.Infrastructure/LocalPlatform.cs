@@ -1,10 +1,12 @@
 ﻿using Ev.Common.Core.Interfaces;
+using Ev.Domain.Client.Actions;
 using Ev.Domain.Client.Core;
 using Ev.Domain.Server.Core;
 using Ev.Infrastructure.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Ev.Helpers.Debug;
 using ITribe = Ev.Domain.Server.Core.ITribe;
 
 namespace Ev.Infrastructure
@@ -67,10 +69,15 @@ namespace Ev.Infrastructure
 
             var action = _behaviours[tribe.Name].DoMove(clientWorldState, clientTribe);
 
+            if (action is PlayerControlledGameAction)
+            {
+                DumpActions();
+                action = ReadAction(worldState);
+            }
+
             var serverAction = _mapper.Map(action);
             
             serverAction.Tribe = tribe;
-
             return serverAction;
         }
 

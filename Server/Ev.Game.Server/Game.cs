@@ -76,20 +76,13 @@ namespace Ev.Game.Server
 
                     var move = _platform.Update(state, tribe);
 
-                    switch (move)
+                    if (move is AttackAction a)
                     {
-                        case PlayerControlledGameAction: // TODO: this should be done by the TribeAgent / LocalPlatform
-                            DumpActions();
-                            move = ReadAction(state);
-                            move.Tribe = tribe;
-                            break;
-
                         // TODO: it would be nice if we could delegate this responsibility to Platform, so that game logic already sees the final server action
-                        // without having to perform this mapping logic. For now I'm gonna add TargetName as an additional property in the server action model.
-                        case AttackAction a:
-                            // mapping client-side action to server-side
-                            a.Target = alive.First(el => el.Name == a.TargetName);
-                            break;
+                        // without having to perform this mapping logic.
+                        // For now I'm gonna add TargetName as an additional property in the server action model.
+                        // mapping client-side action to server-side
+                        a.Target = alive.First(el => el.Name == a.TargetName);
                     }
 
                     _history.Add((move, state));
