@@ -38,9 +38,7 @@ namespace Ev.Domain.Server.Tests
         {
             ShouldThrowArgumentNullException(() =>
             {
-                IGameAction nullAction = null;
-
-                _uat.Update(nullAction, new Mock<ITribe>().Object, Stubs.IWorld, 0);
+                _uat.Update((IGameAction) null, new Mock<ITribe>().Object, Stubs.IWorld, 0);
             });
         }
 

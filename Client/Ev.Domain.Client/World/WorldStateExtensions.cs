@@ -13,6 +13,7 @@ namespace Ev.Domain.Client.World
         /// <summary>
         /// Returns all available collectable entities of a given type, if specified, all of them otherwise.
         /// </summary>
+        /// <param name="type">The optional entity type used to filter out the entities.</param>
         /// <returns>An array of collectables.</returns>
         public static ICollectableWorldEntity[] GetCollectables(this IWorldState state, CollectableWorldEntityType? type = null)
         {
@@ -59,6 +60,7 @@ namespace Ev.Domain.Client.World
         /// <summary>
         /// Returns all the available blocking entities of a given type, if specified, all of them otherwise.
         /// </summary>
+        /// <param name="type">The optional entity type used to filter out the entities.</param>
         /// <returns>An array of blocking entities.</returns>
         public static IBlockingWorldEntity[] GetBlockings(this IWorldState state, BlockingWorldEntityType? type = null)
         {
@@ -172,7 +174,7 @@ namespace Ev.Domain.Client.World
         // d=1 => [1,1] [2,1] [3,1] [3,2] [3,3] [2,3] [1.3] [1,2]
         // d=2 => [0,0] [1,0] [2,0] [3,0] [4,0] [4,1] [4,2] [4,3] [4,4] [3,4] [2,4] [1,4] [0,4] [0,3] [0,2] [0,1]
 
-        private static readonly int[][,] traverseList = new int[2][,]
+        private static readonly int[][,] traverseList = 
         {
             new[,] {
                 { 1, 1 }, { 2, 1 }, { 3, 1 }, { 3, 2 }, { 3, 3 }, { 2, 3 }, { 1, 3 }, { 1, 2 }

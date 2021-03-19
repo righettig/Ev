@@ -45,10 +45,6 @@ namespace Ev.Game.Server
             // TODO: if #agents is OK -> start game loop
         }
 
-        public void Start()
-        {
-        }
-
         public async Task GameLoop(EvGameOptions options)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));

@@ -112,7 +112,7 @@ namespace Ev.Helpers
             WriteLine($"iteration {iteration} {Environment.NewLine}");
 
             if (move != null) {
-                Write($"Current: ");
+                Write("Current: ");
                 ForegroundColor = ColorMapper.MapColor(move.Tribe.Color);
                 Write($"{move.Tribe.Name}");
                 ResetColor();

@@ -4,6 +4,6 @@ namespace Ev.Serialization.Dto.Actions.Core
 {
     public abstract class GameActionDto : IGameActionDto
     {
-        public TribeDto Tribe { get; set; }
+        public TribeDto Tribe { get; init; }
     }
 }
