@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Client\Ev.Domain.Client.Core\Ev.Domain.Client.Core.csproj" />
+    <ProjectReference Include="..\..\Client\Ev.Domain.Client\Ev.Domain.Client.csproj" />
+    <ProjectReference Include="..\..\Common\Ev.Common\Ev.Common.csproj" />
+    <ProjectReference Include="..\..\Server\Ev.Domain.Server.Core\Ev.Domain.Server.Core.csproj" />
+    <ProjectReference Include="..\..\Server\Ev.Domain.Server\Ev.Domain.Server.csproj" />
+    <ProjectReference Include="..\..\Server\Ev.Helpers\Ev.Helpers.csproj" />
+    <ProjectReference Include="..\Ev.Infrastructure.Core\Ev.Infrastructure.Core.csproj" />
+  </ItemGroup>
+
+</Project>

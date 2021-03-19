@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\Ev.Infrastructure.Core\Ev.Infrastructure.Core.csproj" />
+    <ProjectReference Include="..\Ev.Domain.Server.Core\Ev.Domain.Server.Core.csproj" />
+  </ItemGroup>
+
+</Project>

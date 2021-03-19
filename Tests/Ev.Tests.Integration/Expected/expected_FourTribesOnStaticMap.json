@@ -2,7 +2,7 @@
   {
     "Action": {
       "Type": "Move",
-      "Direction": 2,
+      "Direction": 0,
       "Population": 100
     },
     "State": []
@@ -10,78 +10,20 @@
   {
     "Action": {
       "Type": "Move",
-      "Direction": 5,
-      "Population": 97
+      "Direction": 1,
+      "Population": 99
     },
     "State": []
   },
   {
     "Action": {
       "Type": "Move",
-      "Direction": 0,
+      "Direction": 7,
       "Population": 96
     },
-    "State": []
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 2,
-      "Population": 95
-    },
-    "State": []
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 2,
-      "Population": 92
-    },
     "State": [
       {
-        "Value": "Blocking,Wall,4,4"
-      }
-    ]
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 6,
-      "Population": 89
-    },
-    "State": [
-      {
-        "Value": "Blocking,Wall,3,4"
-      },
-      {
-        "Value": "Blocking,Wall,4,4"
-      }
-    ]
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 1,
-      "Population": 86
-    },
-    "State": [
-      {
-        "Value": "Blocking,Wall,2,3"
-      },
-      {
-        "Value": "Blocking,Wall,2,4"
-      },
-      {
-        "Value": "Blocking,Wall,3,3"
-      },
-      {
-        "Value": "Collectable,Iron,1,3,4"
-      },
-      {
-        "Value": "Blocking,Wall,4,3"
-      },
-      {
-        "Value": "Collectable,Food,5,4,4"
+        "Value": "Collectable,Iron,6,0,4"
       }
     ]
   },
@@ -89,466 +31,856 @@
     "Action": {
       "Type": "Move",
       "Direction": 7,
-      "Population": 85
+      "Population": 93
     },
     "State": [
       {
-        "Value": "Blocking,Wall,2,3"
-      },
-      {
-        "Value": "Blocking,Wall,2,4"
-      },
-      {
-        "Value": "Blocking,Wall,3,3"
-      },
-      {
-        "Value": "Collectable,Iron,1,3,4"
-      },
-      {
-        "Value": "Blocking,Wall,4,3"
-      },
-      {
-        "Value": "Collectable,Food,5,4,4"
+        "Value": "Collectable,Iron,6,1,3"
       }
     ]
   },
   {
     "Action": {
       "Type": "Move",
-      "Direction": 5,
-      "Population": 82
+      "Direction": 6,
+      "Population": 90
     },
-    "State": [
-      {
-        "Value": "Collectable,Wood,4,0,4"
-      },
-      {
-        "Value": "Blocking,Wall,3,2"
-      },
-      {
-        "Value": "Blocking,Wall,3,3"
-      },
-      {
-        "Value": "Blocking,Wall,3,4"
-      },
-      {
-        "Value": "Blocking,Wall,4,2"
-      },
-      {
-        "Value": "Collectable,Iron,1,4,3"
-      }
-    ]
-  },
-  {
-    "Action": {
-      "Type": "Hold",
-      "Population": 79
-    },
-    "State": [
-      {
-        "Value": "Blocking,Wall,4,3"
-      },
-      {
-        "Value": "Blocking,Wall,4,4"
-      }
-    ]
+    "State": []
   },
   {
     "Action": {
       "Type": "Move",
       "Direction": 4,
+      "Population": 87
+    },
+    "State": []
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 3,
+      "Population": 84
+    },
+    "State": []
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 3,
+      "Population": 81
+    },
+    "State": []
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 1,
       "Population": 78
     },
-    "State": [
-      {
-        "Value": "Blocking,Wall,4,3"
-      },
-      {
-        "Value": "Blocking,Wall,4,4"
-      }
-    ]
+    "State": []
   },
   {
     "Action": {
       "Type": "Move",
-      "Direction": 6,
+      "Direction": 1,
       "Population": 75
     },
-    "State": [
-      {
-        "Value": "Blocking,Wall,3,4"
-      },
-      {
-        "Value": "Blocking,Wall,4,4"
-      }
-    ]
+    "State": []
   },
   {
     "Action": {
       "Type": "Move",
-      "Direction": 6,
+      "Direction": 3,
       "Population": 72
     },
     "State": [
       {
-        "Value": "Blocking,Wall,2,3"
-      },
-      {
-        "Value": "Blocking,Wall,2,4"
-      },
-      {
-        "Value": "Blocking,Wall,3,3"
-      },
-      {
-        "Value": "Collectable,Iron,1,3,4"
-      },
-      {
-        "Value": "Blocking,Wall,4,3"
-      },
-      {
-        "Value": "Collectable,Food,5,4,4"
+        "Value": "Blocking,Wall,0,4"
       }
     ]
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 3,
-      "Population": 71
-    },
-    "State": [
-      {
-        "Value": "Blocking,Wall,2,3"
-      },
-      {
-        "Value": "Blocking,Wall,2,4"
-      },
-      {
-        "Value": "Blocking,Wall,3,3"
-      },
-      {
-        "Value": "Collectable,Iron,1,3,4"
-      },
-      {
-        "Value": "Blocking,Wall,4,3"
-      },
-      {
-        "Value": "Collectable,Food,5,4,4"
-      }
-    ]
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 3,
-      "Population": 68
-    },
-    "State": [
-      {
-        "Value": "Blocking,Wall,3,3"
-      },
-      {
-        "Value": "Blocking,Wall,3,4"
-      },
-      {
-        "Value": "Blocking,Wall,4,3"
-      },
-      {
-        "Value": "Collectable,Iron,1,4,4"
-      }
-    ]
-  },
-  {
-    "Action": {
-      "Type": "Hold",
-      "Population": 65
-    },
-    "State": [
-      {
-        "Value": "Blocking,Wall,4,3"
-      },
-      {
-        "Value": "Blocking,Wall,4,4"
-      }
-    ]
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 5,
-      "Population": 64
-    },
-    "State": [
-      {
-        "Value": "Blocking,Wall,4,3"
-      },
-      {
-        "Value": "Blocking,Wall,4,4"
-      }
-    ]
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 0,
-      "Population": 61
-    },
-    "State": []
-  },
-  {
-    "Action": {
-      "Type": "Hold",
-      "Population": 60
-    },
-    "State": []
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 0,
-      "Population": 59
-    },
-    "State": []
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 3,
-      "Population": 58
-    },
-    "State": []
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 4,
-      "Population": 55
-    },
-    "State": []
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 3,
-      "Population": 54
-    },
-    "State": []
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 5,
-      "Population": 53
-    },
-    "State": []
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 0,
-      "Population": 52
-    },
-    "State": []
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 7,
-      "Population": 51
-    },
-    "State": []
   },
   {
     "Action": {
       "Type": "Move",
       "Direction": 1,
-      "Population": 50
-    },
-    "State": []
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 5,
-      "Population": 47
-    },
-    "State": []
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 2,
-      "Population": 46
-    },
-    "State": []
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 1,
-      "Population": 43
-    },
-    "State": []
-  },
-  {
-    "Action": {
-      "Type": "Hold",
-      "Population": 40
+      "Population": 69
     },
     "State": [
       {
-        "Value": "Collectable,Wood,4,2,4"
-      }
-    ]
-  },
-  {
-    "Action": {
-      "Type": "Hold",
-      "Population": 39
-    },
-    "State": [
+        "Value": "Blocking,Wall,0,1"
+      },
       {
-        "Value": "Collectable,Wood,4,2,4"
+        "Value": "Blocking,Wall,0,2"
+      },
+      {
+        "Value": "Blocking,Wall,0,3"
+      },
+      {
+        "Value": "Blocking,Wall,1,4"
       }
     ]
   },
   {
     "Action": {
       "Type": "Move",
-      "Direction": 0,
-      "Population": 38
+      "Direction": 6,
+      "Population": 66
     },
     "State": [
       {
-        "Value": "Collectable,Wood,4,2,4"
-      }
-    ]
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 2,
-      "Population": 35
-    },
-    "State": []
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 4,
-      "Population": 32
-    },
-    "State": [
-      {
-        "Value": "Blocking,Wall,4,3"
+        "Value": "Blocking,Wall,0,0"
       },
       {
-        "Value": "Blocking,Wall,4,4"
-      }
-    ]
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 7,
-      "Population": 29
-    },
-    "State": [
-      {
-        "Value": "Blocking,Wall,3,4"
+        "Value": "Blocking,Wall,0,1"
       },
       {
-        "Value": "Blocking,Wall,4,4"
-      }
-    ]
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 2,
-      "Population": 26
-    },
-    "State": [
-      {
-        "Value": "Blocking,Wall,4,3"
+        "Value": "Blocking,Wall,0,2"
       },
       {
-        "Value": "Blocking,Wall,4,4"
-      }
-    ]
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 0,
-      "Population": 23
-    },
-    "State": [
-      {
-        "Value": "Blocking,Wall,3,3"
+        "Value": "Blocking,Wall,1,3"
       },
-      {
-        "Value": "Blocking,Wall,3,4"
-      },
-      {
-        "Value": "Blocking,Wall,4,3"
-      },
-      {
-        "Value": "Collectable,Iron,1,4,4"
-      }
-    ]
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 2,
-      "Population": 20
-    },
-    "State": [
-      {
-        "Value": "Blocking,Wall,3,4"
-      },
-      {
-        "Value": "Blocking,Wall,4,4"
-      }
-    ]
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 2,
-      "Population": 17
-    },
-    "State": [
-      {
-        "Value": "Blocking,Wall,2,4"
-      },
-      {
-        "Value": "Blocking,Wall,3,4"
-      },
-      {
-        "Value": "Blocking,Wall,4,4"
-      }
-    ]
-  },
-  {
-    "Action": {
-      "Type": "Move",
-      "Direction": 5,
-      "Population": 14
-    },
-    "State": [
       {
         "Value": "Blocking,Wall,1,4"
       },
       {
-        "Value": "Blocking,Wall,2,4"
+        "Value": "Collectable,Food,9,3,4"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 7,
+      "Population": 63
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,2"
       },
       {
-        "Value": "Blocking,Wall,3,4"
+        "Value": "Blocking,Wall,0,3"
       },
       {
-        "Value": "Blocking,Wall,4,4"
+        "Value": "Enemy,SmrtAggr,72,2,3"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 0,
+      "Population": 80
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Blocking,Wall,0,3"
+      },
+      {
+        "Value": "Blocking,Wall,1,1"
+      },
+      {
+        "Value": "Blocking,Wall,1,2"
+      },
+      {
+        "Value": "Enemy,SmrtAggr,52,3,2"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 3,
+      "Population": 77
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Blocking,Wall,0,1"
+      },
+      {
+        "Value": "Blocking,Wall,0,4"
+      },
+      {
+        "Value": "Blocking,Wall,1,2"
+      },
+      {
+        "Value": "Blocking,Wall,1,3"
+      },
+      {
+        "Value": "Enemy,SmrtAggr,49,2,3"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 3,
+      "Population": 76
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Blocking,Wall,0,1"
+      },
+      {
+        "Value": "Blocking,Wall,0,4"
+      },
+      {
+        "Value": "Blocking,Wall,1,2"
+      },
+      {
+        "Value": "Blocking,Wall,1,3"
+      },
+      {
+        "Value": "Enemy,SmrtAggr,46,1,4"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 3,
+      "Population": 75
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Blocking,Wall,0,1"
+      },
+      {
+        "Value": "Blocking,Wall,0,4"
+      },
+      {
+        "Value": "Blocking,Wall,1,2"
+      },
+      {
+        "Value": "Blocking,Wall,1,3"
+      },
+      {
+        "Value": "Enemy,SmrtAggr,43,2,3"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 0,
+      "Population": 74
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Blocking,Wall,0,1"
+      },
+      {
+        "Value": "Blocking,Wall,0,4"
+      },
+      {
+        "Value": "Blocking,Wall,1,2"
+      },
+      {
+        "Value": "Blocking,Wall,1,3"
+      },
+      {
+        "Value": "Enemy,SmrtAggr,42,2,3"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 6,
+      "Population": 71
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Blocking,Wall,0,1"
+      },
+      {
+        "Value": "Blocking,Wall,0,2"
+      },
+      {
+        "Value": "Blocking,Wall,1,3"
+      },
+      {
+        "Value": "Blocking,Wall,1,4"
+      },
+      {
+        "Value": "Enemy,SmrtAggr,39,2,3"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 7,
+      "Population": 68
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,2"
+      },
+      {
+        "Value": "Blocking,Wall,0,3"
+      },
+      {
+        "Value": "Enemy,SmrtAggr,36,1,1"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 3,
+      "Population": 65
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Blocking,Wall,0,3"
+      },
+      {
+        "Value": "Blocking,Wall,1,1"
+      },
+      {
+        "Value": "Blocking,Wall,1,2"
+      },
+      {
+        "Value": "Enemy,SmrtAggr,33,2,1"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 2,
+      "Population": 64
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Blocking,Wall,0,3"
+      },
+      {
+        "Value": "Blocking,Wall,1,1"
+      },
+      {
+        "Value": "Blocking,Wall,1,2"
+      },
+      {
+        "Value": "Enemy,SmrtAggr,30,2,0"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 4,
+      "Population": 61
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,1"
+      },
+      {
+        "Value": "Blocking,Wall,0,2"
+      },
+      {
+        "Value": "Enemy,SmrtAggr,27,2,1"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 2,
+      "Population": 58
+    },
+    "State": [
+      {
+        "Value": "Enemy,SmrtAggr,24,1,1"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 1,
+      "Population": 55
+    },
+    "State": [
+      {
+        "Value": "Enemy,SmrtAggr,21,1,2"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 2,
+      "Population": 52
+    },
+    "State": [
+      {
+        "Value": "Enemy,SmrtAggr,20,1,1"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 5,
+      "Population": 51
+    },
+    "State": [
+      {
+        "Value": "Enemy,SmrtAggr,17,0,0"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 1,
+      "Population": 48
+    },
+    "State": [
+      {
+        "Value": "Enemy,SmrtAggr,14,2,0"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 0,
+      "Population": 45
+    },
+    "State": []
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 7,
+      "Population": 42
+    },
+    "State": [
+      {
+        "Value": "Enemy,SmrtAggr,8,2,0"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 0,
+      "Population": 39
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,1"
+      },
+      {
+        "Value": "Blocking,Wall,0,2"
+      },
+      {
+        "Value": "Enemy,SmrtAggr,5,4,0"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 7,
+      "Population": 36
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,2"
+      },
+      {
+        "Value": "Blocking,Wall,0,3"
+      },
+      {
+        "Value": "Enemy,SmrtAggr,2,3,2"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 1,
+      "Population": 33
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Blocking,Wall,0,3"
+      },
+      {
+        "Value": "Blocking,Wall,1,1"
+      },
+      {
+        "Value": "Blocking,Wall,1,2"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 7,
+      "Population": 30
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,2"
+      },
+      {
+        "Value": "Blocking,Wall,1,0"
+      },
+      {
+        "Value": "Blocking,Wall,1,1"
+      },
+      {
+        "Value": "Collectable,Wood,3,1,4"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 1,
+      "Population": 27
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,1"
+      },
+      {
+        "Value": "Blocking,Wall,1,1"
+      },
+      {
+        "Value": "Blocking,Water,1,4"
+      },
+      {
+        "Value": "Blocking,Wall,2,0"
+      },
+      {
+        "Value": "Collectable,Wood,3,2,3"
+      },
+      {
+        "Value": "Blocking,Water,2,4"
+      },
+      {
+        "Value": "Blocking,Water,3,4"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 7,
+      "Population": 24
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Collectable,Food,7,0,4"
+      },
+      {
+        "Value": "Blocking,Wall,1,0"
+      },
+      {
+        "Value": "Blocking,Water,1,3"
+      },
+      {
+        "Value": "Blocking,Water,1,4"
+      },
+      {
+        "Value": "Blocking,Water,2,3"
+      },
+      {
+        "Value": "Blocking,Water,2,4"
+      },
+      {
+        "Value": "Blocking,Water,3,3"
+      },
+      {
+        "Value": "Blocking,Water,3,4"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 7,
+      "Population": 23
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Collectable,Food,7,0,4"
+      },
+      {
+        "Value": "Blocking,Wall,1,0"
+      },
+      {
+        "Value": "Blocking,Water,1,3"
+      },
+      {
+        "Value": "Blocking,Water,1,4"
+      },
+      {
+        "Value": "Blocking,Water,2,3"
+      },
+      {
+        "Value": "Blocking,Water,2,4"
+      },
+      {
+        "Value": "Blocking,Water,3,3"
+      },
+      {
+        "Value": "Blocking,Water,3,4"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 7,
+      "Population": 22
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Collectable,Food,7,0,4"
+      },
+      {
+        "Value": "Blocking,Wall,1,0"
+      },
+      {
+        "Value": "Blocking,Water,1,3"
+      },
+      {
+        "Value": "Blocking,Water,1,4"
+      },
+      {
+        "Value": "Blocking,Water,2,3"
+      },
+      {
+        "Value": "Blocking,Water,2,4"
+      },
+      {
+        "Value": "Blocking,Water,3,3"
+      },
+      {
+        "Value": "Blocking,Water,3,4"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 7,
+      "Population": 21
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Collectable,Food,7,0,4"
+      },
+      {
+        "Value": "Blocking,Wall,1,0"
+      },
+      {
+        "Value": "Blocking,Water,1,3"
+      },
+      {
+        "Value": "Blocking,Water,1,4"
+      },
+      {
+        "Value": "Blocking,Water,2,3"
+      },
+      {
+        "Value": "Blocking,Water,2,4"
+      },
+      {
+        "Value": "Blocking,Water,3,3"
+      },
+      {
+        "Value": "Blocking,Water,3,4"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 7,
+      "Population": 20
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Collectable,Food,7,0,4"
+      },
+      {
+        "Value": "Blocking,Wall,1,0"
+      },
+      {
+        "Value": "Blocking,Water,1,3"
+      },
+      {
+        "Value": "Blocking,Water,1,4"
+      },
+      {
+        "Value": "Blocking,Water,2,3"
+      },
+      {
+        "Value": "Blocking,Water,2,4"
+      },
+      {
+        "Value": "Blocking,Water,3,3"
+      },
+      {
+        "Value": "Blocking,Water,3,4"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 7,
+      "Population": 19
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Collectable,Food,7,0,4"
+      },
+      {
+        "Value": "Blocking,Wall,1,0"
+      },
+      {
+        "Value": "Blocking,Water,1,3"
+      },
+      {
+        "Value": "Blocking,Water,1,4"
+      },
+      {
+        "Value": "Blocking,Water,2,3"
+      },
+      {
+        "Value": "Blocking,Water,2,4"
+      },
+      {
+        "Value": "Blocking,Water,3,3"
+      },
+      {
+        "Value": "Blocking,Water,3,4"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 7,
+      "Population": 18
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Collectable,Food,7,0,4"
+      },
+      {
+        "Value": "Blocking,Wall,1,0"
+      },
+      {
+        "Value": "Blocking,Water,1,3"
+      },
+      {
+        "Value": "Blocking,Water,1,4"
+      },
+      {
+        "Value": "Blocking,Water,2,3"
+      },
+      {
+        "Value": "Blocking,Water,2,4"
+      },
+      {
+        "Value": "Blocking,Water,3,3"
+      },
+      {
+        "Value": "Blocking,Water,3,4"
+      }
+    ]
+  },
+  {
+    "Action": {
+      "Type": "Move",
+      "Direction": 7,
+      "Population": 17
+    },
+    "State": [
+      {
+        "Value": "Blocking,Wall,0,0"
+      },
+      {
+        "Value": "Collectable,Food,7,0,4"
+      },
+      {
+        "Value": "Blocking,Wall,1,0"
+      },
+      {
+        "Value": "Blocking,Water,1,3"
+      },
+      {
+        "Value": "Blocking,Water,1,4"
+      },
+      {
+        "Value": "Blocking,Water,2,3"
+      },
+      {
+        "Value": "Blocking,Water,2,4"
+      },
+      {
+        "Value": "Blocking,Water,3,3"
+      },
+      {
+        "Value": "Blocking,Water,3,4"
       }
     ]
   }

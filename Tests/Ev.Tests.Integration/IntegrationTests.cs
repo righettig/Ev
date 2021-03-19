@@ -1,6 +1,12 @@
-using Ev.Domain.Utils;
-using Ev.Domain.World;
-using Ev.Game;
+using Ev.Common.Core;
+using Ev.Common.Core.Interfaces;
+using Ev.Domain.Client;
+using Ev.Domain.Server.Core;
+using Ev.Domain.Server.World;
+using Ev.Domain.Server.World.Core;
+using Ev.Game.Server;
+using Ev.Infrastructure;
+using Ev.Infrastructure.Core;
 using Ev.Samples.Behaviours;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
@@ -11,6 +17,15 @@ namespace Ev.Tests.Integration
     [TestClass]
     public class IntegrationTests
     {
+        private readonly IPlatform _platform;
+        private readonly IRandom _random;
+
+        public IntegrationTests()
+        {
+            _platform = new LocalPlatform(new Mapper());
+            _random = new Random(1);
+        }
+
         static IWorld CreateWorldFromMap(IRandom rnd)
         {
             var map = // 4 tribes
@@ -41,25 +56,32 @@ namespace Ev.Tests.Integration
             new WorldResources { FoodCount = 100, WoodCount = 40, IronCount = 10 },
             rnd);
 
-        static void CreateTribes(IWorld world, IRandom rnd) =>
-            world
-                .WithTribe("RandomW",  Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd))
-                .WithTribe("Gatherer", Color.Cyan,       new JackOfAllTradesTribeBehaviour(rnd))
-                .WithTribe("Aggr",     Color.Yellow,     new AggressiveTribeBehaviour(rnd))
-                .WithTribe("SmrtAggr", Color.Magenta,    new SmartAggressiveTribeBehaviour(rnd));
+        void CreateTribes(IGame game, IRandom rnd)
+        {
+            var agent1 = new TribeAgent("RandomW",  Color.DarkYellow, new RandomWalkerTribeBehaviour(rnd));
+            var agent2 = new TribeAgent("Gatherer", Color.Cyan,       new JackOfAllTradesTribeBehaviour(rnd));
+            var agent3 = new TribeAgent("Aggr",     Color.Yellow,     new AggressiveTribeBehaviour(rnd));
+            var agent4 = new TribeAgent("SmrtAggr", Color.Magenta,    new SmartAggressiveTribeBehaviour(rnd));
+
+            _platform.RegisterAgent(game, agent1, agent2, agent3, agent4);
+        }
 
         [TestMethod]
         public async Task FourTribesOnRandomMap()
         {
             // Arrange
-            var world = CreateWorld(new Random(1));
+            var world = CreateWorld(_random);
+            
+            var game = new Game.Server.Game(_platform, world, _random);
 
-            CreateTribes(world, new Random(1));
-
-            var options = new EvGameOptions { DumpWinnerHistory = true, WinnerHistoryFilename = "actual_FourTribesOnRandomMap.json" };
+            CreateTribes(game, _random);
 
             // Act
-            await EvGame.GameLoop(options, world, new Random(1));
+            await game.GameLoop(new EvGameOptions
+            {
+                DumpWinnerHistory = true,
+                WinnerHistoryFilename = "actual_FourTribesOnRandomMap.json"
+            });
 
             // Assertions
             AssertSameFinalState("FourTribesOnRandomMap");
@@ -69,14 +91,18 @@ namespace Ev.Tests.Integration
         public async Task FourTribesOnStaticMap()
         {
             // Arrange
-            var world = CreateWorldFromMap(new Random(1));
+            var world = CreateWorldFromMap(_random);
 
-            CreateTribes(world, new Random(1));
+            var game = new Game.Server.Game(_platform, world, _random);
 
-            var options = new EvGameOptions { DumpWinnerHistory = true, WinnerHistoryFilename = "actual_FourTribesOnStaticMap.json" };
+            CreateTribes(game, _random);
 
             // Act
-            await EvGame.GameLoop(options, world, new Random(1));
+            await game.GameLoop(new EvGameOptions
+            {
+                DumpWinnerHistory = true,
+                WinnerHistoryFilename = "actual_FourTribesOnStaticMap.json"
+            });
 
             // Assertions
             AssertSameFinalState("FourTribesOnStaticMap");
