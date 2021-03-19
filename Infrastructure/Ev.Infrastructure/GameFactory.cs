@@ -1,4 +1,5 @@
-﻿using Ev.Domain.Server.World.Core;
+﻿using Ev.Domain.Server.Core;
+using Ev.Domain.Server.World.Core;
 using Ev.Game.Server;
 using System;
 using Random = Ev.Common.Core.Random;
@@ -17,6 +18,16 @@ namespace Ev.Infrastructure
             return new GameChannel(
                 new Game.Server.Game(options, platform, world, options.Random ?? new Random()),
                 platform);
+        }
+
+        public static GameChannel Client(string serverUrl, int serverPort, int localPort)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static GameChannel Server(EvGameOptions options, IWorld world, int localPort)
+        {
+            throw new NotImplementedException();
         }
     }
 }
