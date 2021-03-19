@@ -11,12 +11,6 @@ using ITribe = Ev.Domain.Server.Core.ITribe;
 
 namespace Ev.Infrastructure
 {
-    public static class PlatformFactory
-    {
-        public static readonly IPlatform Local  = new LocalPlatform(new Mapper());
-        public static readonly IPlatform Remote = new RemotePlatform();
-    }
-
     public class LocalPlatform : IPlatform
     {
         private readonly IMapper _mapper;
@@ -24,7 +18,7 @@ namespace Ev.Infrastructure
         
         private ITribeAgent[] _agents;
 
-        public LocalPlatform(IMapper mapper) => _mapper = mapper;
+        public LocalPlatform(IMapper mapper) => _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
         public void OnGameStart() => ForEachTribeAgent(tribeAgent => tribeAgent.OnGameStart());
 
@@ -44,9 +38,6 @@ namespace Ev.Infrastructure
 
             foreach (var tribeAgent in agents)
             {
-                // TODO: server should return a unique Id for each tribe agent
-                game.RegisterAgent(tribeAgent.Name, tribeAgent.Color);
-
                 // TODO: should use the unique tribe agent Id
                 if (_behaviours.ContainsKey(tribeAgent.Name))
                 {
@@ -54,6 +45,9 @@ namespace Ev.Infrastructure
                 }
 
                 _behaviours[tribeAgent.Name] = tribeAgent.Behaviour;
+
+                // TODO: server should return a unique Id for each tribe agent
+                game.RegisterAgent(tribeAgent.Name, tribeAgent.Color);
             }
         }
 

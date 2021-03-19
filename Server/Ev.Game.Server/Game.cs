@@ -17,16 +17,20 @@ namespace Ev.Game.Server
 {
     public class Game : IGame
     {
+        private readonly EvGameOptions _options;
         private readonly IWorld _world;
         private readonly IPlatform _platform;
         private readonly EvGameHistory _history;
         private readonly IGameActionProcessor _actionProcessor;
 
-        public Game(IPlatform platform, IWorld world, IRandom rnd)
+        private int _joinedTribes = 0;
+
+        public Game(EvGameOptions options, IPlatform platform, IWorld world, IRandom rnd)
         {
             if (rnd == null) throw new ArgumentNullException(nameof(rnd));
 
-            _world = world ?? throw new ArgumentNullException(nameof(world));
+            _options  = options  ?? throw new ArgumentNullException(nameof(options));
+            _world    = world    ?? throw new ArgumentNullException(nameof(world));
             _platform = platform ?? throw new ArgumentNullException(nameof(platform));
 
             // TODO: for this to be useful I need to be able to record the game/world parameters too
@@ -42,13 +46,16 @@ namespace Ev.Game.Server
 
             _world.AddTribe(agentName, agentColor);
             
-            // TODO: if #agents is OK -> start game loop
+            _joinedTribes++;
+
+            if (_joinedTribes == _options.Players)
+            {
+                Task.Run(GameLoop).Wait();
+            }
         }
 
-        public async Task GameLoop(EvGameOptions options)
+        private async Task GameLoop()
         {
-            if (options == null) throw new ArgumentNullException(nameof(options));
-
             var finished = false;
             var iteration = 0;
 
@@ -87,13 +94,13 @@ namespace Ev.Game.Server
 
                     _platform.OnTurnEnd();
 
-                    if (options.RenderEachTurn)
+                    if (_options.RenderEachTurn)
                     {
                         var next = alive[(i + 1) % alive.Length];
                         Dump(_world, iteration, move, next);
                     }
 
-                    if (options.WaitAfterEachMove)
+                    if (_options.WaitAfterEachMove)
                     {
                         Console.ReadLine();
                     }
@@ -108,14 +115,14 @@ namespace Ev.Game.Server
             // TODO: delegate to Spectator?
             Dump(_world, iteration);
 
-            if (options.DumpWinnerHistory)
+            if (_options.DumpWinnerHistory)
             {
                 var winnerHistory = _history.States.Where(el => el.Item1.Tribe.Name == _world.Winner.Name);
 
                 DumpHistory(winnerHistory.Select(el => el.Item1).ToList());
 
                 var serializer = new EvGameHistorySerializer();
-                await serializer.SaveToFile(winnerHistory, options.WinnerHistoryFilename);
+                await serializer.SaveToFile(winnerHistory, _options.WinnerHistoryFilename);
             }
         }
     }

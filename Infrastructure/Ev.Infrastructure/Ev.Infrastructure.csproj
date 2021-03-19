@@ -10,6 +10,7 @@
     <ProjectReference Include="..\..\Common\Ev.Common\Ev.Common.csproj" />
     <ProjectReference Include="..\..\Server\Ev.Domain.Server.Core\Ev.Domain.Server.Core.csproj" />
     <ProjectReference Include="..\..\Server\Ev.Domain.Server\Ev.Domain.Server.csproj" />
+    <ProjectReference Include="..\..\Server\Ev.Game.Server\Ev.Game.Server.csproj" />
     <ProjectReference Include="..\..\Server\Ev.Helpers\Ev.Helpers.csproj" />
     <ProjectReference Include="..\Ev.Infrastructure.Core\Ev.Infrastructure.Core.csproj" />
   </ItemGroup>

@@ -5,7 +5,6 @@ using Ev.Infrastructure.Core;
 using Ev.Tests.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Threading.Tasks;
 using static Ev.Tests.Common.TestHelpers;
 
 namespace Ev.Game.Server.Tests
@@ -13,18 +12,28 @@ namespace Ev.Game.Server.Tests
     [TestClass]
     public class GameTests
     {
-        private IPlatform _platform;
-        private IWorld    _world;
-        private IRandom   _random;
+        private EvGameOptions _options;
+        private IPlatform     _platform;
+        private IWorld        _world;
+        private IRandom       _random;
 
         public GameTests()
         {
+            _options  = new EvGameOptions(1);
             _platform = Stubs.IPlatform;
             _world    = Stubs.IWorld;
             _random   = Stubs.IRandom;
         }
 
         #region Ctor
+
+        [TestMethod]
+        public void Ctor_Should_Throw_ArgumentNullException_If_Options_Is_Null()
+        {
+            _options = null;
+
+            ShouldThrowArgumentNullException(CreateUat);
+        }
 
         [TestMethod]
         public void Ctor_Should_Throw_ArgumentNullException_If_Platform_Is_Null()
@@ -52,12 +61,6 @@ namespace Ev.Game.Server.Tests
 
         #endregion
 
-        [TestMethod]
-        public async Task GameLoop_Should_Throw_ArgumentNullException_If_EvGameOptions_Is_Null()
-        {
-            await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => CreateUat().GameLoop(null));
-        }
-
         [DataTestMethod]
         [DataRow(null)]
         [DataRow("")]
@@ -72,6 +75,6 @@ namespace Ev.Game.Server.Tests
             Assert.ThrowsException<ArgumentNullException>(func);
         }
 
-        private Game CreateUat() => new(_platform, _world, _random);
+        private Game CreateUat() => new(_options, _platform, _world, _random);
     }
 }

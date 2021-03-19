@@ -13,6 +13,12 @@ namespace Ev.Infrastructure.Tests
     {
         private readonly LocalPlatform _uat = new(Stubs.IMapper);
 
+        [TestMethod]
+        public void Ctor_Should_Throw_ArgumentNullException_If_Mapper_Is_Null()
+        {
+            ShouldThrowArgumentNullException(() => new LocalPlatform(null));
+        }
+
         #region RegisterAgent
 
         [TestMethod]

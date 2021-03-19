@@ -67,42 +67,40 @@ namespace Ev.Tests.Integration
         }
 
         [TestMethod]
-        public async Task FourTribesOnRandomMap()
+        public void FourTribesOnRandomMap()
         {
             // Arrange
             var world = CreateWorld(_random);
-            
-            var game = new Game.Server.Game(_platform, world, _random);
 
-            CreateTribes(game, _random);
-
-            // Act
-            await game.GameLoop(new EvGameOptions
+            var game = new Game.Server.Game(new EvGameOptions(4)
             {
                 DumpWinnerHistory = true,
                 WinnerHistoryFilename = "actual_FourTribesOnRandomMap.json"
-            });
+
+            }, _platform, world, _random);
+
+            // Act
+            CreateTribes(game, _random);
 
             // Assertions
             AssertSameFinalState("FourTribesOnRandomMap");
         }
 
         [TestMethod]
-        public async Task FourTribesOnStaticMap()
+        public void FourTribesOnStaticMap()
         {
             // Arrange
             var world = CreateWorldFromMap(_random);
 
-            var game = new Game.Server.Game(_platform, world, _random);
-
-            CreateTribes(game, _random);
-
-            // Act
-            await game.GameLoop(new EvGameOptions
+            var game = new Game.Server.Game(new EvGameOptions(4)
             {
                 DumpWinnerHistory = true,
                 WinnerHistoryFilename = "actual_FourTribesOnStaticMap.json"
-            });
+
+            }, _platform, world, _random);
+
+            // Act
+            CreateTribes(game, _random);
 
             // Assertions
             AssertSameFinalState("FourTribesOnStaticMap");
