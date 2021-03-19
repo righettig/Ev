@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package ev.server;
+
+service EvGameMaster {
+  rpc Join (JoinRequest) returns (JoinReply) {}
+}
+
+message JoinRequest {
+	string name = 1;
+	string url = 2;
+	string color = 3;
+	bool isTribe = 4;
+}
+
+message JoinReply {
+}
